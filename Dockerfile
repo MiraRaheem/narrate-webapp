@@ -34,4 +34,7 @@ ENV CATALINA_OPTS="-Xms256m -Xmx512m -Djava.security.egd=file:/dev/./urandom"
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD curl -fsS http://localhost:8080/ || exit 1
 
+# Disable Tomcat shutdown port (prevents "Invalid shutdown command" spam)
+RUN sed -ri 's/port="8005"/port="-1"/' /usr/local/tomcat/conf/server.xml
+
 CMD ["catalina.sh", "run"]
