@@ -95,19 +95,20 @@ public static String getNS() { return NS; }
 private static void loadOntologyModel() {
     model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
 
-    // Prefer classpath (works if the RDF is inside src/main/resources or in the WAR),
-    // then fallback to filesystem (absolute or relative).
     FileManager fm = FileManager.get();
     fm.addLocatorClassLoader(OntologyReader.class.getClassLoader());
+
+    boolean loaded = false;
+    String loadMode = null;
 
     // 1) Try classpath / FileManager
     try (InputStream in = fm.open(ONTOLOGY_PATH)) {
         if (in != null) {
             System.out.println("[OntologyReader] Loading via classpath: " + ONTOLOGY_PATH);
-            // change "RDF/XML" to "TTL" if your file is Turtle
+            // Change "RDF/XML" to "TTL" if your file is Turtle
             model.read(in, null, "RDF/XML");
-            System.out.println("[OntologyReader] Loaded triples: " + model.size());
-            return;
+            loaded = true;
+            loadMode = "CLASSPATH";
         } else {
             System.out.println("[OntologyReader] Classpath lookup failed for: " + ONTOLOGY_PATH);
         }
@@ -115,16 +116,39 @@ private static void loadOntologyModel() {
         System.out.println("[OntologyReader] Classpath load error: " + e.getMessage());
     }
 
-    // 2) Try filesystem (absolute or relative to working dir)
-    try {
-        File f = toFile(ONTOLOGY_PATH);
-        System.out.println("[OntologyReader] Filesystem path: " + f.getAbsolutePath() +
-                           " (exists=" + f.exists() + ")");
-        try (InputStream in = new FileInputStream(f)) {
-            model.read(in, null, "RDF/XML"); // or "TTL"
-            System.out.println("[OntologyReader] Loaded triples: " + model.size());
-            // ----- Infer namespace (NS) from the loaded model if not provided -----
-if (NS == null || NS.isBlank()) {
+    // 2) Try filesystem if not loaded yet
+    if (!loaded) {
+        try {
+            File f = toFile(ONTOLOGY_PATH);
+            System.out.println("[OntologyReader] Filesystem path: " + f.getAbsolutePath() +
+                               " (exists=" + f.exists() + ")");
+            try (InputStream in = new FileInputStream(f)) {
+                model.read(in, null, "RDF/XML"); // or "TTL"
+                loaded = true;
+                loadMode = "FILESYSTEM";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load ontology from: " + ONTOLOGY_PATH, e);
+        }
+    }
+
+    if (!loaded) {
+        throw new RuntimeException("Failed to load ontology: " + ONTOLOGY_PATH);
+    }
+
+    // ----- Common debug + NS inference for BOTH paths -----
+    System.out.println("[OntologyReader] Loaded triples: " + model.size());
+    inferNamespaceIfNeeded();
+    System.out.println("[OntologyReader] Final NS = " + NS);
+
+    // sanity: try resolve a known class by local name if NS is set
+    tryResolveSample("Customer");   // change to a class you know exists
+    tryResolveSample("Carrier");    // optional
+}
+
+private static void inferNamespaceIfNeeded() {
+    if (NS != null && !NS.isBlank()) return;
+
     String inferred = null;
 
     // 1) Prefer a named class URI to infer base
@@ -136,7 +160,7 @@ if (NS == null || NS.isBlank()) {
             int slash = uri.lastIndexOf('/');
             int cut = Math.max(hash, slash);
             if (cut >= 0) {
-                inferred = uri.substring(0, cut + 1); // keep the trailing # or /
+                inferred = uri.substring(0, cut + 1); // keep trailing # or /
                 break;
             }
         }
@@ -151,14 +175,14 @@ if (NS == null || NS.isBlank()) {
         NS = inferred;
         System.out.println("[OntologyReader] Inferred NS = " + NS);
     } else {
-        System.out.println("[OntologyReader] WARNING: Could not infer NS; ensure ONTOLOGY_NS env var is set.");
+        System.out.println("[OntologyReader] WARNING: Could not infer NS; set ONTOLOGY_NS env var.");
     }
 }
-return;
-        }
-    } catch (Exception e) {
-        throw new RuntimeException("Failed to load ontology from: " + ONTOLOGY_PATH, e);
-    }
+
+private static void tryResolveSample(String localName) {
+    if (NS == null || NS.isBlank()) return;
+    OntClass c = model.getOntClass(NS + localName);
+    System.out.println("[OntologyReader] Test resolve '" + localName + "': " + (c != null ? "OK" : "NOT FOUND"));
 }
 
 /** Resolve relative paths against current working directory */
