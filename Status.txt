@@ -1,0 +1,43 @@
+1) Numeric Values, and Enum values are solved for Add Individual and Update Individual
+2) Fixed: merging the individuals, when the individual already exists
+3) Fixed: Eum in Query Individuals
+4) Cardinalities of super classes are added
+5) Added Compare Blueprints use case with statistical information, summary and CSV download 
+6) Fixed the Type issue in Add Individual (NamedIndividual is added automatically), and update individual (disabled' cant add; can't remove)
+7) Query Individuals use case: a) fixed adding multiple rows for numeric values, even if thier max cardinalities is 1, to enable inequalties search
+8) Included inverse object properties by utilizing a reasoning model
+
+9) support main direction for inverse object properties;i.e., add only from the main direction, display only in other use cases
+10) Not important: in Delete Individual use case, data propeties doesnt show muli-values
+11) Done: To fix: Update Individual use case: fix inverse properties table and inverse properties not showing for some classes (e.g., University class)
+12) Not important TODO: Sort drop down lists 
+13) created a first version of NARRATE-blueprints Ontology
+14)✅ Proper handling of xsd:date, xsd:dateTime, and xsd:anyURI.
+✅ Correct enforcement of xsd:string for textual data (even when numbers are entered!).
+✅ No more datatype inconsistencies in Protégé.
+✅ Clean RDF output, ready for validators, reasoners, and real-world use.
+✅ Full respect for your OWL definitions — no guessing types anymore.
+✅ Smart date auto-completion (T00:00:00) for xsd:dateTime.
+15) Adding tooltips
+16) Done: Ordering properties semantically (through displayOrder metadata in the OWL ontology. The code currently only supports data properties)
+17) Resolved: Customer and SalesOrder class give error in AddIndividual use case
+18) TODO: Update Query Blueprints use case:
+✅ Proper handling of xsd:date, xsd:dateTime, and xsd:anyURI.
+✅ Correct enforcement of xsd:string for textual data (even when numbers are entered!).
+✅ No more datatype inconsistencies in Protégé.
+✅ Clean RDF output, ready for validators, reasoners, and real-world use.
+✅ Full respect for your OWL definitions — no guessing types anymore.
+✅ Smart date auto-completion (T00:00:00) for xsd:dateTime.
+✅ Adding tooltips and order data properties based on displayOrder metadata
+
+19) Done: to consider reasoned model in update Individual use case, also in query and compose use cases 
+20) DONE: in OWL, BOM should also have quantity or any measuring units for the needed materials-> introduced MaterialUsage as an Association class
+21) TODO: resolve xsd:date and xsd:datetime issue (display datetime option in the UI)
+22) TODO: Include certification in the Bespoke COT scenario -> Partially, Material Supplier and Product
+23) Fixed Query Individual: ordering data properties, comments as tooltips, inline expandable rows for results objects properties
+24) TODO: Query Individual: Some classes, like DeliverySchedule, it doesnt link into object properties
+25) Compare blueprints:
+    a) Load reasoned model
+    b) display order
+    c) selection of comparision criteria
+    d) fix display table when three rows

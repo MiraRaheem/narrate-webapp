@@ -1,0 +1,58 @@
+/* Dark Grey Background */
+.bg-dark-grey {
+    background-color: #343a40 !important;
+}
+
+/* Glassmorphism Effect */
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px;
+}
+
+/* Banner Image */
+.banner-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.banner-img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-bottom: 4px solid #fd7e14;
+}
+
+/* Color Theme */
+.text-orange {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+/* Labels - Now Orange */
+.label-bold {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+/* Buttons */
+.btn-warning {
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+    color: white;
+}
+.btn-warning:hover {
+    background-color: #e96c0a;
+    border-color: #e96c0a;
+}
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #218838;
+}
