@@ -25,6 +25,9 @@ COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 RUN mkdir -p /data
 COPY --from=build /tmp/NARRATE-blueprints-rdf-xml.rdf /data/NARRATE-blueprints-rdf-xml.rdf
 
+# Disable Tomcat shutdown port (prevents "Invalid shutdown command" spam)
+RUN sed -ri 's/port="8005"/port="-1"/' /usr/local/tomcat/conf/server.xml
+
 # App expects this path by default, but set it explicitly too:
 ENV ONTOLOGY_PATH=/data/NARRATE-blueprints-rdf-xml.rdf
 
@@ -33,8 +36,5 @@ ENV CATALINA_OPTS="-Xms256m -Xmx512m -Djava.security.egd=file:/dev/./urandom"
 
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD curl -fsS http://localhost:8080/ || exit 1
-
-# Disable Tomcat shutdown port (prevents "Invalid shutdown command" spam)
-RUN sed -ri 's/port="8005"/port="-1"/' /usr/local/tomcat/conf/server.xml
 
 CMD ["catalina.sh", "run"]
