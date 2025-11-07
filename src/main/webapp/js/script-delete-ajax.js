@@ -1,18 +1,45 @@
 $(document).ready(function () {
     // Load ontology classes dynamically
-    $.getJSON("ontologyReaderAjax", {type: "classes"}, function (classes) {
-        console.log("Classes received:", classes);
-        let classSelect = $("#classSelect");
-        classSelect.empty().append(new Option("-- Select a Class --", ""));
+    $.getJSON("ontologyReaderAjax", {type: "classAnnotation", annotation: "blueprintClass"}, function (groupedClasses) {
+        console.log("📦 Loaded grouped classes:", groupedClasses);
 
-        /*classes.forEach(cls => {
-            classSelect.append(new Option(cls, cls));
-        });*/
-        
-         classes.sort((a, b) => a.localeCompare(b)).forEach(cls => {
-            $("#classSelect").append(`<option value="${cls}">${cls}</option>`);
+        const classSelect = $("#classSelect");
+        classSelect.empty();
+
+        // Placeholder option
+        classSelect.append(`<option value="" disabled selected style="color:#999;">Select blueprint</option>`);
+
+        // Count how many times each class appears (for ⚡ indicator)
+        const classCounts = {};
+        Object.values(groupedClasses).forEach(classList => {
+            classList.forEach(cls => {
+                classCounts[cls] = (classCounts[cls] || 0) + 1;
+            });
         });
-    }).fail(handleAjaxError);
+
+        // Build the grouped dropdown
+        Object.keys(groupedClasses).sort().forEach(blueprint => {
+            classSelect.append(`<option disabled>🔹 𝐁𝐋𝐔𝐄𝐏𝐑𝐈𝐍𝐓: ${blueprint}</option>`);
+
+            groupedClasses[blueprint].sort().forEach(cls => {
+                const coreName = blueprint.replace(/Blueprint$/, "").toLowerCase();
+                const isMain = cls.toLowerCase() === coreName;
+                const isShared = classCounts[cls] > 1;
+
+                const style = isMain ? 'style="font-weight:bold; color:#007bff;"' : "";
+                const label = isMain
+                        ? `⭐ ${cls}`
+                        : isShared
+                        ? `  ${cls} ⚡`
+                        : `  ${cls}`;
+
+                classSelect.append(`<option value="${cls}" ${style}>${label}</option>`);
+            });
+        });
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.error("Failed to load grouped classes:", textStatus, errorThrown);
+    });
+
 
     // Load individuals dynamically based on selected class
     $("#classSelect").change(function () {
@@ -159,76 +186,76 @@ $(document).ready(function () {
 
 
 // ✅ Handle delete individual
-$("#deleteIndividualBtn").click(function () {
-    let selectedClass = $("#classSelect").val();
-    let selectedIndividual = $("#individualSelect").val();
+    $("#deleteIndividualBtn").click(function () {
+        let selectedClass = $("#classSelect").val();
+        let selectedIndividual = $("#individualSelect").val();
 
-    if (selectedClass && selectedIndividual) {
-        // ✅ Show SweetAlert2 confirmation before deleting
-        Swal.fire({
-            title: "Are you sure?",
-            text: "This will also remove all triples where " + selectedIndividual + " is subject or object.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // ✅ Proceed with deletion if confirmed
-                $.post("DeleteIndividualServlet",
-                    { className: selectedClass, individualName: selectedIndividual },
-                    function (response) {
-                        console.log("🗑️ Delete response:", response);
+        if (selectedClass && selectedIndividual) {
+            // ✅ Show SweetAlert2 confirmation before deleting
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This will also remove all triples where " + selectedIndividual + " is subject or object.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // ✅ Proceed with deletion if confirmed
+                    $.post("DeleteIndividualServlet",
+                            {className: selectedClass, individualName: selectedIndividual},
+                            function (response) {
+                                console.log("🗑️ Delete response:", response);
 
-                        if (response.status === "success") {
-                            // ✅ Show success message with SweetAlert2
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: response.message,
-                                icon: "success",
-                                confirmButtonText: "OK"
-                            }).then(() => {
-                                // ✅ Wait 1 second to allow ontology model to reload before fetching new individuals
-                                setTimeout(function () {
-                                    $.getJSON("ontologyReaderAjax", { type: "directInstances", className: selectedClass, timestamp: new Date().getTime() }) // Force fresh request
-                                        .done(function (individuals) {
-                                            console.log("✅ Updated individuals list:", individuals);
+                                if (response.status === "success") {
+                                    // ✅ Show success message with SweetAlert2
+                                    Swal.fire({
+                                        title: "Deleted!",
+                                        text: response.message,
+                                        icon: "success",
+                                        confirmButtonText: "OK"
+                                    }).then(() => {
+                                        // ✅ Wait 1 second to allow ontology model to reload before fetching new individuals
+                                        setTimeout(function () {
+                                            $.getJSON("ontologyReaderAjax", {type: "directInstances", className: selectedClass, timestamp: new Date().getTime()}) // Force fresh request
+                                                    .done(function (individuals) {
+                                                        console.log("✅ Updated individuals list:", individuals);
 
-                                            let individualSelect = $("#individualSelect");
-                                            individualSelect.empty().append(new Option("-- Select an Individual --", ""));
+                                                        let individualSelect = $("#individualSelect");
+                                                        individualSelect.empty().append(new Option("-- Select an Individual --", ""));
 
-                                            if (Array.isArray(individuals) && individuals.length > 0) {
-                                                individuals.forEach(ind => {
-                                                    individualSelect.append(new Option(ind, ind));
-                                                });
-                                                individualSelect.prop("disabled", false);
-                                            } else {
-                                                individualSelect.prop("disabled", true);
-                                            }
+                                                        if (Array.isArray(individuals) && individuals.length > 0) {
+                                                            individuals.forEach(ind => {
+                                                                individualSelect.append(new Option(ind, ind));
+                                                            });
+                                                            individualSelect.prop("disabled", false);
+                                                        } else {
+                                                            individualSelect.prop("disabled", true);
+                                                        }
 
-                                            // ✅ After dropdown updates, refresh the page to ensure consistency
-                                            setTimeout(function () {
-                                                location.reload();
-                                            }, 1000);
+                                                        // ✅ After dropdown updates, refresh the page to ensure consistency
+                                                        setTimeout(function () {
+                                                            location.reload();
+                                                        }, 1000);
 
-                                        })
-                                        .fail(function (jqXHR, textStatus, errorThrown) {
-                                            console.error("⚠️ Failed to fetch updated individuals:", textStatus, errorThrown);
-                                        });
-                                }, 1000); // ✅ Delay before fetching updated individuals to ensure ontology reloads first
-                            });
+                                                    })
+                                                    .fail(function (jqXHR, textStatus, errorThrown) {
+                                                        console.error("⚠️ Failed to fetch updated individuals:", textStatus, errorThrown);
+                                                    });
+                                        }, 1000); // ✅ Delay before fetching updated individuals to ensure ontology reloads first
+                                    });
 
-                        } else {
-                            // ❌ Show error message with SweetAlert2
-                            Swal.fire({
-                                title: "Error!",
-                                text: response.message,
-                                icon: "error",
-                                confirmButtonText: "OK"
-                            });
-                        }
-                    }, "json").fail(function (jqXHR, textStatus, errorThrown) {
+                                } else {
+                                    // ❌ Show error message with SweetAlert2
+                                    Swal.fire({
+                                        title: "Error!",
+                                        text: response.message,
+                                        icon: "error",
+                                        confirmButtonText: "OK"
+                                    });
+                                }
+                            }, "json").fail(function (jqXHR, textStatus, errorThrown) {
                         console.error("⚠️ AJAX request failed:", textStatus, errorThrown);
                         Swal.fire({
                             title: "Error!",
@@ -237,10 +264,10 @@ $("#deleteIndividualBtn").click(function () {
                             confirmButtonText: "OK"
                         });
                     });
-            }
-        });
-    }
-});
+                }
+            });
+        }
+    });
 
 
     // General AJAX error handler
