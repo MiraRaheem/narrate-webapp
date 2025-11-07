@@ -8,14 +8,46 @@ $(document).ready(function () {
     let currentClass = null;
     let selectedIndividuals = [];
     // Load classes into dropdown
-    $.getJSON(baseUrl, {type: "default"}, function (classes) {
-        console.log("📚 Loaded classes:", classes);
+    $.getJSON(baseUrl, {type: "classAnnotation", annotation: "blueprintClass"}, function (groupedClasses) {
+        console.log("📦 Loaded grouped classes:", groupedClasses);
+
         const $dropdown = $("#classSelect");
-        $dropdown.empty().append(`<option value="">-- Select a Class --</option>`);
-        classes.forEach(cls => {
-            $dropdown.append(`<option value="${cls}">${cls}</option>`);
+        $dropdown.empty();
+
+        // Placeholder
+        $dropdown.append(`<option value="" disabled selected style="color:#999;">Select blueprint</option>`);
+
+        // Count appearances to detect shared classes
+        const classCounts = {};
+        Object.values(groupedClasses).forEach(classList => {
+            classList.forEach(cls => {
+                classCounts[cls] = (classCounts[cls] || 0) + 1;
+            });
+        });
+
+        // Render grouped dropdown
+        Object.keys(groupedClasses).sort().forEach(blueprint => {
+            $dropdown.append(`<option disabled>🔹 𝐁𝐋𝐔𝐄𝐏𝐑𝐈𝐍𝐓: ${blueprint}</option>`);
+
+            groupedClasses[blueprint].sort().forEach(cls => {
+                const coreName = blueprint.replace(/Blueprint$/, "").toLowerCase();
+                const isMain = cls.toLowerCase() === coreName;
+                const isShared = classCounts[cls] > 1;
+
+                const style = isMain ? 'style="font-weight:bold; color:#007bff;"' : "";
+                const label = isMain
+                        ? `⭐ ${cls}`
+                        : isShared
+                        ? `  ${cls} ⚡`
+                        : `  ${cls}`;
+
+                $dropdown.append(`<option value="${cls}" ${style}>${label}</option>`);
+            });
         });
     });
+
+
+
     // When a class is selected, load its individuals
     $("#classSelect").on("change", function () {
         const selectedClass = $(this).val();
@@ -300,7 +332,3 @@ $(document).ready(function () {
 
 
 });
-
-
-
-
