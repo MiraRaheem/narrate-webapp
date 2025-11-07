@@ -44,7 +44,7 @@ public class ontologyReaderAjax extends HttpServlet {
             if ("dataProperties".equals(type)) {
                 Set<String> dataProperties = ontologyReader.getDataProperties(className);
                 out.print(gson.toJson(dataProperties));
-                
+
             } else if ("dataPropertiesWithComments".equals(type)) {
                 List<Map<String, Object>> dataProperties = ontologyReader.getDataPropertiesWithMeta(className);
                 out.print(gson.toJson(dataProperties));
@@ -131,6 +131,16 @@ public class ontologyReaderAjax extends HttpServlet {
             } else if ("inverseObjectProperties".equals(type) && individualName != null) {
                 Map<String, List<String>> inverseProps = ontologyReader.getInverseObjectProperties(individualName);
                 out.print(gson.toJson(inverseProps));
+            } else if ("classAnnotation".equals(type)) {
+                String annotationName = request.getParameter("annotation");
+                if (annotationName == null || annotationName.trim().isEmpty()) {
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    out.print("{\"error\": \"Missing 'annotation' parameter.\"}");
+                    return;
+                }
+
+                Map<String, List<String>> grouped = ontologyReader.getClassGroupingsByAnnotation(annotationName.trim());
+                out.print(gson.toJson(grouped));
             } else {
                 Set<String> classes = ontologyReader.getOntologyClasses();
                 out.print(gson.toJson(classes));
