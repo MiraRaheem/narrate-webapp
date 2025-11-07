@@ -22,16 +22,44 @@ $(document).ready(function () {
     console.log("📦 Query script loaded");
 
     // Load classes into dropdown
-    $.getJSON(baseUrl, {type: "default"}, function (classes) {
-        console.log("📚 Loaded classes:", classes);
-        /*classes.forEach(cls => {
-         $("#classSelect").append(`<option value="${cls}">${cls}</option>`);
-         });*/
+    $.getJSON(baseUrl, {type: "classAnnotation", annotation: "blueprintClass"}, function (groupedClasses) {
+        console.log("📦 Loaded grouped classes:", groupedClasses);
 
-        classes.sort((a, b) => a.localeCompare(b)).forEach(cls => {
-            $("#classSelect").append(`<option value="${cls}">${cls}</option>`);
+        const $select = $("#classSelect");
+        $select.empty();
+
+        // Placeholder
+        $select.append(`<option value="" disabled selected style="color:#999;">Select blueprint</option>`);
+
+        // Count appearances to detect shared classes
+        const classCounts = {};
+        Object.values(groupedClasses).forEach(classList => {
+            classList.forEach(cls => {
+                classCounts[cls] = (classCounts[cls] || 0) + 1;
+            });
+        });
+
+        // Render each blueprint group
+        Object.keys(groupedClasses).sort().forEach(blueprint => {
+            $select.append(`<option disabled>🔹 𝐁𝐋𝐔𝐄𝐏𝐑𝐈𝐍𝐓: ${blueprint}</option>`);
+
+            groupedClasses[blueprint].sort().forEach(cls => {
+                const coreName = blueprint.replace(/Blueprint$/, "").toLowerCase();
+                const isMain = cls.toLowerCase() === coreName;
+                const isShared = classCounts[cls] > 1;
+
+                const style = isMain ? 'style="font-weight:bold; color:#007bff;"' : "";
+                const label = isMain
+                        ? `⭐ ${cls}`
+                        : isShared
+                        ? `  ${cls} ⚡`
+                        : `  ${cls}`;
+
+                $select.append(`<option value="${cls}" ${style}>${label}</option>`);
+            });
         });
     });
+
 
     // On class selection
     $("#classSelect").on("change", function () {
@@ -317,9 +345,9 @@ $(document).ready(function () {
 
     function displayResults(individuals, similarityNotes = {}, objectProperties = [], className = "") {
 
-        
-         // const objectPropKeys = Object.keys(objectProperties);
-         const objectPropKeys = Array.isArray(objectProperties) ? objectProperties : Object.keys(objectProperties);
+
+        // const objectPropKeys = Object.keys(objectProperties);
+        const objectPropKeys = Array.isArray(objectProperties) ? objectProperties : Object.keys(objectProperties);
 
         if (!individuals || individuals.length === 0) {
             $("#resultsContainer").html("<p>No matching individuals found.</p>");
@@ -350,7 +378,7 @@ $(document).ready(function () {
                 const dataProps = [];
                 const objectProps = [];
                 Object.entries(details).forEach(([prop, value]) => {
-                  
+
                     if (objectPropKeys.includes(prop)) {
                         objectProps.push({prop, value});
                     } else {
@@ -405,7 +433,7 @@ $(document).ready(function () {
                     table += "</tbody></table>";
                     $("#resultsContainer").html(table);
                     $("#resultsHeader").removeClass("d-none");
-                   // const objectPropKeys = Object.keys(objectProperties);
+                    // const objectPropKeys = Object.keys(objectProperties);
 
 
                     // Attach expand/collapse handler
