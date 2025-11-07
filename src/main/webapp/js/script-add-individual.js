@@ -12,18 +12,65 @@ $(document).ready(function () {
     let existingIndividualsList = [];
 
     // Load all classes
-    $.getJSON(baseUrl, {type: "default"}, function (classes) {
-        console.log("📚 Loaded classes:", classes);
-        /*classes.forEach(cls => {
-         $("#classSelect").append(`<option value="${cls}">${cls}</option>`);
-         });*/
 
-        classes.sort((a, b) => a.localeCompare(b)).forEach(cls => {
-            $("#classSelect").append(`<option value="${cls}">${cls}</option>`);
+    //$.getJSON(baseUrl, {type: "default"}, function (classes) {
+    // console.log("📚 Loaded classes:", classes);
+    /*classes.forEach(cls => {
+     $("#classSelect").append(`<option value="${cls}">${cls}</option>`);
+     });*/
+
+    //classes.sort((a, b) => a.localeCompare(b)).forEach(cls => {
+    //    $("#classSelect").append(`<option value="${cls}">${cls}</option>`);
+    // });
+
+
+    //});
+
+    // Load grouped classes by blueprintClass
+    $.getJSON(baseUrl, {type: "classAnnotation", annotation: "blueprintClass"}, function (groupedClasses) {
+        console.log("📚 Grouped classes by blueprintClass:", groupedClasses);
+
+        const $select = $("#classSelect");
+        $select.empty();
+
+        // 🔸 Add placeholder first
+        $select.append(`<option value="" disabled selected style="color: #999;">Select blueprint</option>`);
+
+        const sortedBlueprints = Object.keys(groupedClasses).sort();
+
+        sortedBlueprints.forEach(blueprint => {
+            // Header: blueprint name (not selectable)
+            //$select.append(`<option disabled>🔹 ${blueprint}</option>`);
+            $select.append(`<option disabled>🔹 𝐁𝐋𝐔𝐄𝐏𝐑𝐈𝐍𝐓: ${blueprint}</option>`);
+
+            const sortedClasses = groupedClasses[blueprint].sort();
+
+            // First: build a reverse map to count how many blueprints each class appears in
+            const classCounts = {};
+            Object.values(groupedClasses).forEach(classList => {
+                classList.forEach(cls => {
+                    classCounts[cls] = (classCounts[cls] || 0) + 1;
+                });
+            });
+
+            sortedClasses.forEach(cls => {
+                const coreName = blueprint.replace(/Blueprint$/, "").toLowerCase();
+                const isMain = cls.toLowerCase() === coreName;
+                const isShared = classCounts[cls] > 1;
+
+                let style = isMain ? 'style="font-weight:bold; color:#007bff;"' : "";
+                let label = isMain
+                        ? `⭐ ${cls}`
+                        : isShared
+                        ? `  ${cls} ⚡`
+                        : `  ${cls}`;
+
+                $select.append(`<option value="${cls}" ${style}>${label}</option>`);
+            });
+            ;
         });
-
-
     });
+
 
 // On class selection
     $("#classSelect").on("change", function () {
