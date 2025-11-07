@@ -4,20 +4,13 @@
  */
 package com.example.ontology;
 
-import org.apache.jena.util.FileManager;
-import java.io.InputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import org.apache.jena.ontology.*;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.util.FileManager;
 import java.io.InputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -29,58 +22,62 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.apache.jena.ontology.DatatypeProperty;
+import org.apache.jena.ontology.Individual;
+import org.apache.jena.ontology.ObjectProperty;
+import org.apache.jena.ontology.OntClass;
+import org.apache.jena.ontology.OntModel;
+import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.ontology.OntProperty;
+import org.apache.jena.ontology.OntResource;
+import org.apache.jena.ontology.Restriction;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFList;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.util.FileManager;
 import org.apache.jena.util.iterator.ExtendedIterator;
+import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDFS;
 import org.apache.jena.vocabulary.XSD;
-import org.apache.jena.ontology.MinCardinalityQRestriction;
-import org.apache.jena.ontology.MaxCardinalityQRestriction;
-import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.RDFList;
-import org.apache.jena.vocabulary.OWL;
-import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.util.FileManager;
-import java.io.InputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
-/**
- *
- * @author amal.elgammal
- */
 public class OntologyReader {
 
-    //private static final String ONTOLOGY_PATH = "C:/Programs/university-rdf-xml.owl";
-    //private static final String NS = "http://www.semanticweb.org/amal.elgammal/ontologies/2025/2/untitled-ontology-3#";
-    private static final String ONTOLOGY_PATH =System.getenv().getOrDefault("ONTOLOGY_PATH", "/data/NARRATE-blueprints-rdf-xml.rdf");
-    // Allow overriding via env; if null we'll infer from the file after load
-private static String NS = System.getenv().getOrDefault("ONTOLOGY_NS", null);
-public static String getNS() { return NS; }
+    // ---- Preferred (Render/Prod): environment variables ----
+    private static final String DEFAULT_LINUX_PATH = "/data/NARRATE-blueprints-rdf-xml.rdf";
+    private static final String ONTOLOGY_PATH = System.getenv().getOrDefault("ONTOLOGY_PATH", DEFAULT_LINUX_PATH);
 
-//private static final String NS = "http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#";
-    // ✅ Use volatile to prevent caching issues
+    // Namespace: use env if provided; otherwise we'll infer after loading
+    private static String NS = System.getenv().getOrDefault("ONTOLOGY_NS", null);
+    public static String getNS() { return NS; }
+
+    // ---- Local dev fallback (for colleague Windows setups) ----
+    private static final String COLLEAGUE_WINDOWS_PATH = "C:/Programs/NARRATE-blueprints-rdf-xml.rdf";
+    private static final String COLLEAGUE_NS_DEFAULT =
+        "http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#";
+
+    // Model / Singleton
     private static volatile OntModel model;
-    // ✅ Singleton Instance
     private static volatile OntologyReader instance;
 
+    // OWL qualified-cardinality helpers
     private static final String OWL_NS = "http://www.w3.org/2002/07/owl#";
-    private static final Property OWL_MIN_QUALIFIED_CARDINALITY = ResourceFactory.createProperty(OWL_NS + "minQualifiedCardinality");
-    private static final Property OWL_MAX_QUALIFIED_CARDINALITY = ResourceFactory.createProperty(OWL_NS + "maxQualifiedCardinality");
-    private static final Property OWL_QUALIFIED_CARDINALITY = ResourceFactory.createProperty(OWL_NS + "qualifiedCardinality");
+    private static final Property OWL_MIN_QUALIFIED_CARDINALITY =
+            ResourceFactory.createProperty(OWL_NS + "minQualifiedCardinality");
+    private static final Property OWL_MAX_QUALIFIED_CARDINALITY =
+            ResourceFactory.createProperty(OWL_NS + "maxQualifiedCardinality");
+    private static final Property OWL_QUALIFIED_CARDINALITY =
+            ResourceFactory.createProperty(OWL_NS + "qualifiedCardinality");
 
-    // ✅ Private constructor to prevent instantiation
-    private OntologyReader() {
-        loadOntologyModel();
-    }
+    // ---- Lifecycle ----
+    private OntologyReader() { loadOntologyModel(); }
 
-    // ✅ Singleton Method to get the instance
     public static OntologyReader getInstance() {
         if (instance == null) {
             synchronized (OntologyReader.class) {
@@ -92,115 +89,130 @@ public static String getNS() { return NS; }
         return instance;
     }
 
-private static void loadOntologyModel() {
-    model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
+    // ---- Model loading (classpath → filesystem → Windows fallback) ----
+    private static void loadOntologyModel() {
+        model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
 
-    FileManager fm = FileManager.get();
-    fm.addLocatorClassLoader(OntologyReader.class.getClassLoader());
+        FileManager fm = FileManager.get();
+        fm.addLocatorClassLoader(OntologyReader.class.getClassLoader());
 
-    boolean loaded = false;
-    String loadMode = null;
+        boolean loaded = false;
 
-    // 1) Try classpath / FileManager
-    try (InputStream in = fm.open(ONTOLOGY_PATH)) {
-        if (in != null) {
-            System.out.println("[OntologyReader] Loading via classpath: " + ONTOLOGY_PATH);
-            // Change "RDF/XML" to "TTL" if your file is Turtle
-            model.read(in, null, "RDF/XML");
-            loaded = true;
-            loadMode = "CLASSPATH";
-        } else {
-            System.out.println("[OntologyReader] Classpath lookup failed for: " + ONTOLOGY_PATH);
-        }
-    } catch (Exception e) {
-        System.out.println("[OntologyReader] Classpath load error: " + e.getMessage());
-    }
-
-    // 2) Try filesystem if not loaded yet
-    if (!loaded) {
-        try {
-            File f = toFile(ONTOLOGY_PATH);
-            System.out.println("[OntologyReader] Filesystem path: " + f.getAbsolutePath() +
-                               " (exists=" + f.exists() + ")");
-            try (InputStream in = new FileInputStream(f)) {
-                model.read(in, null, "RDF/XML"); // or "TTL"
+        // 1) Try classpath/FileManager (works if the path is on the classpath)
+        try (InputStream in = fm.open(ONTOLOGY_PATH)) {
+            if (in != null) {
+                System.out.println("[OntologyReader] Loading via classpath: " + ONTOLOGY_PATH);
+                model.read(in, null, "RDF/XML"); // change to "TTL" if your file is Turtle
                 loaded = true;
-                loadMode = "FILESYSTEM";
+            } else {
+                System.out.println("[OntologyReader] Classpath lookup failed for: " + ONTOLOGY_PATH);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load ontology from: " + ONTOLOGY_PATH, e);
+            System.out.println("[OntologyReader] Classpath load error: " + e.getMessage());
         }
-    }
 
-    if (!loaded) {
-        throw new RuntimeException("Failed to load ontology: " + ONTOLOGY_PATH);
-    }
-
-    // ----- Common debug + NS inference for BOTH paths -----
-    System.out.println("[OntologyReader] Loaded triples: " + model.size());
-    inferNamespaceIfNeeded();
-    System.out.println("[OntologyReader] Final NS = " + NS);
-
-    // sanity: try resolve a known class by local name if NS is set
-    tryResolveSample("Customer");   // change to a class you know exists
-    tryResolveSample("Carrier");    // optional
-}
-
-private static void inferNamespaceIfNeeded() {
-    if (NS != null && !NS.isBlank()) return;
-
-    String inferred = null;
-
-    // 1) Prefer a named class URI to infer base
-    for (ExtendedIterator<OntClass> it = model.listNamedClasses(); it.hasNext();) {
-        OntClass c = it.next();
-        String uri = c.getURI();
-        if (uri != null) {
-            int hash = uri.lastIndexOf('#');
-            int slash = uri.lastIndexOf('/');
-            int cut = Math.max(hash, slash);
-            if (cut >= 0) {
-                inferred = uri.substring(0, cut + 1); // keep trailing # or /
-                break;
+        // 2) Try filesystem using the (possibly relative) ONTOLOGY_PATH
+        if (!loaded) {
+            try {
+                File f = toFile(ONTOLOGY_PATH);
+                System.out.println("[OntologyReader] Filesystem path: " + f.getAbsolutePath() + " (exists=" + f.exists() + ")");
+                try (InputStream in = new FileInputStream(f)) {
+                    model.read(in, null, "RDF/XML");
+                    loaded = true;
+                }
+            } catch (Exception e) {
+                System.out.println("[OntologyReader] Filesystem load error: " + e.getMessage());
             }
         }
+
+        // 3) Colleague Windows fallback
+        if (!loaded) {
+            try {
+                File wf = new File(COLLEAGUE_WINDOWS_PATH);
+                System.out.println("[OntologyReader] Windows fallback: " + wf.getAbsolutePath() + " (exists=" + wf.exists() + ")");
+                try (InputStream in = new FileInputStream(wf)) {
+                    model.read(in, null, "RDF/XML");
+                    loaded = true;
+                    if (NS == null || NS.isBlank()) {
+                        NS = COLLEAGUE_NS_DEFAULT;
+                        System.out.println("[OntologyReader] Using colleague NS default = " + NS);
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("[OntologyReader] Windows fallback load error: " + e.getMessage());
+            }
+        }
+
+        if (!loaded) {
+            throw new RuntimeException("Failed to load ontology. Tried classpath, filesystem, and Windows fallback.\n"
+                    + "ONTOLOGY_PATH=" + ONTOLOGY_PATH);
+        }
+
+        System.out.println("[OntologyReader] Loaded triples: " + model.size());
+        inferNamespaceIfNeeded();
+        System.out.println("[OntologyReader] Final NS = " + NS);
+
+        // Quick sanity checks—replace with classes you know exist if you want
+        tryResolveSample("Customer");
+        tryResolveSample("Carrier");
     }
 
-    // 2) Fallback to default prefix if any
-    if (inferred == null) {
-        inferred = model.getNsPrefixURI("");
+    /** Resolve relative paths against current working directory */
+    private static File toFile(String path) {
+        File f = new File(path);
+        if (f.isAbsolute()) return f;
+        return Paths.get(System.getProperty("user.dir"), path).toFile();
     }
 
-    if (inferred != null) {
-        NS = inferred;
-        System.out.println("[OntologyReader] Inferred NS = " + NS);
-    } else {
-        System.out.println("[OntologyReader] WARNING: Could not infer NS; set ONTOLOGY_NS env var.");
+    private static void inferNamespaceIfNeeded() {
+        if (NS != null && !NS.isBlank()) return;
+
+        String inferred = null;
+
+        // Prefer from a named class
+        for (ExtendedIterator<OntClass> it = model.listNamedClasses(); it.hasNext();) {
+            OntClass c = it.next();
+            String uri = c.getURI();
+            if (uri != null) {
+                int hash = uri.lastIndexOf('#');
+                int slash = uri.lastIndexOf('/');
+                int cut = Math.max(hash, slash);
+                if (cut >= 0) {
+                    inferred = uri.substring(0, cut + 1); // keep trailing # or /
+                    break;
+                }
+            }
+        }
+
+        // Fallback to default prefix if any
+        if (inferred == null) {
+            inferred = model.getNsPrefixURI("");
+        }
+
+        if (inferred != null) {
+            NS = inferred;
+            System.out.println("[OntologyReader] Inferred NS = " + NS);
+        } else {
+            System.out.println("[OntologyReader] WARNING: Could not infer NS; set ONTOLOGY_NS env var.");
+        }
     }
-}
 
-private static void tryResolveSample(String localName) {
-    if (NS == null || NS.isBlank()) return;
-    OntClass c = model.getOntClass(NS + localName);
-    System.out.println("[OntologyReader] Test resolve '" + localName + "': " + (c != null ? "OK" : "NOT FOUND"));
-}
+    private static void tryResolveSample(String localName) {
+        if (NS == null || NS.isBlank()) return;
+        OntClass c = model.getOntClass(NS + localName);
+        System.out.println("[OntologyReader] Test resolve '" + localName + "': " + (c != null ? "OK" : "NOT FOUND"));
+    }
 
-/** Resolve relative paths against current working directory */
-private static File toFile(String path) {
-    File f = new File(path);
-    if (f.isAbsolute()) return f;
-    return Paths.get(System.getProperty("user.dir"), path).toFile();
-}
+    // ---- Public utils ----
 
-
-    // ✅ Reload Ontology Model (Ensures real-time updates)
+    // Reload (thread-safe)
     public static void reloadModel() {
         System.out.println("♻️ Reloading Ontology Model...");
-        synchronized (OntologyReader.class) { // Ensure thread safety
+        synchronized (OntologyReader.class) {
             loadOntologyModel();
             System.out.println("✅ Ontology model reloaded successfully.");
 
-            // 🔍 Debug: Print all individuals after reloading
+            // Debug: list individuals
             System.out.println("📌 Individuals After Reload:");
             for (OntClass cls : model.listNamedClasses().toList()) {
                 for (ExtendedIterator<? extends OntResource> i = cls.listInstances(); i.hasNext();) {
@@ -211,27 +223,23 @@ private static File toFile(String path) {
         }
     }
 
-    // ✅ Get OntModel instance
-    public static OntModel getModel() {
-        return model;
-    }
+    public static OntModel getModel() { return model; }
 
     public OntModel getReasonedModel() {
         return ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF, model);
     }
 
-    // Method to get all classes
+    // ---- Query helpers (unchanged public API) ----
+
     public Set<String> getOntologyClasses() {
         Set<String> classSet = new HashSet<>();
         ExtendedIterator<OntClass> classIter = model.listClasses();
-
         while (classIter.hasNext()) {
             OntClass ontClass = classIter.next();
             if (ontClass.getLocalName() != null) {
                 classSet.add(ontClass.getLocalName());
             }
         }
-
         return classSet;
     }
 
@@ -251,7 +259,6 @@ private static File toFile(String path) {
                             Map<String, Object> propMeta = new HashMap<>();
                             propMeta.put("name", dp.getLocalName());
 
-                            // Get comment (if any)
                             String comment = "";
                             if (dp.hasProperty(RDFS.comment)) {
                                 RDFNode obj = dp.getProperty(RDFS.comment).getObject();
@@ -261,7 +268,6 @@ private static File toFile(String path) {
                             }
                             propMeta.put("comment", comment);
 
-                            // Get displayOrder (default to Integer.MAX_VALUE)
                             int order = Integer.MAX_VALUE;
                             for (StmtIterator annots = dp.listProperties(); annots.hasNext();) {
                                 Statement stmt = annots.nextStatement();
@@ -284,12 +290,10 @@ private static File toFile(String path) {
             }
         }
 
-        // Sort by displayOrder
         result.sort(Comparator.comparingInt(p -> (int) p.get("order")));
         return result;
     }
 
-    // New method to return Data Property names + comments
     public Map<String, String> getDataPropertiesWithComments(String className) {
         Map<String, String> propertiesWithComments = new HashMap<>();
         OntClass ontClass = model.getOntClass(NS + className);
@@ -320,18 +324,12 @@ private static File toFile(String path) {
         OntClass ontClass = model.getOntClass(NS + className);
 
         if (ontClass != null) {
-            // Fetch data properties including inherited ones
             for (Iterator<DatatypeProperty> it = model.listDatatypeProperties(); it.hasNext();) {
                 DatatypeProperty dp = it.next();
-
-                // Get the domain classes of the property
                 for (ExtendedIterator<? extends Resource> itDomain = dp.listDomain(); itDomain.hasNext();) {
                     Resource domain = itDomain.next();
-
                     if (domain.canAs(OntClass.class)) {
                         OntClass domainClass = domain.as(OntClass.class);
-
-                        // Check if the domain matches or is a superclass of the target class
                         if (domainClass.equals(ontClass) || ontClass.hasSuperClass(domainClass, true)) {
                             properties.add(dp.getLocalName());
                         }
@@ -342,35 +340,12 @@ private static File toFile(String path) {
         return properties;
     }
 
-    /* public Set<String> getObjectProperties(String className) {
-        Set<String> properties = new HashSet<>();
-        OntClass ontClass = model.getOntClass(NS + className);
+    public Set<String> getObjectProperties(String className) {
+        return getObjectProperties(className, true);
+    }
 
-        if (ontClass != null) {
-            // Fetch object properties including inherited ones
-            for (Iterator<ObjectProperty> it = model.listObjectProperties(); it.hasNext();) {
-                ObjectProperty op = it.next();
-
-                // Get the domain classes of the property
-                for (ExtendedIterator<? extends Resource> itDomain = op.listDomain(); itDomain.hasNext();) {
-                    Resource domain = itDomain.next();
-
-                    if (domain.canAs(OntClass.class)) {
-                        OntClass domainClass = domain.as(OntClass.class);
-
-                        // Check if the domain matches or is a superclass of the target class
-                        if (domainClass.equals(ontClass) || ontClass.hasSuperClass(domainClass, true)) {
-                            properties.add(op.getLocalName());
-                        }
-                    }
-                }
-            }
-        }
-        return properties;
-    }*/
     public Set<String> getObjectProperties(String className, boolean excludeInverses) {
         System.out.println("Entering getObjectProperties method");
-        //OntologyReader.reloadModel();
         Set<String> properties = new HashSet<>();
         OntClass ontClass = model.getOntClass(NS + className);
 
@@ -379,9 +354,7 @@ private static File toFile(String path) {
                 ObjectProperty op = it.next();
 
                 if (excludeInverses) {
-                    // ✅ Check if *this* property is defined as inverseOf another
                     StmtIterator invCheck = model.listStatements(op, OWL.inverseOf, (RDFNode) null);
-
                     if (invCheck.hasNext()) {
                         System.out.println("⛔ Skipping inverse-only property: " + op.getLocalName());
                         continue;
@@ -390,10 +363,8 @@ private static File toFile(String path) {
 
                 for (ExtendedIterator<? extends Resource> itDomain = op.listDomain(); itDomain.hasNext();) {
                     Resource domain = itDomain.next();
-
                     if (domain.canAs(OntClass.class)) {
                         OntClass domainClass = domain.as(OntClass.class);
-
                         if (domainClass.equals(ontClass) || ontClass.hasSuperClass(domainClass, true)) {
                             properties.add(op.getLocalName());
                         }
@@ -403,10 +374,6 @@ private static File toFile(String path) {
         }
 
         return properties;
-    }
-
-    public Set<String> getObjectProperties(String className) {
-        return getObjectProperties(className, true); // Default: exclude inverses
     }
 
     public Map<String, String> getObjectPropertiesWithComments(String className, boolean excludeInverses) {
@@ -428,10 +395,8 @@ private static File toFile(String path) {
 
                 for (ExtendedIterator<? extends Resource> itDomain = op.listDomain(); itDomain.hasNext();) {
                     Resource domain = itDomain.next();
-
                     if (domain.canAs(OntClass.class)) {
                         OntClass domainClass = domain.as(OntClass.class);
-
                         if (domainClass.equals(ontClass) || ontClass.hasSuperClass(domainClass, true)) {
                             String comment = "";
                             if (op.hasProperty(RDFS.comment)) {
@@ -462,7 +427,6 @@ private static File toFile(String path) {
         return dataProperties;
     }
 
-    //not used across application
     public Map<String, String> getObjectPropertiesForIndividual(String individualName) {
         Map<String, String> objectProperties = new HashMap<>();
         Individual individual = model.getIndividual(NS + individualName);
@@ -483,15 +447,12 @@ private static File toFile(String path) {
         OntClass ontClass = model.getOntClass(NS + className);
 
         if (ontClass != null) {
-            // Get individuals from class listInstances()
             for (ExtendedIterator<? extends OntResource> i = ontClass.listInstances(); i.hasNext();) {
                 Individual ind = (Individual) i.next();
                 if (ind.getLocalName() != null) {
                     instances.add(ind.getLocalName());
                 }
             }
-
-            // Also check manually via rdf:type (safety net)
             for (ExtendedIterator<Individual> i = model.listIndividuals(); i.hasNext();) {
                 Individual ind = i.next();
                 if (ind.hasRDFType(ontClass) && ind.getLocalName() != null) {
@@ -502,27 +463,18 @@ private static File toFile(String path) {
         return instances;
     }
 
-    /**
-     * Retrieves the range class of an object property.
-     *
-     * @param objectProperty The name of the object property.
-     * @return The name of the range class, or null if not found.
-     */
     public String getRangeClass(String objectProperty) {
         ObjectProperty prop = model.getObjectProperty(NS + objectProperty);
-
         if (prop == null) {
             System.out.println("Object Property not found: " + objectProperty);
             return null;
         }
-
         StmtIterator it = model.listStatements(prop, RDFS.range, (RDFNode) null);
         while (it.hasNext()) {
             Statement stmt = it.nextStatement();
-            return stmt.getObject().asResource().getLocalName(); // Found range class
+            return stmt.getObject().asResource().getLocalName();
         }
-
-        return null; // No range class found
+        return null;
     }
 
     private String getFullURI(String className) {
@@ -534,7 +486,6 @@ private static File toFile(String path) {
         return null;
     }
 
-    //not used across application
     public Map<String, String> getIndividualDetails(String individualName) {
         Map<String, String> details = new HashMap<>();
         Individual individual = model.getIndividual(NS + individualName);
@@ -543,9 +494,7 @@ private static File toFile(String path) {
             while (it.hasNext()) {
                 Statement stmt = it.nextStatement();
                 String property = stmt.getPredicate().getLocalName();
-                System.out.print("getIndividualDetails property Name:" + property);
                 String value = stmt.getObject().toString();
-                System.out.print("getIndividualDetails property value:" + value);
                 details.put(property, value);
             }
         }
@@ -561,21 +510,16 @@ private static File toFile(String path) {
             return false;
         }
 
-        // Log the triples before deletion
         StmtIterator it = model.listStatements(individual, null, (RDFNode) null);
         while (it.hasNext()) {
             System.out.println("Triple found: " + it.nextStatement());
         }
 
-        // Remove all triples where the individual is subject
         model.removeAll(individual, null, null);
-
-        // Remove all triples where the individual is an object
         model.removeAll(null, null, individual);
 
         System.out.println("Successfully deleted: " + individualName);
 
-        // Persist changes to OWL file
         try (FileOutputStream out = new FileOutputStream(ONTOLOGY_PATH)) {
             model.write(out, "RDF/XML-ABBREV");
         } catch (IOException e) {
@@ -584,7 +528,6 @@ private static File toFile(String path) {
         }
         reloadModel();
         System.out.println("📂 Loaded ontology from: " + ONTOLOGY_PATH);
-
         return true;
     }
 
@@ -597,14 +540,12 @@ private static File toFile(String path) {
             return triples;
         }
 
-        // Get triples where the individual is the subject
         StmtIterator subjectTriples = model.listStatements(individual, null, (RDFNode) null);
         while (subjectTriples.hasNext()) {
             Statement stmt = subjectTriples.nextStatement();
             triples.add(stmt.getSubject().getLocalName() + " " + stmt.getPredicate().getLocalName() + " " + stmt.getObject().toString());
         }
 
-        // Get triples where the individual is the object
         StmtIterator objectTriples = model.listStatements(null, null, individual);
         while (objectTriples.hasNext()) {
             Statement stmt = objectTriples.nextStatement();
@@ -614,10 +555,9 @@ private static File toFile(String path) {
         return triples;
     }
 
-//UpdateIndividual Method by taking into consideration numeric values, and multi-value properties
     public boolean updateIndividual(String className, String individualName,
-            Map<String, Object> dataProps,
-            Map<String, Object> objectProps) {
+                                    Map<String, Object> dataProps,
+                                    Map<String, Object> objectProps) {
 
         System.out.println("🚨 updateIndividual() CALLED!");
         System.out.println("👉 className: " + className);
@@ -631,25 +571,21 @@ private static File toFile(String path) {
             return false;
         }
 
-        // 🔄 Remove all existing properties
+        // Remove all existing properties (subject)
         individual.removeAll(null);
 
-        // 🔍 Detect numeric data properties for this class
+        // Detect numeric data properties for this class
         Set<String> numericProps = getNumericDataProperties(className);
         System.out.println("🔢 Numeric properties: " + numericProps);
 
-        // ✅ Add updated Data Properties
+        // Data properties (support multi-value and numeric types)
         for (Map.Entry<String, Object> entry : dataProps.entrySet()) {
             String prop = entry.getKey();
             Object rawValue = entry.getValue();
             Property property = model.getProperty(NS + prop);
-            if (property == null) {
-                continue;
-            }
+            if (property == null) continue;
 
-            List<Object> values = (rawValue instanceof List)
-                    ? (List<Object>) rawValue
-                    : Collections.singletonList(rawValue);
+            List<Object> values = (rawValue instanceof List) ? (List<Object>) rawValue : Collections.singletonList(rawValue);
 
             for (Object valueObj : values) {
                 String valueStr = valueObj.toString();
@@ -683,26 +619,19 @@ private static File toFile(String path) {
                 }
 
                 individual.addProperty(property, typedLiteral);
-                // ✅ Print what's actually being stored
-                System.out.println("✅ Stored Property: " + prop);
-                System.out.println("   → Value: " + typedLiteral.getString());
-                System.out.println("   → DataType URI: " + typedLiteral.getDatatypeURI());
-                System.out.println("   → Jena Type: " + typedLiteral.getDatatype());
+                System.out.println("✅ Stored Property: " + prop + " → " + typedLiteral.getString()
+                        + " (dtypeURI=" + typedLiteral.getDatatypeURI() + ")");
             }
         }
 
-        // ✅ Add updated Object Properties
+        // Object properties (support multi-value)
         for (Map.Entry<String, Object> entry : objectProps.entrySet()) {
             String prop = entry.getKey();
             Object rawValue = entry.getValue();
             Property property = model.getProperty(NS + prop);
-            if (property == null) {
-                continue;
-            }
+            if (property == null) continue;
 
-            List<Object> values = (rawValue instanceof List)
-                    ? (List<Object>) rawValue
-                    : Collections.singletonList(rawValue);
+            List<Object> values = (rawValue instanceof List) ? (List<Object>) rawValue : Collections.singletonList(rawValue);
 
             for (Object valueObj : values) {
                 String value = valueObj.toString();
@@ -713,7 +642,7 @@ private static File toFile(String path) {
             }
         }
 
-        // 💾 Save the updated model
+        // Persist
         try (FileOutputStream out = new FileOutputStream(ONTOLOGY_PATH)) {
             model.write(out, "RDF/XML-ABBREV");
         } catch (IOException e) {
@@ -730,11 +659,8 @@ private static File toFile(String path) {
         Map<String, Map<String, Integer>> cardinalityMap = new HashMap<>();
         OntClass ontClass = model.getOntClass(NS + className);
 
-        if (ontClass == null) {
-            return cardinalityMap;
-        }
+        if (ontClass == null) return cardinalityMap;
 
-        // Loop through restrictions
         for (ExtendedIterator<OntClass> it = ontClass.listSuperClasses(); it.hasNext();) {
             OntClass superCls = it.next();
 
@@ -776,7 +702,6 @@ private static File toFile(String path) {
         Queue<OntClass> queue = new LinkedList<>();
         queue.add(ontClass);
 
-        // 🔁 Collect all superclasses transitively (including the class itself)
         while (!queue.isEmpty()) {
             OntClass current = queue.poll();
             if (allClassesToCheck.add(current)) {
@@ -787,13 +712,10 @@ private static File toFile(String path) {
             }
         }
 
-        // ✅ Check restrictions on all collected classes
         for (OntClass cls : allClassesToCheck) {
             System.out.println("🔍 Checking class (or restriction): " + cls);
 
-            if (!cls.isRestriction()) {
-                continue;
-            }
+            if (!cls.isRestriction()) continue;
 
             Restriction restriction = cls.asRestriction();
             Property onProperty = restriction.getOnProperty();
@@ -809,22 +731,18 @@ private static File toFile(String path) {
             System.out.println("🔎 Found restriction on property: " + propName);
             System.out.println("🔎 Restriction type: " + restriction.getClass().getName());
 
-            // Skip someValuesFrom
-            if (restriction.canAs(SomeValuesFromRestriction.class)) {
+            if (restriction.canAs(org.apache.jena.ontology.SomeValuesFromRestriction.class)) {
                 System.out.println("👀 SomeValuesFrom restriction detected — skipping cardinality.");
                 continue;
             }
 
-            // Manual cardinality checks (OWL-qualified-cardinality)
             StmtIterator stmtIter = restriction.listProperties();
             while (stmtIter.hasNext()) {
                 Statement stmt = stmtIter.nextStatement();
                 Property predicate = stmt.getPredicate();
                 RDFNode object = stmt.getObject();
 
-                if (!object.isLiteral()) {
-                    continue;
-                }
+                if (!object.isLiteral()) continue;
 
                 int value = object.asLiteral().getInt();
                 if (predicate.equals(OWL_MIN_QUALIFIED_CARDINALITY)) {
@@ -865,14 +783,12 @@ private static File toFile(String path) {
 
                     if (object.isLiteral()) {
                         Literal literal = object.asLiteral();
-
                         String value;
                         if (literal.getDatatypeURI() != null) {
-                            value = literal.getLexicalForm(); // 📅 Get the correct lexical form including date, datetime, URI, number
+                            value = literal.getLexicalForm();
                         } else {
                             value = literal.getString();
                         }
-
                         dataProperties.computeIfAbsent(propName, k -> new ArrayList<>()).add(value);
                     }
                 }
@@ -882,7 +798,6 @@ private static File toFile(String path) {
         return dataProperties;
     }
 
-    //not used across application
     public Map<String, List<String>> getAllObjectPropertiesForIndividual(String individualName) {
         Map<String, List<String>> objectProperties = new HashMap<>();
         Individual individual = model.getIndividual(NS + individualName);
@@ -894,7 +809,6 @@ private static File toFile(String path) {
                 if (stmt.getObject().isResource()) {
                     String propName = stmt.getPredicate().getLocalName();
                     String value = stmt.getObject().asResource().getLocalName();
-
                     objectProperties.computeIfAbsent(propName, k -> new ArrayList<>()).add(value);
                 }
             }
@@ -915,7 +829,6 @@ private static File toFile(String path) {
                 if (stmt.getObject().isResource()) {
                     String propName = stmt.getPredicate().getLocalName();
                     String value = stmt.getObject().asResource().getLocalName();
-
                     objectProperties.computeIfAbsent(propName, k -> new ArrayList<>()).add(value);
                 }
             }
@@ -924,62 +837,33 @@ private static File toFile(String path) {
         return objectProperties;
     }
 
-// Helper classes to handle data structure for AJAX request
     public static class DataPropertyValue {
-
         private String property;
         private String value;
-
-        public String getProperty() {
-            return property;
-        }
-
-        public void setProperty(String property) {
-            this.property = property;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
+        public String getProperty() { return property; }
+        public void setProperty(String property) { this.property = property; }
+        public String getValue() { return value; }
+        public void setValue(String value) { this.value = value; }
     }
 
     public static class ObjectPropertyValue {
-
         private String property;
         private String value;
-
-        public String getProperty() {
-            return property;
-        }
-
-        public void setProperty(String property) {
-            this.property = property;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
+        public String getProperty() { return property; }
+        public void setProperty(String property) { this.property = property; }
+        public String getValue() { return value; }
+        public void setValue(String value) { this.value = value; }
     }
 
     public Map<String, Object> queryIndividuals(String className,
-            Map<String, List<String>> dataProps,
-            Map<String, List<String>> objectProps,
-            boolean includeFuzzy,
-            double fuzzyThreshold) {
+                                                Map<String, List<String>> dataProps,
+                                                Map<String, List<String>> objectProps,
+                                                boolean includeFuzzy,
+                                                double fuzzyThreshold) {
 
         Set<String> matchedIndividuals = new HashSet<>();
         Map<String, Map<String, String>> similarityNotes = new HashMap<>();
 
-        //OntClass ontClass = model.getOntClass(NS + className);
-        //considering readoned moded instead
         OntModel reasonedModel = getReasonedModel();
         OntClass ontClass = reasonedModel.getOntClass(NS + className);
 
@@ -1001,11 +885,9 @@ private static File toFile(String path) {
 
             System.out.println("🔍 Evaluating individual: " + individualName);
 
-            // 🔍 Data properties with numeric operator support
             for (Map.Entry<String, List<String>> entry : dataProps.entrySet()) {
                 String prop = entry.getKey();
                 List<String> searchValues = entry.getValue();
-                //Property property = model.getProperty(NS + prop);
                 Property property = reasonedModel.getProperty(NS + prop);
 
                 if (property != null) {
@@ -1035,29 +917,15 @@ private static File toFile(String path) {
                                 double actualNum = Double.parseDouble(actual);
 
                                 switch (operator) {
-                                    case "=":
-                                        matchFound = actualNum == expectedNum;
-                                        break;
-                                    case ">":
-                                        matchFound = actualNum > expectedNum;
-                                        break;
-                                    case ">=":
-                                        matchFound = actualNum >= expectedNum;
-                                        break;
-                                    case "<":
-                                        matchFound = actualNum < expectedNum;
-                                        break;
-                                    case "<=":
-                                        matchFound = actualNum <= expectedNum;
-                                        break;
-                                    default:
-                                        matchFound = actual.equals(expected);
-                                        break;
+                                    case "=":  matchFound = actualNum == expectedNum; break;
+                                    case ">":  matchFound = actualNum >  expectedNum; break;
+                                    case ">=": matchFound = actualNum >= expectedNum; break;
+                                    case "<":  matchFound = actualNum <  expectedNum; break;
+                                    case "<=": matchFound = actualNum <= expectedNum; break;
+                                    default:   matchFound = actual.equals(expected); break;
                                 }
 
-                                if (matchFound) {
-                                    break;
-                                }
+                                if (matchFound) break;
                             }
                         } catch (NumberFormatException e) {
                             if (actualValues.contains(expected)) {
@@ -1068,13 +936,10 @@ private static File toFile(String path) {
                                     System.out.println("🔍 Similarity = " + sim);
                                     if (sim >= fuzzyThreshold) {
                                         matchFound = true;
-
-                                        // 🧠 Capture similarity note per individual and property
                                         String note = actual + " ≈ " + expected + " (" + Math.round(sim * 100) + "%)";
                                         similarityNotes
-                                                .computeIfAbsent(individualName, k -> new HashMap<>())
-                                                .put(prop, note);
-
+                                            .computeIfAbsent(individualName, k -> new HashMap<>())
+                                            .put(prop, note);
                                         System.out.println("🤝 Fuzzy match: " + note);
                                         break;
                                     }
@@ -1098,19 +963,14 @@ private static File toFile(String path) {
                     }
                 }
 
-                if (!matchesAll) {
-                    break;
-                }
+                if (!matchesAll) break;
             }
 
-            // 🔁 Object properties (unchanged)
             if (matchesAll) {
                 for (Map.Entry<String, List<String>> entry : objectProps.entrySet()) {
                     String prop = entry.getKey();
                     List<String> searchValues = entry.getValue();
-                    //Property property = model.getProperty(NS + prop);
                     Property property = reasonedModel.getProperty(NS + prop);
-
 
                     if (property != null) {
                         List<String> actualTargets = new ArrayList<>();
@@ -1143,11 +1003,8 @@ private static File toFile(String path) {
                         }
                     }
 
-                    if (!matchesAll) {
-                        break;
-                    }
+                    if (!matchesAll) break;
                 }
-
             }
 
             if (matchesAll) {
@@ -1157,23 +1014,18 @@ private static File toFile(String path) {
                 System.out.println("⛔️ Skipped: " + individualName);
             }
         }
+
         Map<String, Object> result = new HashMap<>();
         result.put("matchedIndividuals", matchedIndividuals);
         result.put("similarityNotes", similarityNotes);
         return result;
-
-        //return similarityNotes;
     }
 
     private double computeStringSimilarity(String a, String b) {
         a = a.toLowerCase();
         b = b.toLowerCase();
-
         int maxLength = Math.max(a.length(), b.length());
-        if (maxLength == 0) {
-            return 1.0;
-        }
-
+        if (maxLength == 0) return 1.0;
         int distance = org.apache.commons.text.similarity.LevenshteinDistance.getDefaultInstance().apply(a, b);
         return 1.0 - ((double) distance / maxLength);
     }
@@ -1189,7 +1041,10 @@ private static File toFile(String path) {
                     RDFNode range = it.nextStatement().getObject();
                     if (range.isResource()) {
                         String rangeURI = range.asResource().getURI();
-                        if (rangeURI != null && (rangeURI.endsWith("integer") || rangeURI.endsWith("decimal") || rangeURI.endsWith("float") || rangeURI.endsWith("double"))) {
+                        if (rangeURI != null && (rangeURI.endsWith("integer")
+                                || rangeURI.endsWith("decimal")
+                                || rangeURI.endsWith("float")
+                                || rangeURI.endsWith("double"))) {
                             numericProps.add(prop);
                         }
                     }
@@ -1199,7 +1054,6 @@ private static File toFile(String path) {
         return numericProps;
     }
 
-// 🗓️ Get Date Properties
     public Set<String> getDateDataProperties(String className) {
         Set<String> dateProps = new HashSet<>();
         OntClass ontClass = model.getOntClass(NS + className);
@@ -1226,7 +1080,6 @@ private static File toFile(String path) {
         return dateProps;
     }
 
-// 🌐 Get URI Properties
     public Set<String> getURIDataProperties(String className) {
         Set<String> uriProps = new HashSet<>();
         OntClass ontClass = model.getOntClass(NS + className);
@@ -1264,7 +1117,7 @@ private static File toFile(String path) {
                         String rangeURI = range.asResource().getURI();
                         if (rangeURI != null && rangeURI.startsWith("http://www.w3.org/2001/XMLSchema#")) {
                             propertyRanges.put(prop, rangeURI);
-                            break; // Take the first valid range
+                            break;
                         }
                     }
                 }
@@ -1288,7 +1141,6 @@ private static File toFile(String path) {
         while (allDataProps.hasNext()) {
             DatatypeProperty prop = allDataProps.next();
 
-            // Check if this property is declared for the class
             StmtIterator domains = prop.listProperties(RDFS.domain);
             while (domains.hasNext()) {
                 RDFNode domain = domains.next().getObject();
@@ -1304,16 +1156,13 @@ private static File toFile(String path) {
         for (String propURI : classProperties) {
             DatatypeProperty prop = model.getDatatypeProperty(propURI);
 
-            // Check for range definition
             StmtIterator rangeIt = prop.listProperties(RDFS.range);
             while (rangeIt.hasNext()) {
                 RDFNode rangeNode = rangeIt.nextStatement().getObject();
 
-                // We are only interested in anonymous (blank node) range definitions
                 if (rangeNode != null && rangeNode.isAnon()) {
                     Resource rangeRes = rangeNode.asResource();
 
-                    // Look for owl:oneOf list inside the anonymous range
                     Statement oneOfStmt = rangeRes.getProperty(OWL.oneOf);
                     if (oneOfStmt != null && oneOfStmt.getObject().canAs(RDFList.class)) {
                         RDFList rdfList = oneOfStmt.getObject().as(RDFList.class);
@@ -1371,8 +1220,7 @@ private static File toFile(String path) {
                             try {
                                 double val = obj.asLiteral().getDouble();
                                 statsMap.computeIfAbsent(prop, k -> new ArrayList<>()).add(val);
-                            } catch (Exception ignored) {
-                            }
+                            } catch (Exception ignored) { }
                         }
                     }
                 }
@@ -1381,19 +1229,18 @@ private static File toFile(String path) {
         return statsMap;
     }
 
-    //Enforce specific order for showing data and object properties in the UI based on "displayOrder" metadata
     private int getDisplayOrder(OntProperty prop) {
         for (StmtIterator annots = prop.listProperties(); annots.hasNext();) {
             Statement stmt = annots.nextStatement();
             if (stmt.getPredicate().getLocalName().equals("displayOrder") && stmt.getObject().isLiteral()) {
                 try {
-                    return stmt.getObject().asLiteral().getInt(); // assumes xsd:integer
+                    return stmt.getObject().asLiteral().getInt();
                 } catch (Exception e) {
                     System.err.println("⚠️ Could not parse displayOrder for property " + prop.getLocalName());
                 }
             }
         }
-        return Integer.MAX_VALUE; // No order defined → push to bottom
+        return Integer.MAX_VALUE;
     }
 
     public Map<String, List<String>> getInverseObjectProperties(String individualName) {
@@ -1420,4 +1267,60 @@ private static File toFile(String path) {
         return inverseProps;
     }
 
+    // Group classes by an annotation (literal or resource)
+    public Map<String, List<String>> getClassGroupingsByAnnotation(String annotationName) {
+        System.out.println("🔍 Annotation requested: " + annotationName);
+
+        Map<String, List<String>> grouped = new HashMap<>();
+        Set<String> allClasses = getOntologyClasses();
+
+        Property annotationProp;
+        if ("comment".equals(annotationName)) {
+            annotationProp = RDFS.comment;
+            System.out.println("🧭 Using built-in RDFS.comment as annotation property");
+        } else {
+            annotationProp = model.getProperty(NS + annotationName);
+            System.out.println("🧭 Using custom property: " + annotationName);
+            System.out.println("🔗 Resolved URI: " + NS + annotationName);
+        }
+
+        if (annotationProp == null) {
+            System.out.println("❌ Annotation property not found in model.");
+            return grouped;
+        }
+
+        System.out.println("📦 Total classes found: " + allClasses.size());
+
+        for (String className : allClasses) {
+            OntClass ontClass = model.getOntClass(NS + className);
+            if (ontClass == null) {
+                System.out.println("⚠️ OntClass not found for: " + className);
+                continue;
+            }
+
+            System.out.println("🔍 Checking class: " + className);
+
+            StmtIterator annotations = ontClass.listProperties(annotationProp);
+            while (annotations.hasNext()) {
+                Statement stmt = annotations.nextStatement();
+                RDFNode object = stmt.getObject();
+
+                String groupKey = null;
+                if (object.isResource()) {
+                    groupKey = object.asResource().getLocalName();
+                    System.out.println("🔗 Resource annotation for class " + className + ": " + groupKey);
+                } else if (object.isLiteral()) {
+                    groupKey = object.asLiteral().getString();
+                    System.out.println("📝 Literal annotation for class " + className + ": " + groupKey);
+                }
+
+                if (groupKey != null && !groupKey.isEmpty()) {
+                    grouped.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(className);
+                }
+            }
+        }
+
+        System.out.println("✅ Grouping complete. Groups found: " + grouped.size());
+        return grouped;
+    }
 }
