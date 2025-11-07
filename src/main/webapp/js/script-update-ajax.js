@@ -13,9 +13,53 @@ $(document).ready(function () {
          $("#classSelect").append(`<option value="${cls}">${cls}</option>`);
          });*/
 
-        classes.sort((a, b) => a.localeCompare(b)).forEach(cls => {
-            $("#classSelect").append(`<option value="${cls}">${cls}</option>`);
+        //classes.sort((a, b) => a.localeCompare(b)).forEach(cls => {
+        //   $("#classSelect").append(`<option value="${cls}">${cls}</option>`);
+        //});
+
+        // Request grouped classes by blueprintClass
+        $.getJSON(baseUrl, {type: "classAnnotation", annotation: "blueprintClass"}, function (groupedClasses) {
+            console.log("📦 Loaded grouped classes:", groupedClasses);
+
+            const $select = $("#classSelect");
+            $select.empty();
+
+            // Placeholder
+            $select.append(`<option value="" disabled selected style="color:#999;">Select blueprint</option>`);
+
+            // Count appearances to detect shared classes
+            const classCounts = {};
+            Object.values(groupedClasses).forEach(classList => {
+                classList.forEach(cls => {
+                    classCounts[cls] = (classCounts[cls] || 0) + 1;
+                });
+            });
+
+            // Sort and populate grouped options
+            Object.keys(groupedClasses).sort().forEach(blueprint => {
+                
+                    // 🔹 Insert blueprint header
+        $select.append(`<option disabled>🔹 𝐁𝐋𝐔𝐄𝐏𝐑𝐈𝐍𝐓: ${blueprint}</option>`);
+        
+                const sortedClasses = groupedClasses[blueprint].sort();
+
+                sortedClasses.forEach(cls => {
+                    const coreName = blueprint.replace(/Blueprint$/, "").toLowerCase();
+                    const isMain = cls.toLowerCase() === coreName;
+                    const isShared = classCounts[cls] > 1;
+
+                    const style = isMain ? 'style="font-weight:bold; color:#007bff;"' : "";
+                    const label = isMain
+                            ? `⭐ ${cls}`
+                            : isShared
+                            ? `  ${cls} ⚡`
+                            : `  ${cls}`;
+
+                    $select.append(`<option value="${cls}" ${style}>${label}</option>`);
+                });
+            });
         });
+
 
 
     });
