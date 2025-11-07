@@ -6733,6 +6733,7 @@ It answers key questions like:
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Employee -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Employee">
+        <j.0:blueprintClass>ResourceBlueprint</j.0:blueprintClass>
         <rdfs:comment></rdfs:comment>
         <rdfs:comment>A general class representing a person involved in supply chain operations — this can include operators, supervisors, managers, etc.</rdfs:comment>
     </owl:Class>
@@ -6741,7 +6742,9 @@ It answers key questions like:
 
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LaborRole -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LaborRole"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LaborRole">
+        <j.0:blueprintClass>ResourceBlueprint</j.0:blueprintClass>
+    </owl:Class>
     
 
 
@@ -6758,7 +6761,13 @@ It answers key questions like:
 
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Location -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Location"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Location">
+        <j.0:blueprintClass>LogisticsBlueprint</j.0:blueprintClass>
+        <j.0:blueprintClass>ProductBlueprint</j.0:blueprintClass>
+        <j.0:blueprintClass>ProductionPlanBlueprint</j.0:blueprintClass>
+        <j.0:blueprintClass>SupplierBlueprint</j.0:blueprintClass>
+        <j.0:blueprintClass>WarehousingBlueprint</j.0:blueprintClass>
+    </owl:Class>
     
 
 
@@ -6794,6 +6803,7 @@ Each MBOM is derived from a Product’s engineering BOM and is used to support o
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Machine">
         <j.0:blueprintClass>ProductionPlanBlueprint</j.0:blueprintClass>
+        <j.0:blueprintClass>ResourceBlueprint</j.0:blueprintClass>
         <rdfs:comment>Additional Modeling Ideas:
 subclass Machine into types like AssemblyMachine, InspectionTool, PackagingUnit
 
@@ -6846,6 +6856,7 @@ Maintenance history could be modeled as a separate class (MaintenanceLog) to ena
             </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sustainability"/>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
         <rdfs:comment>“Abstract class – do not instantiate directly.”</rdfs:comment>
     </owl:Class>
     
@@ -6877,6 +6888,7 @@ ProcessExecution	A real-world occurrence (e.g., “Injection Molding run on Apri
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProcessSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sustainability"/>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
