@@ -6608,7 +6608,7 @@ Use hasFuelType and hasCarrierType to compare emission profiles across modes</rd
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CarrierSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
-        <rdfs:comment>SustainabilityBlueprint</rdfs:comment>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
@@ -6785,7 +6785,7 @@ It answers key questions like:
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
-        <rdfs:comment>SustainabilityBlueprint</rdfs:comment>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
@@ -7211,7 +7211,7 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ShipmentSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
-        <rdfs:comment>SustainabilityBlueprint</rdfs:comment>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
@@ -7322,7 +7322,7 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
-        <rdfs:comment>SustainabilityBlueprint</rdfs:comment>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
@@ -7339,7 +7339,7 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WarehouseSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
-        <rdfs:comment>SustainabilityBlueprint</rdfs:comment>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
