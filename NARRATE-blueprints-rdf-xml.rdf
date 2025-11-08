@@ -293,7 +293,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#certifiesSupplier">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#supplierIsCertifiedBy"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
     </owl:ObjectProperty>
     
 
@@ -334,7 +334,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#componentIsSuppliedBy">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#suppliesComponent"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductComponent"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplierBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplier"/>
         <rdfs:comment>The component Supplier that supplies this component</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -355,7 +355,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#componentProoducedBy">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#producesComponent"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductComponent"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
     </owl:ObjectProperty>
     
 
@@ -447,7 +447,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#employs">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEmployedBy"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Employee"/>
     </owl:ObjectProperty>
     
@@ -467,7 +467,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#executesWorkOrder">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isExecutedByLeadMfg"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WorkOrder"/>
     </owl:ObjectProperty>
     
@@ -739,7 +739,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSLA">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#providedByLeadManufacturer"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SLAgreement"/>
     </owl:ObjectProperty>
     
@@ -801,7 +801,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasStation">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#stationOfLeadMfg"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Station"/>
     </owl:ObjectProperty>
     
@@ -822,7 +822,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSupplierSustainability">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sustainabilityOfSupplier"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierSustainability"/>
     </owl:ObjectProperty>
     
@@ -999,7 +999,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEmployedBy">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Employee"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
     </owl:ObjectProperty>
     
 
@@ -1008,7 +1008,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isExecutedByLeadMfg">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WorkOrder"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
     </owl:ObjectProperty>
     
 
@@ -1076,7 +1076,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isLocationOfSupplier">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#locatedAt"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Location"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
     </owl:ObjectProperty>
     
 
@@ -1107,7 +1107,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isMaterialSuppliedBy">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#suppliesMaterial"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Material"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplierBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier"/>
         <rdfs:comment>Materials are provided by one or more suppliers</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -1289,7 +1289,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#locatedAt -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#locatedAt">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Location"/>
         <rdfs:comment>Geographical location of the supplier (if you model Location as a class)</rdfs:comment>
     </owl:ObjectProperty>
@@ -1348,7 +1348,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#manufacturedBy">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
         <rdfs:comment>OEM builds the product</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -1535,7 +1535,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#producesComponent -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#producesComponent">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductComponent"/>
     </owl:ObjectProperty>
     
@@ -1583,7 +1583,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#providedByLeadManufacturer">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SLAgreement"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
         <rdfs:comment>All SLAs are fulfilled (or at least owned) by the LeadManufacturer.</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -1747,7 +1747,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#stationOfLeadMfg">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Station"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
     </owl:ObjectProperty>
     
 
@@ -1794,7 +1794,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#supplierIsCertifiedBy -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#supplierIsCertifiedBy">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
     </owl:ObjectProperty>
     
@@ -1803,7 +1803,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#suppliesComponent -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#suppliesComponent">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplier"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductComponent"/>
         <rdfs:comment>The components provided by the supplier</rdfs:comment>
     </owl:ObjectProperty>
@@ -1813,7 +1813,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#suppliesMaterial -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#suppliesMaterial">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Material"/>
         <rdfs:comment>Materials are provided by one or more suppliers</rdfs:comment>
     </owl:ObjectProperty>
@@ -1887,7 +1887,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sustainabilityOfSupplier">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierSustainability"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
     </owl:ObjectProperty>
     
 
@@ -2558,7 +2558,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCapacity -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCapacity">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</j.0:displayOrder>
         <rdfs:comment>Capacity measured as units/day</rdfs:comment>
@@ -2743,7 +2743,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasComponentSpecialty -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasComponentSpecialty">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:comment>e.g., “Metal Frames”, “Side Panels”, “Fasteners”</rdfs:comment>
     </owl:DatatypeProperty>
@@ -2845,7 +2845,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCountry -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCountry">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</j.0:displayOrder>
         <rdfs:comment>Country where the supplier is based</rdfs:comment>
@@ -3084,7 +3084,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasEmail -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasEmail">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</j.0:displayOrder>
     </owl:DatatypeProperty>
@@ -3535,7 +3535,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLeadTimeDays -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLeadTimeDays">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</j.0:displayOrder>
         <rdfs:comment>Average delivery lead time in days</rdfs:comment>
@@ -4023,7 +4023,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasMinimumBatchSize -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasMinimumBatchSize">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
         <rdfs:comment>Minimum order quantity they can supply</rdfs:comment>
     </owl:DatatypeProperty>
@@ -4050,7 +4050,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasOEMType -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasOEMType">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</j.0:displayOrder>
     </owl:DatatypeProperty>
@@ -4294,7 +4294,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPaymentTerms -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPaymentTerms">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range>
             <rdfs:Datatype>
                 <owl:oneOf>
@@ -4353,7 +4353,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPhoneNumber -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPhoneNumber">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</j.0:displayOrder>
     </owl:DatatypeProperty>
@@ -4708,7 +4708,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasRating -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasRating">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8</j.0:displayOrder>
         <rdfs:comment>Average performance score or rating</rdfs:comment>
@@ -4719,7 +4719,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasRecallHistory -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasRecallHistory">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range>
             <rdfs:Datatype>
                 <owl:oneOf>
@@ -5273,7 +5273,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasStartDate -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasStartDate">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">16</j.0:displayOrder>
         <rdfs:comment>Date when the supplier relationship started</rdfs:comment>
@@ -5304,7 +5304,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSupplierID -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSupplierID">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</j.0:displayOrder>
     </owl:DatatypeProperty>
@@ -5446,7 +5446,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasTaxID -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasTaxID">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">17</j.0:displayOrder>
         <rdfs:comment>For compliance or financial transactions</rdfs:comment>
@@ -5850,7 +5850,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isCertified -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isCertified">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range>
             <rdfs:Datatype>
                 <owl:oneOf>
@@ -6608,6 +6608,7 @@ Use hasFuelType and hasCarrierType to compare emission profiles across modes</rd
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CarrierSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
+        <rdfs:comment>SustainabilityBlueprint</rdfs:comment>
     </owl:Class>
     
 
@@ -6632,10 +6633,10 @@ B Corp certification</rdfs:comment>
     
 
 
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplierBlueprint -->
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplier -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplierBlueprint">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplier">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <j.0:blueprintClass>SupplierBlueprint</j.0:blueprintClass>
         <rdfs:comment>This supplier specifically provides components (e.g., cot frames, hinges, side rails) used in product assembly. ComponentSupplier is an entity that provides pre-fabricated components or subassemblies used in the manufacturing of finished products.
 It ensures timely delivery, quality assurance, and adherence to technical specifications and SLAs within the smart manufacturing network.</rdfs:comment>
@@ -6748,10 +6749,10 @@ It answers key questions like:
     
 
 
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint -->
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <j.0:blueprintClass>SLAgreementBlueprint</j.0:blueprintClass>
         <j.0:blueprintClass>SupplierBlueprint</j.0:blueprintClass>
         <rdfs:comment>represents a strategic manufacturing entity responsible for orchestrating and executing core production activities within a smart supply chain network. It acts as the primary producer, coordinating with suppliers, managing resources, and ensuring the fulfillment of production plans under defined SLAs.</rdfs:comment>
@@ -6784,6 +6785,7 @@ It answers key questions like:
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
+        <rdfs:comment>SustainabilityBlueprint</rdfs:comment>
     </owl:Class>
     
 
@@ -6822,10 +6824,10 @@ Maintenance history could be modeled as a separate class (MaintenanceLog) to ena
     
 
 
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplierBlueprint -->
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplierBlueprint">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <j.0:blueprintClass>SupplierBlueprint</j.0:blueprintClass>
         <rdfs:comment>MaterialSupplier represents an entity responsible for supplying raw or semi-finished materials to manufacturers or component suppliers within the supply chain. It plays a key role in ensuring material availability, quality compliance, and alignment with sustainability and SLA requirements.</rdfs:comment>
     </owl:Class>
@@ -6856,7 +6858,6 @@ Maintenance history could be modeled as a separate class (MaintenanceLog) to ena
             </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sustainability"/>
-        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
         <rdfs:comment>“Abstract class – do not instantiate directly.”</rdfs:comment>
     </owl:Class>
     
@@ -6935,7 +6936,7 @@ ProcessExecution	A real-world occurrence (e.g., “Injection Molding run on Apri
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#manufacturedBy"/>
                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onClass rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -7210,6 +7211,7 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ShipmentSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
+        <rdfs:comment>SustainabilityBlueprint</rdfs:comment>
     </owl:Class>
     
 
@@ -7222,15 +7224,15 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
     
 
 
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint -->
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierBlueprint">
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplierBlueprint"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplierBlueprint"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplier"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier"/>
                 </owl:unionOf>
             </owl:Class>
         </owl:equivalentClass>
@@ -7320,6 +7322,7 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
+        <rdfs:comment>SustainabilityBlueprint</rdfs:comment>
     </owl:Class>
     
 
@@ -7336,6 +7339,7 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WarehouseSustainability">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
+        <rdfs:comment>SustainabilityBlueprint</rdfs:comment>
     </owl:Class>
     
 
@@ -8057,7 +8061,7 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OEM_COT_1 -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OEM_COT_1">
-        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturerBlueprint"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
         <j.0:hasCapacity rdf:datatype="http://www.w3.org/2001/XMLSchema#int">200</j.0:hasCapacity>
         <j.0:hasCountry>Spain</j.0:hasCountry>
         <j.0:hasLeadTimeDays rdf:datatype="http://www.w3.org/2001/XMLSchema#int">15</j.0:hasLeadTimeDays>
@@ -8373,7 +8377,7 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier_A -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier_A">
-        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplierBlueprint"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier"/>
         <j.0:hasSupplierSustainability rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sustainability_Supplier_A"/>
         <j.0:locatedAt rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier_A_Location"/>
         <j.0:supplierIsCertifiedBy rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CERT-ENV-2024-001"/>
@@ -8412,7 +8416,7 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier_B -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier_B">
-        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplierBlueprint"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier"/>
         <j.0:hasSupplierSustainability rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sustainability_Supplier_B"/>
         <j.0:locatedAt rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier_B_Location"/>
         <j.0:supplierIsCertifiedBy rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CERT-ENV-2024-001"/>
@@ -8449,7 +8453,7 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier_C -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier_C">
-        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplierBlueprint"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier"/>
         <j.0:hasSupplierSustainability rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sustainability_Supplier_C"/>
         <j.0:locatedAt rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier_C_Location"/>
         <j.0:supplierIsCertifiedBy rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CERT-ENV-2024-001"/>
@@ -8570,7 +8574,7 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#TimberTechBerlin_01 -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#TimberTechBerlin_01">
-        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplierBlueprint"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSupplier"/>
         <j.0:hasSupplierSustainability rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sustainability_TimberTechBerlin_01_2025"/>
         <j.0:suppliesComponent rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EcoPanelX1"/>
         <j.0:hasComponentSpecialty>Water-based eco varnish</j.0:hasComponentSpecialty>
