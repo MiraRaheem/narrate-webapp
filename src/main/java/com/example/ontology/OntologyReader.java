@@ -1455,7 +1455,8 @@ public class OntologyReader {
             return values;
         }
 
-        NodeIterator nodes = reasonedModel.listObjectsOfProperty(ind, prop);
+    
+        ExtendedIterator<RDFNode> nodes = reasonedModel.listObjectsOfProperty(ind, prop);
         while (nodes.hasNext()) {
             RDFNode node = nodes.next();
             if (node.isResource()) {
