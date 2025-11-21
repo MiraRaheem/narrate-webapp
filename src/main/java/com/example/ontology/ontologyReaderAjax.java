@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
@@ -141,6 +142,27 @@ public class ontologyReaderAjax extends HttpServlet {
 
                 Map<String, List<String>> grouped = ontologyReader.getClassGroupingsByAnnotation(annotationName.trim());
                 out.print(gson.toJson(grouped));
+            } else if ("materialIntensity".equals(type)) {
+                String productName = request.getParameter("individual");
+                JsonObject json = KpiCalculator.computeMaterialIntensity(productName, ontologyReader);
+                out.print(json.toString());
+            } else if ("individualsByClass".equals(type)) {
+                String owlClassName = request.getParameter("className");  // Renamed to avoid conflict
+                List<String> individuals = ontologyReader.getIndividualsByClass(owlClassName);
+
+                JsonObject jsonResponse = new JsonObject();
+                JsonArray jsonIndividuals = new JsonArray();
+
+                for (String individual : individuals) {
+                    jsonIndividuals.add(individual);
+                }
+
+                jsonResponse.add("individuals", jsonIndividuals);
+                out.print(jsonResponse.toString());
+            } else if ("renewableContent".equals(type)) {
+                String productName = request.getParameter("individual");
+                JsonObject json = KpiCalculator.computeRenewableContent(productName, ontologyReader);
+                out.print(json.toString());
             } else {
                 Set<String> classes = ontologyReader.getOntologyClasses();
                 out.print(gson.toJson(classes));
