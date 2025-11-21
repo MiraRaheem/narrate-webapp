@@ -9704,3 +9704,31 @@ p,
   padding: 0;
   list-style-type: none;
 }
+
+
+.kpi-btn {
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    padding: 10px;
+}
+
+.kpi-btn i {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.kpi-btn span {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+#materialKpiChart {
+    max-width: 600px;
+    margin: 0 auto;
+}
