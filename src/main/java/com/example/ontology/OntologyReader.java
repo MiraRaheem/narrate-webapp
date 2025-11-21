@@ -46,6 +46,7 @@ import org.apache.jena.util.iterator.ExtendedIterator;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDFS;
 import org.apache.jena.vocabulary.XSD;
+import org.apache.jena.ontology.SomeValuesFromRestriction;
 
 public class OntologyReader {
 
@@ -1455,7 +1456,8 @@ public class OntologyReader {
             return values;
         }
 
-        NodeIterator nodes = reasonedModel.listObjectsOfProperty(ind, prop);
+        
+        ExtendedIterator<RDFNode> nodes = reasonedModel.listObjectsOfProperty(ind, prop);
         while (nodes.hasNext()) {
             RDFNode node = nodes.next();
             if (node.isResource()) {
