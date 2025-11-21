@@ -724,10 +724,11 @@ public class OntologyReader {
             System.out.println("🔎 Restriction type: " + restriction.getClass().getName());
 
             // Skip someValuesFrom
-            if (restriction.canAs(SomeValuesFromRestriction.class)) {
-                System.out.println("👀 SomeValuesFrom restriction detected — skipping cardinality.");
-                continue;
-            }
+if (restriction.isSomeValuesFromRestriction()) {
+    System.out.println("👀 SomeValuesFromRestriction restriction detected — skipping cardinality.");
+    continue;
+}
+
 
             // Manual cardinality checks (OWL-qualified-cardinality)
             StmtIterator stmtIter = restriction.listProperties();
