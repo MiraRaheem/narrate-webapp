@@ -33,6 +33,24 @@ public class GenericBlueprintApiServlet extends HttpServlet {
 
         String pathInfo = request.getPathInfo();
         System.out.println("PathInfo: " + pathInfo);
+        
+        OntologyReader ontologyReader = OntologyReader.getInstance();
+
+        // =====================================
+// CASE 0: GET /api/classes
+// =====================================
+        if (pathInfo != null && pathInfo.equals("/classes")) {
+
+             Set<String> classes = ontologyReader.getOntologyClasses();
+            // Use the correct method you already have
+            // If it's named differently, replace accordingly
+
+            out.print(gson.toJson(Map.of(
+                    "classes", classes,
+                    "count", classes.size()
+            )));
+            return;
+        }
 
         if (pathInfo == null || pathInfo.equals("/")) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -46,7 +64,7 @@ public class GenericBlueprintApiServlet extends HttpServlet {
         System.out.println("ClassName: " + className);
 
         try {
-            OntologyReader ontologyReader = OntologyReader.getInstance();
+            //OntologyReader ontologyReader = OntologyReader.getInstance();
 
             // CASE 1: /api/{className}
             if (parts.length == 1) {
