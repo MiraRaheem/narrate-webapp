@@ -92,6 +92,8 @@ public class OntologyReader {
         }
         return instance;
     }
+private static final String ONTOLOGY_NS =
+    "http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#";
 
 // ✅ Load the Ontology Model
     private static void loadOntologyModel() {
@@ -100,7 +102,11 @@ public class OntologyReader {
             if (in == null) {
                 throw new IllegalArgumentException("❌ Ontology file not found: " + ONTOLOGY_PATH);
             }
-            model.read(in, null);
+            model.read(in, ONTOLOGY_NS);
+model.setNsPrefix("", ONTOLOGY_NS);
+NS = ONTOLOGY_NS;
+System.out.println("🧭 Ontology namespace set to: " + NS);
+
             System.out.println("✅ Ontology loaded successfully from: " + ONTOLOGY_PATH);
         } catch (IOException e) {
             e.printStackTrace();
