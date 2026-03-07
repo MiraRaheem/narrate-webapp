@@ -443,6 +443,59 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectedByLogisticsSensor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectedByLogisticsSensor">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectsLogisticsEvent"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsEvent"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSensor"/>
+        <rdfs:comment>InverseOf detectsLogisticsEvent: Represents the capability of the logistics sensor to detect logistics-related events such as delivery delays or abnormal shipment conditions. In practice, these events are typically derived from sensor observations.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectedBySensor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectedBySensor">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectsAnomaly"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaintenanceEvent"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ConditionMonitoringSensor"/>
+        <rdfs:comment>Inverse of detectsAnomoly: Represents the capability of the sensor to detect abnormal physical conditions that may result in a MaintenanceEvent. Semantically expresses responsibility, while actual triggering occurs via SensorObservation.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectsAnomaly -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectsAnomaly">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ConditionMonitoringSensor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaintenanceEvent"/>
+        <rdfs:comment>Represents the capability of the sensor to detect abnormal physical conditions that may result in a MaintenanceEvent. Semantically expresses responsibility, while actual triggering occurs via SensorObservation.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectsLogisticsEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectsLogisticsEvent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSensor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsEvent"/>
+        <rdfs:comment>Represents the capability of the logistics sensor to detect logistics-related events such as delivery delays or abnormal shipment conditions. In practice, these events are typically derived from sensor observations.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectsProductionEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#detectsProductionEvent">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productionEventDetectedBySensor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMonitoringSensor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionEvent"/>
+        <rdfs:comment>Represents the capability of the production monitoring sensor to detect production-related events such as bottlenecks or performance degradation. In practice these events are derived from sensor observations.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#employs -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#employs">
@@ -1017,6 +1070,50 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isDeployedOnMachine -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isDeployedOnMachine">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByConditionSensor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ConditionMonitoringSensor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Machine"/>
+        <rdfs:comment>Indicates the specific machine where the condition monitoring sensor is installed. Each sensor is deployed on exactly one machine.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isDeployedOnMachineProductionSensor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isDeployedOnMachineProductionSensor">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByProdSensor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMonitoringSensor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Machine"/>
+        <rdfs:comment>Indicates that the sensor may be physically installed on a machine performing the monitored production process.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isDeployedOnShipment -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isDeployedOnShipment">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByLogisticsSensor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSensor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
+        <rdfs:comment>Indicates the shipment on which the logistics sensor is installed or associated, enabling tracking of shipment conditions during transportation.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isDeployedOnStation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isDeployedOnStation">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#stationMonitoredBy"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMonitoringSensor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Station"/>
+        <rdfs:comment>Represents the capability of the production monitoring sensor to detect production-related events such as bottlenecks or performance degradation. In practice these events are derived from sensor observations.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEmployedBy -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEmployedBy">
@@ -1434,12 +1531,63 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByConditionSensor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByConditionSensor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Machine"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ConditionMonitoringSensor"/>
+        <rdfs:comment>Inverse of isDeployedOnMachone: Indicates the specific machine where the condition monitoring sensor is installed. Each sensor is deployed on exactly one machine.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByLogisticsSensor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByLogisticsSensor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSensor"/>
+        <rdfs:comment>InverseOf isDeployedOnShipment: Indicates the shipment on which the logistics sensor is installed or associated, enabling tracking of shipment conditions during transportation.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByProdSensor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByProdSensor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Machine"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMonitoringSensor"/>
+        <rdfs:comment>InverseOf isDeployedOnMachine: Indicates that the sensor may be physically installed on a machine performing the monitored production process.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByProductionSensor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitoredByProductionSensor">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitorsProcess"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMonitoringSensor"/>
+        <rdfs:comment>InverseOf monitorsProcess: Indicates the production process whose performance is monitored by the sensor. Enables linking observed production metrics with the relevant process.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitorsParameter -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitorsParameter">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#parameterMonitoredBy"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sensor"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MeasuredParameter"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitorsProcess -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitorsProcess">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMonitoringSensor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
+        <rdfs:comment>Indicates the production process whose performance is monitored by the sensor. Enables linking observed production metrics with the relevant process.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -1640,12 +1788,33 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productionEventDetectedBySensor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productionEventDetectedBySensor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionEvent"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMonitoringSensor"/>
+        <rdfs:comment>InverseOf detectsProductionEvent:Represents the capability of the production monitoring sensor to detect production-related events such as bottlenecks or performance degradation. In practice these events are derived from sensor observations.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#providedByLeadManufacturer -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#providedByLeadManufacturer">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SLAgreement"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LeadManufacturer"/>
         <rdfs:comment>All SLAs are fulfilled (or at least owned) by the LeadManufacturer.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#receivesDataFrom -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#receivesDataFrom">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#reportsToSustainability"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sustainability"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnvironmentalSensor"/>
+        <rdfs:comment>InverseOf reportsToSustainability: Indicates that the environmental sensor provides environmental monitoring data used by the SustainabilityBlueprint for sustainability analysis and environmental impact assessment.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -1676,6 +1845,16 @@
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#specificationIsReplacedBy"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductSpecification"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductSpecification"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#reportsToSustainability -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#reportsToSustainability">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnvironmentalSensor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sustainability"/>
+        <rdfs:comment>Indicates that the environmental sensor provides environmental monitoring data used by the SustainabilityBlueprint for sustainability analysis and environmental impact assessment.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -1800,6 +1979,16 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#stationLocation">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Station"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Location"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#stationMonitoredBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#stationMonitoredBy">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Station"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMonitoringSensor"/>
+        <rdfs:comment>InverseOf isDeployedOnStation:Represents the capability of the production monitoring sensor to detect production-related events such as bottlenecks or performance degradation. In practice these events are derived from sensor observations.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -6387,6 +6576,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#observationID">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SensorObservation"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1</j.0:displayOrder>
         <rdfs:comment>Unique identifier of the observation instance. Required for traceability and linking with external systems (e.g., FDIF, SQL logs).</rdfs:comment>
     </owl:DatatypeProperty>
     
@@ -6397,6 +6587,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#observationTimestamp">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SensorObservation"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
+        <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3</j.0:displayOrder>
         <rdfs:comment>The exact timestamp when the measurement was taken. Critical for temporal reasoning and event derivation.</rdfs:comment>
     </owl:DatatypeProperty>
     
@@ -6407,6 +6598,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#observedValue">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SensorObservation"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2</j.0:displayOrder>
         <rdfs:comment>The numeric value measured by the sensor at a specific time (e.g., 92.5 seconds, 7.8 mm/s, 25°C).</rdfs:comment>
     </owl:DatatypeProperty>
     
@@ -6435,6 +6627,36 @@ This property supports traceability, risk assessment, and compliance auditing by
         </rdfs:range>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7</j.0:displayOrder>
         <rdfs:comment>Flag to track if delivery was on time (yes/no).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#parameterDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#parameterDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MeasuredParameter"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Optional textual description explaining the meaning and role of the parameter within the manufacturing system.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#parameterID -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#parameterID">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MeasuredParameter"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Unique identifier for the measurable parameter used to ensure traceability and consistent reference across sensors, observations, and analytics tools.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#parameterName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#parameterName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MeasuredParameter"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Human-readable name describing the measured parameter (e.g., Temperature, CycleTime, EnergyConsumption).</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -6666,6 +6888,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sensorID">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sensor"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1</j.0:displayOrder>
     </owl:DatatypeProperty>
     
 
@@ -6675,6 +6898,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sensorName">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sensor"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2</j.0:displayOrder>
         <rdfs:comment>Human-readable label</rdfs:comment>
     </owl:DatatypeProperty>
     
@@ -6941,6 +7165,16 @@ This property supports traceability, risk assessment, and compliance auditing by
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#unitOfMeasurement -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#unitOfMeasurement">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MeasuredParameter"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Specifies the measurement unit associated with the parameter (e.g., °C, mm/s, seconds, kWh). This helps interpret observed values generated by sensors.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#usesHazardousMaterial -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#usesHazardousMaterial">
@@ -7059,10 +7293,17 @@ It ensures timely delivery, quality assurance, and adherence to technical specif
     
 
 
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ConsitionMonitoringSensor -->
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ConditionMonitoringSensor -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ConsitionMonitoringSensor">
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ConditionMonitoringSensor">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sensor"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitorsParameter"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#PhysicalParameter"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
@@ -7175,13 +7416,23 @@ It answers key questions like:
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnvironmentalSensor">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sensor"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitorsParameter"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnvironmentalParameter"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+        <rdfs:comment>Subclass of: SensorBlueprint; Specializes monitoring of LogisticsParameter on Shipment; monitors EnvironmentalParameter; reports to / supports SustainabilityBlueprint; measures environmental and sustainability-related conditions (e.g., CO₂, energy, water)</rdfs:comment>
     </owl:Class>
     
 
 
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event">
+        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+    </owl:Class>
     
 
 
@@ -7233,10 +7484,26 @@ It answers key questions like:
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsParameter -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsParameter">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MeasuredParameter"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSensor -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSensor">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sensor"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitorsParameter"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsParameter"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+        <rdfs:comment>Specializes monitoring of LogisticsParameter on Shipment; monitors logistics-related parameters (e.g., location, cargo condition); is deployed on Shipment; may detect LogisticsEvent (e.g., DeliveryDelay)</rdfs:comment>
     </owl:Class>
     
 
@@ -7313,7 +7580,9 @@ Maintenance history could be modeled as a separate class (MaintenanceLog) to ena
 
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MeasuredParameter -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MeasuredParameter"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MeasuredParameter">
+        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+    </owl:Class>
     
 
 
@@ -7575,6 +7844,20 @@ hasDocumentLink can store a path to a file in a DMS or ERP.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMonitoringSensor">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sensor"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitorsParameter"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMetric"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#monitorsProcess"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
@@ -7718,13 +8001,27 @@ hasDocumentLink can store a path to a file in a DMS or ERP.</rdfs:comment>
 
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sensor -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sensor"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sensor">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ConditionMonitoringSensor"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnvironmentalSensor"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSensor"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionMonitoringSensor"/>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:comment>Abstract representation of a sensor within the NARRATE Digital Twin framework that monitors measurable parameters and produces observations describing the state or performance of manufacturing, logistics, or environmental entities. Specialized subclasses represent different sensor roles such as condition monitoring, production monitoring, logistics, and environmental sensing.</rdfs:comment>
+    </owl:Class>
     
 
 
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SensorObservation -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SensorObservation"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SensorObservation">
+        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+    </owl:Class>
     
 
 
@@ -9220,3 +9517,4 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
 
 
 <!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
