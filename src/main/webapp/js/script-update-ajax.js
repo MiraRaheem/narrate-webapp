@@ -37,10 +37,10 @@ $(document).ready(function () {
 
             // Sort and populate grouped options
             Object.keys(groupedClasses).sort().forEach(blueprint => {
-                
-                    // 🔹 Insert blueprint header
-        $select.append(`<option disabled>🔹 𝐁𝐋𝐔𝐄𝐏𝐑𝐈𝐍𝐓: ${blueprint}</option>`);
-        
+
+                // 🔹 Insert blueprint header
+                $select.append(`<option disabled>🔹 𝐁𝐋𝐔𝐄𝐏𝐑𝐈𝐍𝐓: ${blueprint}</option>`);
+
                 const sortedClasses = groupedClasses[blueprint].sort();
 
                 sortedClasses.forEach(cls => {
@@ -48,11 +48,12 @@ $(document).ready(function () {
                     const isMain = cls.toLowerCase() === coreName;
                     const isShared = classCounts[cls] > 1;
 
-                    const style = isMain ? 'style="font-weight:bold; color:#007bff;"' : "";
+                    const style = isMain ? 'style="color:#007bff;"' : "";
+
                     const label = isMain
-                            ? `⭐ ${cls}`
+                            ? `  ${cls}`
                             : isShared
-                            ? `  ${cls} ⚡`
+                            ? `  ${cls} 🔗`
                             : `  ${cls}`;
 
                     $select.append(`<option value="${cls}" ${style}>${label}</option>`);
