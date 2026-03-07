@@ -48,11 +48,12 @@ $(document).ready(function () {
                 const isMain = cls.toLowerCase() === coreName;
                 const isShared = classCounts[cls] > 1;
 
-                const style = isMain ? 'style="font-weight:bold; color:#007bff;"' : "";
+                const style = isMain ? 'style="color:#007bff;"' : "";
+
                 const label = isMain
-                        ? `⭐ ${cls}`
+                        ? `  ${cls}`
                         : isShared
-                        ? `  ${cls} ⚡`
+                        ? `  ${cls} 🔗`
                         : `  ${cls}`;
 
                 $select.append(`<option value="${cls}" ${style}>${label}</option>`);
