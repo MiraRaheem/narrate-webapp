@@ -12,6 +12,8 @@
     <head>
         <meta charset="utf-8">
         <title>Sustainability KPI Dashboard - NARRATE BMS</title>
+             <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Styling from your template -->
