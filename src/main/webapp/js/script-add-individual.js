@@ -58,11 +58,12 @@ $(document).ready(function () {
                 const isMain = cls.toLowerCase() === coreName;
                 const isShared = classCounts[cls] > 1;
 
-                let style = isMain ? 'style="font-weight:bold; color:#007bff;"' : "";
+                // let style = isMain ? 'style="font-weight:bold; color:#007bff;"' : "";
+                let style = isMain ? 'style="color:#007bff;"' : "";
                 let label = isMain
-                        ? `⭐ ${cls}`
+                        ? `  ${cls}`
                         : isShared
-                        ? `  ${cls} ⚡`
+                        ? `  ${cls} 🔗`
                         : `  ${cls}`;
 
                 $select.append(`<option value="${cls}" ${style}>${label}</option>`);
@@ -327,7 +328,7 @@ $(document).ready(function () {
             data: JSON.stringify(payload),
             success: function (response) {
                 Swal.fire("✅ Success", response || "Individual added successfully!", "success")
-                        .then(() => location.reload());
+                .then(() => location.reload());
             },
             error: function () {
                 Swal.fire("❌ Error", "Failed to add individual.", "error");
