@@ -1,4 +1,4 @@
-```java
+
 package com.example.ontology;
 
 import com.google.gson.Gson;
@@ -267,4 +267,4 @@ public class AddIndividualServlet2 extends HttpServlet {
         public String getValue() { return value; }
     }
 }
-```
+
