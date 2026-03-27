@@ -6,6 +6,7 @@ $(document).ready(function () {
     let numericPropsList = [];
     let enumeratedPropsMap = {};
     let datePropsList = [];
+    let dateTimeStampPropsList = [];
     let uriPropsList = [];
 
     $.getJSON(baseUrl, {type: "default"}, function (classes) {
@@ -93,12 +94,14 @@ $(document).ready(function () {
                 $.getJSON(baseUrl, {type: "numericProperties", class: selectedClass}),
                 $.getJSON(baseUrl, {type: "enumeratedProperties", class: selectedClass}),
                 $.getJSON(baseUrl, {type: "dateProperties", class: selectedClass}),
+                $.getJSON(baseUrl, {type: "dateTimeStampProperties", class: selectedClass}),
                 $.getJSON(baseUrl, {type: "uriProperties", class: selectedClass})
-                ).done(function (cardRes, numRes, enumRes, dateRes, uriRes) {
+                ).done(function (cardRes, numRes, enumRes, dateRes, dateTimeStampRes, uriRes) {
             cardinalities = cardRes[0] || {};
             numericPropsList = numRes[0] || [];
             enumeratedPropsMap = enumRes[0] || {};
             datePropsList = dateRes[0] || [];
+            dateTimeStampPropsList = dateTimeStampRes[0] || [];
             uriPropsList = Array.isArray(uriRes[0]) ? uriRes[0] : [];
         });
     });
@@ -183,6 +186,16 @@ $(document).ready(function () {
                 valueField = `<select class="form-control">${options}</select>`;
             } else if (numericPropsList.includes(prop)) {
                 valueField = `<input type="number" class="form-control" value="${val}">`;
+            } else if (dateTimeStampPropsList.includes(prop)) {
+                let dateTimeValue = val;
+
+                // Convert OWL value → HTML datetime-local format
+                if (dateTimeValue && dateTimeValue.includes("T")) {
+                    dateTimeValue = dateTimeValue.replace("Z", ""); // remove timezone
+                    dateTimeValue = dateTimeValue.substring(0, 19); // keep yyyy-MM-ddTHH:mm:ss ✅
+                }
+
+                valueField = `<input type="datetime-local" step="1" class="form-control" value="${dateTimeValue}">`;
             } else if (datePropsList.includes(prop)) {
                 let dateValue = val;
                 if (dateValue && dateValue.includes("T")) {
@@ -201,8 +214,18 @@ $(document).ready(function () {
                 $.getJSON(baseUrl, {type: "instances", relatedClass: prop}, function (instances) {
                     const $dropdown = $(`#${id}`);
                     $dropdown.empty().append(`<option value="">-- Select --</option>`);
+                    // instances.forEach(inst => {
+                    //    $dropdown.append(`<option value="${inst}" ${inst === val ? "selected" : ""}>${inst}</option>`);
+                    // });
+
                     instances.forEach(inst => {
-                        $dropdown.append(`<option value="${inst}" ${inst === val ? "selected" : ""}>${inst}</option>`);
+                        const label = inst.type
+                                ? `${inst.name} (${inst.type})`
+                                : inst.name;
+
+                        $dropdown.append(
+                                `<option value="${inst.name}" ${inst.name === val ? "selected" : ""}>${label}</option>`
+                                );
                     });
                 });
             }, 0);
