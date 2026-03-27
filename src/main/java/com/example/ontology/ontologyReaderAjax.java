@@ -75,7 +75,9 @@ public class ontologyReaderAjax extends HttpServlet {
                     String actualClass = ontologyReader.getRangeClass(relatedClass);
 
                     if (actualClass != null) {
-                        Set<String> instances = ontologyReader.getInstancesOfClass(actualClass);
+                        //Set<String> instances = ontologyReader.getInstancesOfClass(actualClass);
+                        //out.print(gson.toJson(instances));
+                        List<Map<String, String>> instances = ontologyReader.getInstancesWithTypes(actualClass);
                         out.print(gson.toJson(instances));
                     } else {
                         out.print("[]");
@@ -123,6 +125,9 @@ public class ontologyReaderAjax extends HttpServlet {
             } else if ("dateProperties".equals(type) && className != null) {
                 Set<String> dateProperties = ontologyReader.getDateDataProperties(className);
                 out.print(gson.toJson(dateProperties));
+            } else if ("dateTimeStampProperties".equals(type) && className != null) {
+                Set<String> props = ontologyReader.getDateTimeStampProperties(className);
+                out.print(gson.toJson(props));
             } else if ("uriProperties".equals(type) && className != null) {
                 Set<String> uriProperties = ontologyReader.getURIDataProperties(className);
                 out.print(gson.toJson(uriProperties));
