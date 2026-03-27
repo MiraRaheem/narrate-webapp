@@ -1,18 +1,21 @@
-
 package com.example.ontology;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.XSD;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+
 import java.io.*;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,6 +49,7 @@ public class AddIndividualServlet2 extends HttpServlet {
             BufferedReader reader = request.getReader();
             IndividualData data = gson.fromJson(reader, IndividualData.class);
 
+            // ✅ Validate input
             if (data == null || data.getIndividualName() == null || data.getClassName() == null) {
                 jsonResponse.addProperty("status", "error");
                 jsonResponse.addProperty("message", "Invalid input data.");
@@ -55,13 +59,11 @@ public class AddIndividualServlet2 extends HttpServlet {
 
             synchronized (AddIndividualServlet2.class) {
 
-                // Load model safely
+                // ✅ Load shared model
                 OntologyReader.reloadModel();
                 OntModel model = OntologyReader.getModel();
 
-                System.out.println("📂 Using ontology path: " + ONTOLOGY_PATH);
-
-                // Check duplicate
+                // ✅ Check duplicate
                 if (model.getIndividual(NAMESPACE + data.getIndividualName()) != null) {
                     jsonResponse.addProperty("status", "error");
                     jsonResponse.addProperty("message", "Individual already exists.");
@@ -69,7 +71,7 @@ public class AddIndividualServlet2 extends HttpServlet {
                     return;
                 }
 
-                // Get class
+                // ✅ Get class
                 OntClass ontClass = model.getOntClass(NAMESPACE + data.getClassName());
                 if (ontClass == null) {
                     jsonResponse.addProperty("status", "error");
@@ -78,30 +80,29 @@ public class AddIndividualServlet2 extends HttpServlet {
                     return;
                 }
 
-                // Create individual
+                // ✅ Create individual
                 Individual individual = model.createIndividual(
                         NAMESPACE + data.getIndividualName(),
                         ontClass
                 );
                 individual.addRDFType(OWL.NamedIndividual);
 
-                // Safe lists
+                // ✅ Safe lists
                 List<DataPropertyEntry> dataProps =
                         data.getDataProperties() != null ? data.getDataProperties() : Collections.emptyList();
 
                 List<ObjectPropertyEntry> objectProps =
                         data.getObjectProperties() != null ? data.getObjectProperties() : Collections.emptyList();
 
-                // Process Data Properties
+                // =========================
+                // ✅ DATA PROPERTIES
+                // =========================
                 for (DataPropertyEntry dp : dataProps) {
 
                     DatatypeProperty property =
                             model.getDatatypeProperty(NAMESPACE + dp.getProperty());
 
-                    if (property == null) {
-                        System.err.println("❌ Property not found: " + dp.getProperty());
-                        continue;
-                    }
+                    if (property == null) continue;
 
                     String rawValue = dp.getValue();
                     String rangeURI = property.getRange() != null
@@ -171,13 +172,14 @@ public class AddIndividualServlet2 extends HttpServlet {
                         }
 
                     } catch (Exception e) {
-                        System.err.println("⚠ Failed parsing: " + rawValue);
                         individual.addProperty(property,
                                 model.createTypedLiteral(rawValue));
                     }
                 }
 
-                // Process Object Properties
+                // =========================
+                // ✅ OBJECT PROPERTIES
+                // =========================
                 for (ObjectPropertyEntry op : objectProps) {
 
                     ObjectProperty property =
@@ -186,20 +188,14 @@ public class AddIndividualServlet2 extends HttpServlet {
                     Individual related =
                             model.getIndividual(NAMESPACE + op.getValue());
 
-                    if (property == null) {
-                        System.err.println("❌ Object property not found: " + op.getProperty());
-                        continue;
+                    if (property != null && related != null) {
+                        individual.addProperty(property, related);
                     }
-
-                    if (related == null) {
-                        System.err.println("❌ Related individual not found: " + op.getValue());
-                        continue;
-                    }
-
-                    individual.addProperty(property, related);
                 }
 
-                // Safe file write
+                // =========================
+                // ✅ SAFE FILE WRITE (ATOMIC)
+                // =========================
                 File tempFile = new File(ONTOLOGY_PATH + ".tmp");
 
                 try (FileOutputStream out = new FileOutputStream(tempFile)) {
@@ -207,10 +203,15 @@ public class AddIndividualServlet2 extends HttpServlet {
                 }
 
                 File finalFile = new File(ONTOLOGY_PATH);
-                if (!tempFile.renameTo(finalFile)) {
-                    throw new IOException("Failed to replace ontology file.");
-                }
 
+                // ✅ Reliable replace (fixes renameTo issues)
+                Files.move(
+                        tempFile.toPath(),
+                        finalFile.toPath(),
+                        StandardCopyOption.REPLACE_EXISTING
+                );
+
+                // ✅ Reload model
                 OntologyReader.reloadModel();
 
                 jsonResponse.addProperty("status", "success");
@@ -239,6 +240,9 @@ public class AddIndividualServlet2 extends HttpServlet {
         return model.createTypedLiteral(value);
     }
 
+    // =========================
+    // DTO CLASSES
+    // =========================
     private static class IndividualData {
         private String className;
         private String individualName;
@@ -267,4 +271,3 @@ public class AddIndividualServlet2 extends HttpServlet {
         public String getValue() { return value; }
     }
 }
-
