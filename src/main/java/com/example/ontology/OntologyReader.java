@@ -42,7 +42,11 @@ public class OntologyReader {
     private static final Property OWL_MIN_QUALIFIED_CARDINALITY = ResourceFactory.createProperty(OWL_NS + "minQualifiedCardinality");
     private static final Property OWL_MAX_QUALIFIED_CARDINALITY = ResourceFactory.createProperty(OWL_NS + "maxQualifiedCardinality");
     private static final Property OWL_QUALIFIED_CARDINALITY = ResourceFactory.createProperty(OWL_NS + "qualifiedCardinality");
-
+    
+    
+    public static String getNS() {
+    return NS;
+}
     private OntologyReader() {
         loadOntologyModel();
     }
