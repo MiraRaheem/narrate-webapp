@@ -1,87 +1,52 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.example.ontology;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.apache.jena.ontology.DatatypeProperty;
-import org.apache.jena.ontology.Individual;
-import org.apache.jena.ontology.ObjectProperty;
-import org.apache.jena.ontology.OntClass;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.ontology.OntProperty;
-import org.apache.jena.ontology.OntResource;
-import org.apache.jena.ontology.Restriction;
-import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFList;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.util.FileManager;
+import java.io.InputStream;
+import java.util.*;
+import java.util.stream.Collectors;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.util.iterator.ExtendedIterator;
-import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDFS;
 import org.apache.jena.vocabulary.XSD;
-import org.apache.jena.ontology.SomeValuesFromRestriction;
+import org.apache.jena.vocabulary.OWL;
 
+/**
+ *
+ * @author amal.elgammal
+ */
 public class OntologyReader {
 
-    // ---- Preferred (Render/Prod): environment variables ----
-    private static final String DEFAULT_LINUX_PATH = "/data/NARRATE-blueprints-rdf-xml.rdf";
-    private static final String ONTOLOGY_PATH = System.getenv().getOrDefault("ONTOLOGY_PATH", DEFAULT_LINUX_PATH);
+    // ✅ Docker-safe path (ONLY real change)
+    private static final String ONTOLOGY_PATH =
+        System.getenv().getOrDefault(
+            "ONTOLOGY_PATH",
+            "/data/NARRATE-blueprints-rdf-xml.rdf"
+        );
 
-    // Namespace: use env if provided; otherwise we'll infer after loading
-    private static String NS = System.getenv().getOrDefault("ONTOLOGY_NS", null);
-    public static String getNS() { return NS; }
+    // ✅ Namespace (kept EXACT default, just env-flexible)
+    private static final String NS =
+        System.getenv().getOrDefault(
+            "ONTOLOGY_NS",
+            "http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#"
+        );
 
-    // ---- Local dev fallback (for colleague Windows setups) ----
-    private static final String COLLEAGUE_WINDOWS_PATH = "C:/Programs/NARRATE-blueprints-rdf-xml.rdf";
-    private static final String COLLEAGUE_NS_DEFAULT =
-        "http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#";
-
-    // Model / Singleton
     private static volatile OntModel model;
     private static volatile OntologyReader instance;
 
-    // OWL qualified-cardinality helpers
     private static final String OWL_NS = "http://www.w3.org/2002/07/owl#";
-    private static final Property OWL_MIN_QUALIFIED_CARDINALITY =
-            ResourceFactory.createProperty(OWL_NS + "minQualifiedCardinality");
-    private static final Property OWL_MAX_QUALIFIED_CARDINALITY =
-            ResourceFactory.createProperty(OWL_NS + "maxQualifiedCardinality");
-    private static final Property OWL_QUALIFIED_CARDINALITY =
-            ResourceFactory.createProperty(OWL_NS + "qualifiedCardinality");
+    private static final Property OWL_MIN_QUALIFIED_CARDINALITY = ResourceFactory.createProperty(OWL_NS + "minQualifiedCardinality");
+    private static final Property OWL_MAX_QUALIFIED_CARDINALITY = ResourceFactory.createProperty(OWL_NS + "maxQualifiedCardinality");
+    private static final Property OWL_QUALIFIED_CARDINALITY = ResourceFactory.createProperty(OWL_NS + "qualifiedCardinality");
 
-    // ✅ Private constructor to prevent instantiation
     private OntologyReader() {
         loadOntologyModel();
     }
 
-    // ✅ Singleton Method to get the instance
     public static OntologyReader getInstance() {
         if (instance == null) {
             synchronized (OntologyReader.class) {
@@ -92,36 +57,27 @@ public class OntologyReader {
         }
         return instance;
     }
-private static final String ONTOLOGY_NS =
-    "http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#";
 
-// ✅ Load the Ontology Model
+    // ✅ Load model (UNCHANGED logic)
     private static void loadOntologyModel() {
         model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
         try (InputStream in = FileManager.get().open(ONTOLOGY_PATH)) {
             if (in == null) {
                 throw new IllegalArgumentException("❌ Ontology file not found: " + ONTOLOGY_PATH);
             }
-            model.read(in, ONTOLOGY_NS);
-model.setNsPrefix("", ONTOLOGY_NS);
-NS = ONTOLOGY_NS;
-System.out.println("🧭 Ontology namespace set to: " + NS);
-
+            model.read(in, null);
             System.out.println("✅ Ontology loaded successfully from: " + ONTOLOGY_PATH);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    // ✅ Reload Ontology Model (Ensures real-time updates)
     public static void reloadModel() {
         System.out.println("♻️ Reloading Ontology Model...");
-        synchronized (OntologyReader.class) { // Ensure thread safety
+        synchronized (OntologyReader.class) {
             loadOntologyModel();
             System.out.println("✅ Ontology model reloaded successfully.");
 
-            // 🔍 Debug: Print all individuals after reloading
             System.out.println("📌 Individuals After Reload:");
             for (OntClass cls : model.listNamedClasses().toList()) {
                 for (ExtendedIterator<? extends OntResource> i = cls.listInstances(); i.hasNext();) {
@@ -132,7 +88,6 @@ System.out.println("🧭 Ontology namespace set to: " + NS);
         }
     }
 
-    // ✅ Get OntModel instance
     public static OntModel getModel() {
         return model;
     }
@@ -141,7 +96,7 @@ System.out.println("🧭 Ontology namespace set to: " + NS);
         return ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF, model);
     }
 
-    // Method to get all classes
+   // Method to get all classes
     public Set<String> getOntologyClasses() {
         Set<String> classSet = new HashSet<>();
         ExtendedIterator<OntClass> classIter = model.listClasses();
@@ -1146,6 +1101,35 @@ System.out.println("🧭 Ontology namespace set to: " + NS);
         return dateProps;
     }
 
+    public Set<String> getDateTimeStampProperties(String className) {
+        Set<String> props = new HashSet<>();
+        OntClass ontClass = model.getOntClass(NS + className);
+
+        if (ontClass != null) {
+            for (Iterator<DatatypeProperty> it = model.listDatatypeProperties(); it.hasNext();) {
+                DatatypeProperty dp = it.next();
+
+                for (ExtendedIterator<? extends Resource> itDomain = dp.listDomain(); itDomain.hasNext();) {
+                    Resource domain = itDomain.next();
+
+                    if (domain.canAs(OntClass.class)) {
+                        OntClass domainClass = domain.as(OntClass.class);
+
+                        if (domainClass.equals(ontClass) || ontClass.hasSuperClass(domainClass, true)) {
+
+                            if (dp.getRange() != null
+                                    && "http://www.w3.org/2001/XMLSchema#dateTimeStamp".equals(dp.getRange().getURI())) {
+
+                                props.add(dp.getLocalName());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return props;
+    }
+
 // 🌐 Get URI Properties
     public Set<String> getURIDataProperties(String className) {
         Set<String> uriProps = new HashSet<>();
@@ -1442,7 +1426,6 @@ System.out.println("🧭 Ontology namespace set to: " + NS);
 
         return values;
     } */
-    
     public List<String> getObjectPropertyValues(String subject, String propertyName) {
         System.out.println("[DEBUG] Fetching list of object values for '" + propertyName + "' from subject '" + subject + "'");
 
@@ -1462,7 +1445,6 @@ System.out.println("🧭 Ontology namespace set to: " + NS);
             return values;
         }
 
-        
         ExtendedIterator<RDFNode> nodes = reasonedModel.listObjectsOfProperty(ind, prop);
         while (nodes.hasNext()) {
             RDFNode node = nodes.next();
@@ -1478,6 +1460,61 @@ System.out.println("🧭 Ontology namespace set to: " + NS);
         }
 
         return values;
+    }
+
+    // Retrieves all instances of a given class, including instances of its subclasses using reasoning.
+// Each instance is returned with its most specific subclass type for clearer UI representation.
+// Useful when object property ranges are abstract superclasses with no direct instances.
+    public List<Map<String, String>> getInstancesWithTypes(String className) {
+        List<Map<String, String>> results = new ArrayList<>();
+
+        OntClass parentClass = model.getOntClass(NS + className);
+        if (parentClass == null) {
+            return results;
+        }
+
+        // Use reasoner to include subclasses
+        OntModel reasonedModel = getReasonedModel();
+        OntClass reasonedClass = reasonedModel.getOntClass(NS + className);
+
+        ExtendedIterator<? extends OntResource> instances = reasonedClass.listInstances();
+
+        while (instances.hasNext()) {
+            Individual ind = instances.next().as(Individual.class);
+
+            String name = ind.getLocalName();
+            String type = "";
+
+            boolean isDirectInstance = false; 
+
+            for (ExtendedIterator<OntClass> types = ind.listOntClasses(true); types.hasNext();) {
+                OntClass cls = types.next();
+
+                if (cls.getLocalName() != null && cls.getLocalName().equals(className)) {
+                    isDirectInstance = true;
+                }
+
+                if (cls.getLocalName() != null
+                        && !cls.getLocalName().equals(className)
+                        && !cls.getLocalName().equals("NamedIndividual")) {
+
+                    type = cls.getLocalName();
+                }
+            }
+
+            // Only show type if NOT direct instance
+            if (isDirectInstance) {
+                type = "";
+            }
+
+            Map<String, String> entry = new HashMap<>();
+            entry.put("name", name);
+            entry.put("type", type);
+
+            results.add(entry);
+        }
+
+        return results;
     }
 
     // 🔧 Add this method to OntologyReader.java
@@ -1497,3 +1534,4 @@ System.out.println("🧭 Ontology namespace set to: " + NS);
     }
 
 }
+
