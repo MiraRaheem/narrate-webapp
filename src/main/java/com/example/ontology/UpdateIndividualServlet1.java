@@ -1,4 +1,4 @@
-```java
+
 package com.example.ontology;
 
 import com.google.gson.Gson;
@@ -302,4 +302,3 @@ public class UpdateIndividualServlet1 extends HttpServlet {
         return "Short description";
     }
 }
-```
