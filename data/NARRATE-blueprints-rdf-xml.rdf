@@ -85,7 +85,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartnerIsCertifiedBy">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#certifiesLogisticsPartner"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
     </owl:ObjectProperty>
     
@@ -117,6 +117,27 @@
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSLAStipulation"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SLAStipulation"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SLAgreement"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadataOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadataOf">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSupplierMetadata"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPIAllocatedToProduct -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPIAllocatedToProduct">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasAllocatedWaterKPI"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:comment>Links a WaterKPI to a Product, indicating that the water-related impact measured at process level has been allocated to the product based on a defined allocation approach.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -164,6 +185,16 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#aggregatedAtProduct -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#aggregatedAtProduct">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productHasMaterialKPI"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#aggregatesComponentSustainability -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#aggregatesComponentSustainability">
@@ -182,6 +213,25 @@
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSustainability"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSustainability"/>
         <rdfs:comment>ComponentSustainabilty aggregates all involved material sustainability metrics</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#allocatedToProduct -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#allocatedToProduct">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasAllocatedEnergyKPI"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:comment>The object property allocatedToProduct links an EnergyKPI instance to a Product, indicating that the KPI value has been assigned or distributed to that product based on a defined allocation logic.
+
+This property is used when energy-related impacts (e.g., energy consumption or carbon footprint) originate at the process level but must be attributed to individual products, typically using allocation rules such as mass-based, time-based, or economic allocation.
+
+It enables:
+
+product-level sustainability assessment derived from process data
+lifecycle-based impact distribution (LCA-aligned)
+traceability of how process impacts contribute to product KPIs</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -232,7 +282,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#assignedLogisticsPartner">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasDeliverySchedule"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DeliverySchedule"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:comment>Logistics partner responsible.</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -306,7 +356,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#certifiesLogisticsPartner">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
     </owl:ObjectProperty>
     
 
@@ -443,6 +493,16 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#customerMetadataOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#customerMetadataOf">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCustomerMetadata"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CustomerMetadata"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Customer"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#defineProcess -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#defineProcess">
@@ -468,7 +528,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#deliversShipment">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isDeliveredbyLogisticsPartner"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
         <rdfs:comment>links to Shipment.</rdfs:comment>
     </owl:ObjectProperty>
@@ -536,6 +596,46 @@
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnviroSensorObservation"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnvironmentalSensor"/>
         <rdfs:comment>inverse of observesEnvironment: Links the observation to the sensor that produced it. Ensures traceability and correct semantic chain.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluatesMaterial -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluatesMaterial">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasMaterialKPI"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Material"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluatesProcess -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluatesProcess">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByEnergyKPI"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
+        <rdfs:comment>The object property evaluatesProcess links an EnergyKPI instance to the specific ProductionProcess it assesses, indicating that the KPI quantifies the energy-related performance of that process.
+
+It captures the evaluation relationship between a performance indicator and the operational entity being analyzed. Through this property, KPIs are explicitly tied to the processes whose sustainability performance they measure.
+
+This enables:
+
+contextualization of KPIs within manufacturing operations
+process-level performance monitoring and comparison
+semantic</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluatesShipment -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluatesShipment">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByLogisticsKPI"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
+        <rdfs:comment>Links a LogisticsKPI to the Shipment it assesses, indicating that the KPI quantifies the environmental impact of a specific transportation activity.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -634,6 +734,17 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#formulaUsesInput -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#formulaUsesInput">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#inputOfFormula"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Links a Formula to the input data or entities it uses for computation, such as process sustainability data, material properties, or intermediate KPI values.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#generates -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#generates">
@@ -678,6 +789,39 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasAllocatedEnergyKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasAllocatedEnergyKPI">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI"/>
+        <rdfs:comment>The object property hasAllocatedEnergyKPI indicates that a Product is associated with one or more EnergyKPI instances whose values have been allocated to it.
+
+It allows querying and aggregating all energy-related KPIs contributing to the sustainability profile of a product.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasAllocatedWasteKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasAllocatedWasteKPI">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#wasteKPIAllocatedToProduct"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WasteKPI"/>
+        <rdfs:comment>Indicates that a Product is associated with one or more WasteKPIs whose values have been allocated to it, contributing to its overall waste-related sustainability profile.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasAllocatedWaterKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasAllocatedWaterKPI">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPI"/>
+        <rdfs:comment>Indicates that a Product is associated with one or more WaterKPIs whose values have been allocated to it, contributing to its overall water-related sustainability profile.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasAssignedWorkOrder -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasAssignedWorkOrder">
@@ -695,6 +839,17 @@
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#BillOfMaterials"/>
         <rdfs:comment>Each product has one Bill of Materials</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasBenchmark -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasBenchmark">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isBenchmarkOf"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIBenchmark"/>
+        <rdfs:comment>Indicates that a KPI is associated with a KPIBenchmark that provides a reference or target value for performance comparison.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -749,12 +904,40 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCustomerMetadata -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCustomerMetadata">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Customer"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CustomerMetadata"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasDeliverySchedule -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasDeliverySchedule">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DeliverySchedule"/>
         <rdfs:comment>LogisticPartner has DeliverySchedule</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasEnergyShareInput -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasEnergyShareInput">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isInputToEnergyKPI"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProcessSustainability"/>
+        <rdfs:comment>The object property hasInput links an EnergyKPI instance to the corresponding ProcessSustainability instance(s) that provide the underlying raw data used for its computation.
+
+It represents the dependency of a KPI on observed or reported sustainability metrics, such as energy consumption, renewable energy share, and emission factors, captured at the process level.
+
+This relationship enables:
+
+traceability between KPI values and their source data
+transparency in KPI computation
+support for semantic reasoning and validation</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -769,11 +952,44 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasFormula -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasFormula">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isFormulaFor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:comment>Links to computation logic</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasIncomingShipment -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasIncomingShipment">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Location"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasInput -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasInput">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isInputToKPI"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Input entities used in computation</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasKPIContext -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasKPIContext">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiIsEvaluatedBy"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Links KPI to entity (Product, Process, etc.)</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -789,11 +1005,22 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLogisticsKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLogisticsKPI">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#logisticsKPIAllocatedToProduct"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsKPI"/>
+        <rdfs:comment>inverse of allocatedToProduct :Links a LogisticsKPI to a Product, indicating that transportation-related impacts have been allocated to the product.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLogisticsSustainability -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLogisticsSustainability">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sustainabilityOfLogistics"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSustainability"/>
     </owl:ObjectProperty>
     
@@ -815,6 +1042,25 @@
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sustainabilityOfMachine"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Machine"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProcessSustainability"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasMaterial -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasMaterial">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isMaterialOfProduct"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Material"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasMaterialKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasMaterialKPI">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Material"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialKPI"/>
     </owl:ObjectProperty>
     
 
@@ -850,12 +1096,32 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPreviousValue -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPreviousValue">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>Historical tracking</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasProcessSustainability -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasProcessSustainability">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sustainabilityOfProcess"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProcessSustainability"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasProductMetadata -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasProductMetadata">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productMetadataOf"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductMetadata"/>
     </owl:ObjectProperty>
     
 
@@ -924,8 +1190,8 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasShipment -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasShipment">
-        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isForSalesOrder"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SalesOrder"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isForProduct"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
         <rdfs:comment>Shipment fulfilling this order</rdfs:comment>
     </owl:ObjectProperty>
@@ -977,7 +1243,6 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSupplierMetadata -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSupplierMetadata">
-        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#supplierMetadataOf"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
     </owl:ObjectProperty>
@@ -1086,6 +1351,16 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#inputOfFormula -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#inputOfFormula">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:comment>Indicates that an entity (e.g., process data, material, or KPI) is used as input in a Formula for computing a KPI.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#instantiatedBy -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#instantiatedBy">
@@ -1124,6 +1399,16 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isBenchmarkOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isBenchmarkOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIBenchmark"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>Links a KPIBenchmark to the KPI it refers to, indicating that the benchmark value is defined for evaluating the performance of that specific KPI.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isComponentOf -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isComponentOf">
@@ -1156,7 +1441,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isDeliveredbyLogisticsPartner">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
     </owl:ObjectProperty>
     
 
@@ -1224,6 +1509,50 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByEnergyKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByEnergyKPI">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI"/>
+        <rdfs:comment>The object property isEvaluatedByEnergyKPI indicates that a ProductionProcess is assessed by one or more EnergyKPI instances.
+
+It provides a reverse navigational link, allowing processes to be queried based on the KPIs that evaluate their performance.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByLogisticsKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByLogisticsKPI">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsKPI"/>
+        <rdfs:comment>Indicates that a Shipment is assessed by a LogisticsKPI, providing sustainability-related performance measurements for that shipment.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByWasteKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByWasteKPI">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#wasteKIPEvaluatesProcess"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WasteKPI"/>
+        <rdfs:comment>Indicates that a ProductionProcess is assessed by a WasteKPI, providing waste-related performance measurements for that process.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByWaterKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByWaterKPI">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#waterKPIEvaluatesProcess"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPI"/>
+        <rdfs:comment>Indicates that a ProductionProcess is assessed by a WaterKPI, providing water-related performance measurements for that process.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isExecutedByLeadMfg -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isExecutedByLeadMfg">
@@ -1233,12 +1562,22 @@
     
 
 
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isForSalesOrder -->
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isForProduct -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isForSalesOrder">
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isForProduct">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SalesOrder"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
         <rdfs:comment>Links the shipment to the related SalesOrder → shows what customer order it fulfills.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isFormulaFor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isFormulaFor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>Links to computation logic</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -1282,6 +1621,26 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isInputToEnergyKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isInputToEnergyKPI">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProcessSustainability"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI"/>
+        <rdfs:comment>Indicates that a ProcessSustainability instance contributes data used in the calculation of a specific EnergyKPI.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isInputToKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isInputToKPI">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>inverse of hasInput: Input entities used in computation</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isLocatedAtStation -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isLocatedAtStation">
@@ -1318,6 +1677,15 @@
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Machine"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Employee"/>
         <rdfs:comment>Machine is maintained by an Employee, e.g., Operator</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isMaterialOfProduct -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isMaterialOfProduct">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Material"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
     </owl:ObjectProperty>
     
 
@@ -1367,6 +1735,17 @@
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#stationHasProductionProcess"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Station"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isProducedByFormula -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isProducedByFormula">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#producesKPI"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:comment>Links a Formula to the KPI it computes, indicating that the formula defines the logic used to derive the KPI value.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -1496,6 +1875,16 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiIsEvaluatedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiIsEvaluatedBy">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>inverse of hasKPIContext: Links KPI to entity (Product, Process, etc.)</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#laborRoleOf -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#laborRoleOf">
@@ -1541,6 +1930,16 @@
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsEvent"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSensorObservation"/>
         <rdfs:comment>inverse Of triggersLogisticsEvent: Connects observation to derived Event. This is where external reasoning may instantiate Event instances.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#logisticsKPIAllocatedToProduct -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#logisticsKPIAllocatedToProduct">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:comment>Links a LogisticsKPI to a Product, indicating that transportation-related impacts have been allocated to the product.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -1872,7 +2271,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#operatedBy">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#operatesCarrier"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Carrier"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:comment>Links to LogisticsPartner</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -1881,7 +2280,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#operatesCarrier -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#operatesCarrier">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Carrier"/>
     </owl:ObjectProperty>
     
@@ -2047,6 +2446,16 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#producesKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#producesKPI">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>Links a Formula to the KPI it computes, indicating that the formula defines the logic used to derive the KPI value.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#producesOutputComponent -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#producesOutputComponent">
@@ -2057,11 +2466,29 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productHasMaterialKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productHasMaterialKPI">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialKPI"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productIsCertifiedBy -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productIsCertifiedBy">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productMetadataOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#productMetadataOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductMetadata"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
     </owl:ObjectProperty>
     
 
@@ -2388,15 +2815,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#supplierMetadataOf -->
-
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#supplierMetadataOf">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#suppliesComponent -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#suppliesComponent">
@@ -2439,7 +2857,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sustainabilityOfLogistics">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSustainability"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
     </owl:ObjectProperty>
     
 
@@ -2590,6 +3008,36 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#warehouseIsCertifiedFrom">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Warehousing"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#wasteKIPEvaluatesProcess -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#wasteKIPEvaluatesProcess">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WasteKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
+        <rdfs:comment>Links a WasteKPI to the ProductionProcess it assesses, indicating that the KPI quantifies waste-related performance (e.g., waste generation or disposal) of that process.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#wasteKPIAllocatedToProduct -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#wasteKPIAllocatedToProduct">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WasteKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
+        <rdfs:comment>Links a WasteKPI to a Product, indicating that waste-related impacts generated at process level have been allocated to the product based on a defined allocation approach.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#waterKPIEvaluatesProcess -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#waterKPIEvaluatesProcess">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
+        <rdfs:comment>Links a WaterKPI to the ProductionProcess it assesses, indicating that the KPI quantifies the water-related performance (e.g., consumption or wastewater generation) of that process.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -2781,6 +3229,36 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#benchmarkSource -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#benchmarkSource">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIBenchmark"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Specifies the origin of the benchmark value, such as a standard (e.g., ISO), industry guideline, or authoritative dataset.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#benchmarkValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#benchmarkValue">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIBenchmark"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Represents the reference or target value of a KPI used for comparison, derived from standards, industry averages, or best practices.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#benchmarkYear -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#benchmarkYear">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIBenchmark"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:comment>Indicates the year in which the benchmark value was defined or published, providing temporal context for its validity.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#breachCondition -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#breachCondition">
@@ -2953,7 +3431,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#creationTimestamp -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#creationTimestamp">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
     </owl:DatatypeProperty>
     
@@ -3089,8 +3567,28 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#documentStatus -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#documentStatus">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#energyCarbonFootprint -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#energyCarbonFootprint">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Total greenhouse gas emissions associated with the energy consumed, expressed in CO₂ equivalent.. In kgCO2eq</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#energyConsumption -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#energyConsumption">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>otal amount of energy consumed by a process or allocated to a product during a defined period or production batch.. In kWh</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -3325,6 +3823,36 @@
         </rdfs:range>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7</j.0:displayOrder>
         <rdfs:comment>Flag to indicate if this is a finished product.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#formulaDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#formulaDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Provides a human-readable explanation of the formula, describing how the KPI is calculated and the meaning of its inputs.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#formulaExpression -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#formulaExpression">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Represents the formal mathematical or logical expression used to compute the KPI, defined using a machine-interpretable syntax.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#formulaLanguage -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#formulaLanguage">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Specifies the language or formalism used to encode the formula expression (e.g., SWRL, SPARQL, MathML), enabling its interpretation and execution.</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -3683,6 +4211,15 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCommissionRate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCommissionRate">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Customer"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCommunicationLanguage -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasCommunicationLanguage">
@@ -3780,7 +4317,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasContactEmail -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasContactEmail">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4</j.0:displayOrder>
         <rdfs:comment>General contact email</rdfs:comment>
@@ -4007,16 +4544,6 @@
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SLAStipulation"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
         <rdfs:comment>Accepted variation around delivery deadline. Affects the customer&apos;s delivery expectations.</rdfs:comment>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasDistanceKM -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasDistanceKM">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
-        <rdfs:comment>Approximate transport distance (for carbon footprint calc)</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -4541,7 +5068,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLeadTime -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLeadTime">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6</j.0:displayOrder>
         <rdfs:comment>average lead time in days.</rdfs:comment>
@@ -4584,7 +5111,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLogisticsPhoneNumber -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLogisticsPhoneNumber">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3</j.0:displayOrder>
         <rdfs:comment>Support or operations line</rdfs:comment>
@@ -4901,16 +5428,6 @@
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSustainability"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
         <rdfs:comment>Environmental or health hazard indicator (0-10)</rdfs:comment>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasMaterialType -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasMaterialType">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-        <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8</j.0:displayOrder>
     </owl:DatatypeProperty>
     
 
@@ -5247,7 +5764,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPartnerID -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPartnerID">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1</j.0:displayOrder>
         <rdfs:comment>Unique identifier for the logistics provider</rdfs:comment>
@@ -5258,7 +5775,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPartnerName -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPartnerName">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2</j.0:displayOrder>
         <rdfs:comment>Company name</rdfs:comment>
@@ -5402,7 +5919,7 @@
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPreferredTransportMode -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasPreferredTransportMode">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7</j.0:displayOrder>
         <rdfs:comment>E.g., “Rail”, “Truck”, “Electric Van”</rdfs:comment>
@@ -5782,7 +6299,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasRegionCoverage -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasRegionCoverage">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <rdfs:range>
             <rdfs:Datatype>
                 <owl:oneOf>
@@ -6175,24 +6692,30 @@ This property supports traceability, risk assessment, and compliance auditing by
                 <owl:oneOf>
                     <rdf:Description>
                         <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                        <rdf:first>Delayed</rdf:first>
+                        <rdf:first>Cancelled</rdf:first>
                         <rdf:rest>
                             <rdf:Description>
                                 <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                <rdf:first>Delivered</rdf:first>
+                                <rdf:first>Delayed</rdf:first>
                                 <rdf:rest>
                                     <rdf:Description>
                                         <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                        <rdf:first>InTransit</rdf:first>
+                                        <rdf:first>Delivered</rdf:first>
                                         <rdf:rest>
                                             <rdf:Description>
                                                 <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                <rdf:first>Packed</rdf:first>
+                                                <rdf:first>InTransit</rdf:first>
                                                 <rdf:rest>
                                                     <rdf:Description>
                                                         <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                        <rdf:first>Planned</rdf:first>
-                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                        <rdf:first>Packed</rdf:first>
+                                                        <rdf:rest>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                                <rdf:first>Planned</rdf:first>
+                                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                            </rdf:Description>
+                                                        </rdf:rest>
                                                     </rdf:Description>
                                                 </rdf:rest>
                                             </rdf:Description>
@@ -6625,6 +7148,16 @@ This property supports traceability, risk assessment, and compliance auditing by
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasTransportDistanceKM -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasTransportDistanceKM">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Actual traveled distance for the shipment</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasTransportMode -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasTransportMode">
@@ -6840,7 +7373,6 @@ This property supports traceability, risk assessment, and compliance auditing by
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasWaterUsagePerYear">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierSustainability"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WarehouseSustainability"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">23</j.0:displayOrder>
         <rdfs:comment>Annual water consumption (m³/year).</rdfs:comment>
@@ -6900,6 +7432,16 @@ This property supports traceability, risk assessment, and compliance auditing by
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hazardousWaste -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hazardousWaste">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WasteKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Represents the total mass of hazardous waste generated by a process or allocated to a product, expressed in kilograms (kg).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#installationDate -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#installationDate">
@@ -6943,6 +7485,33 @@ This property supports traceability, risk assessment, and compliance auditing by
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LaborRole"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
         <rdfs:comment>Flag to indicate if this role is critical for production bottlenecks or key operations.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isCustomerDisabled -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isCustomerDisabled">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Customer"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isFrozenCustomer -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isFrozenCustomer">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Customer"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isInternalCustomer -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isInternalCustomer">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Customer"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
 
@@ -7028,6 +7597,115 @@ This property supports traceability, risk assessment, and compliance auditing by
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiID -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiID">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiRenewableEnergyShare -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiRenewableEnergyShare">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Proportion of total energy consumption that originates from renewable sources (e.g., solar, wind). Expressed as a percentage. renewableEnergyShare → KPI VALUE (interpreted/validated. Represents: computed, validated, or normalized KPI possibly aggregated or adjusted. This represents: analytics / decision layer</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiStatus -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiStatus">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first>estimated</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first>measured</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first>simulated</rdf:first>
+                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+        <rdfs:comment>Validity status</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiTimestamp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiTimestamp">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
+        <rdfs:comment>Time of computation</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiUnit -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiUnit">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Unit of measurement (e.g., kgCO2/kg)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#kpiValue">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Computed value</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#landfillWastePercent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#landfillWastePercent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WasteKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Indicates the proportion of total waste that is disposed of in landfill, expressed as a percentage of the total waste generated.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#lastCalibrationDate -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#lastCalibrationDate">
@@ -7041,7 +7719,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#lastModifiedTimestamp -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#lastModifiedTimestamp">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
     </owl:DatatypeProperty>
     
@@ -7156,6 +7834,16 @@ This property supports traceability, risk assessment, and compliance auditing by
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6</j.0:displayOrder>
         <rdfs:comment>Enumerated values need to be specified</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#materialIntensity -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#materialIntensity">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>kg material per kg product</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -7312,7 +8000,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#modifiedByUser -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#modifiedByUser">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -7321,8 +8009,18 @@ This property supports traceability, risk assessment, and compliance auditing by
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#namingSeries -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#namingSeries">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#nonHazardousWaste -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#nonHazardousWaste">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WasteKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Represents the total mass of non-hazardous waste generated by a process or allocated to a product, expressed in kilograms (kg).</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -7581,7 +8279,7 @@ This property supports traceability, risk assessment, and compliance auditing by
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#recordIndex -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#recordIndex">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -7590,8 +8288,38 @@ This property supports traceability, risk assessment, and compliance auditing by
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#recordOwner -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#recordOwner">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#recycledContentPercent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#recycledContentPercent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>% recycled</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#recycledWastePercent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#recycledWastePercent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WasteKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Indicates the proportion of total waste that is recycled or recovered, expressed as a percentage of the total waste generated.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#renewableContentPercent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#renewableContentPercent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>% renewable</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -7601,7 +8329,8 @@ This property supports traceability, risk assessment, and compliance auditing by
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#renewableEnergyShare">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProcessSustainability"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
-        <rdfs:comment>Percentage of energy sourced from renewable sources; critical for green manufacturing goals.</rdfs:comment>
+        <rdfs:comment>Percentage of energy sourced from renewable sources; critical for green manufacturing goals. Represents: measured or reported value from factory/system, input data. Source:
+IoT, ERP, energy systems. This represents the data layer</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -7610,6 +8339,24 @@ This property supports traceability, risk assessment, and compliance auditing by
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#representsCompany">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Supplier"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#requiresDeliveryNote -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#requiresDeliveryNote">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Customer"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#requiresSalesOrder -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#requiresSalesOrder">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Customer"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -7896,6 +8643,50 @@ This property supports traceability, risk assessment, and compliance auditing by
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sustainabilityDimension -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sustainabilityDimension">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SustainabilityKPI"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first>carbon</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first>energy</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first>material</rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first>waste</rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first>water</rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+        <rdfs:comment>Environmental dimension</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sustainabilityRating -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#sustainabilityRating">
@@ -7956,6 +8747,46 @@ This property supports traceability, risk assessment, and compliance auditing by
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SLAStipulation"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
         <rdfs:comment>Allowed deviation from the target value</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#transportCarbonFootprint -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#transportCarbonFootprint">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Represents the greenhouse gas emissions associated with transportation activities, expressed in kilograms of CO₂ equivalent (kgCO2eq).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#transportDistance -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#transportDistance">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Represents the total distance over which materials or products are transported, expressed in kilometers (km).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#transportEnergyConsumption -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#transportEnergyConsumption">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Represents the total energy consumed during transportation activities, expressed in kilowatt-hours (kWh).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#transportMode -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#transportMode">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Specifies the mode of transportation used (e.g., road, rail, sea, air), influencing the environmental impact of shipment</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -8034,6 +8865,36 @@ This property supports traceability, risk assessment, and compliance auditing by
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#wastewaterGenerated -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#wastewaterGenerated">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Represents the total volume of wastewater generated as a result of a process or product lifecycle stage, expressed in cubic meters (m³).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#waterUsage -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#waterUsage">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Represents the total volume of water consumed by a process or allocated to a product over a defined period or production batch, expressed in cubic meters (m³).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#waterUsagePerKg -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#waterUsagePerKg">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPI"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Indicates the water intensity of production, defined as the volume of water consumed per unit mass of product produced, expressed in cubic meters per kilogram (m³/kg).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -8080,7 +8941,7 @@ Use hasFuelType and hasCarrierType to compare emission profiles across modes</rd
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CarrierSustainability -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CarrierSustainability">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSustainability"/>
         <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
     </owl:Class>
     
@@ -8102,6 +8963,21 @@ FSC (sustainable wood)
 GOTS (organic textiles)
 
 B Corp certification</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CustomerMetadata"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
     </owl:Class>
     
 
@@ -8192,6 +9068,15 @@ hasSustainabilityPreference can be used to track and prioritize eco-conscious cu
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CustomerMetadata -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CustomerMetadata">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
+        <j.0:blueprintClass>CustomerBlueprint</j.0:blueprintClass>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DeliveryDelayEvent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DeliveryDelayEvent">
@@ -8230,6 +9115,15 @@ It answers key questions like:
         <j.0:blueprintClass>ResourceBlueprint</j.0:blueprintClass>
         <rdfs:comment></rdfs:comment>
         <rdfs:comment>A general class representing a person involved in supply chain operations — this can include operators, supervisors, managers, etc.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnergyKPI">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SustainabilityKPI"/>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
@@ -8299,6 +9193,28 @@ Events are typically triggered by sensor observations and may affect production 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula">
+        <rdfs:comment>Represents machine-interpretable KPI computation logic.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI">
+        <rdfs:comment>Represents a measurable performance indicator. This class defines the generic structure shared by all KPIs</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIBenchmark -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIBenchmark"/>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LaborRole -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LaborRole">
@@ -8330,15 +9246,6 @@ Events are typically triggered by sensor observations and may affect production 
     
 
 
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics">
-        <j.0:blueprintClass>LogisticsBlueprint</j.0:blueprintClass>
-        <rdfs:comment>Represents a third-party logistics (3PL) company or service provider responsible for transportation, distribution, or warehousing.</rdfs:comment>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsEvent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsEvent">
@@ -8348,11 +9255,29 @@ Events are typically triggered by sensor observations and may affect production 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsKPI -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsKPI">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SustainabilityKPI"/>
+        <rdfs:comment>Represents KPIs related to transportation, shipment, and logistics activities across the product lifecycle, including associated environmental impacts such as emissions and energy use.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsParameter -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsParameter">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MeasuredParameter"/>
         <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner">
+        <j.0:blueprintClass>LogisticsBlueprint</j.0:blueprintClass>
+        <rdfs:comment>Represents a third-party logistics (3PL) company or service provider responsible for transportation, distribution, or warehousing.</rdfs:comment>
     </owl:Class>
     
 
@@ -8429,6 +9354,16 @@ Maintenance history could be modeled as a separate class (MaintenanceLog) to ena
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialKPI -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialKPI">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SustainabilityKPI"/>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
+        <rdfs:comment>KPIs related to raw materials and composition.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier">
@@ -8487,6 +9422,15 @@ Maintenance history could be modeled as a separate class (MaintenanceLog) to ena
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Sustainability"/>
         <rdfs:comment>“Abstract class – do not instantiate directly.”</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationalKPI -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationalKPI">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>to be extended</rdfs:comment>
     </owl:Class>
     
 
@@ -8681,6 +9625,15 @@ Added ESG (Environmental, Social, Governance) reporting and sustainability prope
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductMetadata -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductMetadata">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
+        <j.0:blueprintClass>ProductBlueprint</j.0:blueprintClass>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductSpecification -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductSpecification">
@@ -8778,6 +9731,15 @@ hasDocumentLink can store a path to a file in a DMS or ERP.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#QAEngineer">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Employee"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#QualityKPI -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#QualityKPI">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>to be extended</rdfs:comment>
     </owl:Class>
     
 
@@ -9049,13 +10011,18 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
 
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierMetadata">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
+        <j.0:blueprintClass>SupplierBlueprint</j.0:blueprintClass>
+    </owl:Class>
     
 
 
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierOperationalPolicy -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierOperationalPolicy"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SupplierOperationalPolicy">
+        <j.0:blueprintClass>SupplierBlueprint</j.0:blueprintClass>
+    </owl:Class>
     
 
 
@@ -9076,6 +10043,15 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SustainabilityKPI -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SustainabilityKPI">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>Specialization of KPI focusing on environmental sustainability metrics.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#TransportationDisruptionEvent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#TransportationDisruptionEvent">
@@ -9088,7 +10064,7 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WarehouseSustainability -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WarehouseSustainability">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsSustainability"/>
         <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
     </owl:Class>
     
@@ -9101,6 +10077,24 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
         <rdfs:comment>A Warehouse represents a physical storage location used for holding raw materials, semi-finished goods, or finished products. Warehouses may be central or decentralized, and can be linked to suppliers, batches, and inventory records.</rdfs:comment>
         <rdfs:comment>Modeling Notes
 We may also consider subclasses like: CentralWarehouse, RegionalWarehouse, ThirdPartyWarehouse</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WasteKPI -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WasteKPI">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SustainabilityKPI"/>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPI -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterKPI">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SustainabilityKPI"/>
+        <j.0:blueprintClass>SustainabilityBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
@@ -9753,7 +10747,7 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticPartner-1001 -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticPartner-1001">
-        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Logistics"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartner"/>
         <j.0:deliversShipment rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SHIP-1001"/>
         <j.0:hasCarbonEstimateKG rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.09</j.0:hasCarbonEstimateKG>
         <j.0:hasContactEmail>contact@dhl.com</j.0:hasContactEmail>
@@ -9918,14 +10912,14 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier_AlNourMetals">
         <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier"/>
-        <j.0:suppliesMaterial rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MetalScrews_1"/>
+        <j.0:suppliesMaterial rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Textile_1"/>
         <j.0:hasCapacity rdf:datatype="http://www.w3.org/2001/XMLSchema#int">12000</j.0:hasCapacity>
         <j.0:hasCountry>Egypt</j.0:hasCountry>
         <j.0:hasEmail>procurement@alnourmetals.com</j.0:hasEmail>
         <j.0:hasLeadTimeDays rdf:datatype="http://www.w3.org/2001/XMLSchema#int">14</j.0:hasLeadTimeDays>
         <j.0:hasPaymentTerms>Net 30</j.0:hasPaymentTerms>
-        <j.0:hasPhoneNumber>+20-2-2754-8891</j.0:hasPhoneNumber>
-        <j.0:hasRating rdf:datatype="http://www.w3.org/2001/XMLSchema#float">4.6</j.0:hasRating>
+        <j.0:hasPhoneNumber>+20-2-2754-8893</j.0:hasPhoneNumber>
+        <j.0:hasRating rdf:datatype="http://www.w3.org/2001/XMLSchema#float">4.7</j.0:hasRating>
         <j.0:hasRecallHistory>yes</j.0:hasRecallHistory>
         <j.0:hasStartDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2022-01-15T00:00:00</j.0:hasStartDate>
         <j.0:hasSupplierID>MS-ALN-001</j.0:hasSupplierID>
@@ -10214,9 +11208,6 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
         <j.0:productIsCertifiedBy rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CERT-FSC-2023-0421-Sustain-Product"/>
         <j.0:hasEcoLabel>EU Ecolabel</j.0:hasEcoLabel>
         <j.0:hasFinishType>Non-toxic White Paint</j.0:hasFinishType>
-        <j.0:hasMaterialType>fabric: Organic Cotton</j.0:hasMaterialType>
-        <j.0:hasMaterialType>fasteners: Steel Bolts</j.0:hasMaterialType>
-        <j.0:hasMaterialType>wood: Oak</j.0:hasMaterialType>
         <j.0:hasProductCategory>Furniture</j.0:hasProductCategory>
         <j.0:hasProductCost rdf:datatype="http://www.w3.org/2001/XMLSchema#float">700.0</j.0:hasProductCost>
         <j.0:hasProductDescription>Custom-made wooden baby cot with personalized engraving, high-quality oak finish, compliant with EU child safety standards.</j.0:hasProductDescription>
@@ -10240,7 +11231,6 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
         <j.0:producedFor rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Customer_2"/>
         <j.0:hasEcoLabel>yes</j.0:hasEcoLabel>
         <j.0:hasFinishType>Non-toxic water-based finish</j.0:hasFinishType>
-        <j.0:hasMaterialType>Solid Beech Wood</j.0:hasMaterialType>
         <j.0:hasProductCategory>Furniture</j.0:hasProductCategory>
         <j.0:hasProductCost rdf:datatype="http://www.w3.org/2001/XMLSchema#float">120.0</j.0:hasProductCost>
         <j.0:hasProductDescription>A handcrafted wooden baby cot designed for safety and durability, compliant with EU child safety standards. Includes adjustable base height and FSC-certified wood.</j.0:hasProductDescription>
@@ -10321,13 +11311,13 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
         <j.0:hasCarrier rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Carrier-1001"/>
         <j.0:hasShipmentDeliverySchedule rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SCHED-1001"/>
         <j.0:isDeliveredbyLogisticsPartner rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticPartner-1001"/>
-        <j.0:isForSalesOrder rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SalesOrder_1"/>
+        <j.0:isForProduct rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SalesOrder_1"/>
         <j.0:hasCarbonEstimateKG rdf:datatype="http://www.w3.org/2001/XMLSchema#float">120.0</j.0:hasCarbonEstimateKG>
-        <j.0:hasDistanceKM rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3200.0</j.0:hasDistanceKM>
         <j.0:hasShipmentDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-06-01T00:00:00</j.0:hasShipmentDate>
         <j.0:hasShipmentID>SHIP-1001</j.0:hasShipmentID>
         <j.0:hasShipmentStatus>Delayed</j.0:hasShipmentStatus>
         <j.0:hasShipmentWeightKG rdf:datatype="http://www.w3.org/2001/XMLSchema#float">850.0</j.0:hasShipmentWeightKG>
+        <j.0:hasTransportDistanceKM rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3200.0</j.0:hasTransportDistanceKM>
         <j.0:hasTransportMode>Air</j.0:hasTransportMode>
     </owl:NamedIndividual>
     
