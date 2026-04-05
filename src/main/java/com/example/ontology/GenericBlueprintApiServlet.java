@@ -25,9 +25,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @WebServlet("/api/*")
 public class GenericBlueprintApiServlet extends HttpServlet {
@@ -212,6 +216,292 @@ public class GenericBlueprintApiServlet extends HttpServlet {
 
         // Forward to the original servlet without modifying its code
         request.getRequestDispatcher("/AddIndividualServlet2")
+                .forward(wrappedRequest, response);
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        String path = request.getPathInfo();
+
+        if (path == null || path.split("/").length < 3) {
+            response.getWriter().write("{\"error\":\"Invalid endpoint\"}");
+            return;
+        }
+
+        // Extract className and individualName
+        String[] parts = path.split("/");
+        String className = parts[1];
+        String individualName = parts[2];
+
+        Gson gson = new Gson();
+
+        // ==========================================
+        // STEP 1: FETCH EXISTING DATA (IMPORTANT)
+        // ==========================================
+        OntologyReader reader = OntologyReader.getInstance();
+
+        Map<String, List<String>> existingData
+                = reader.getAllDataPropertiesForIndividual(individualName);
+
+        Map<String, List<String>> existingObject
+                = reader.getAllObjectPropertiesWithReasoner(individualName);
+
+        if (existingData == null) {
+            existingData = new HashMap<>();
+        }
+        if (existingObject == null) {
+            existingObject = new HashMap<>();
+        }
+
+        // ==========================================
+        // STEP 2: READ INCOMING REQUEST
+        // ==========================================
+        JsonObject inputJson = JsonParser.parseReader(request.getReader()).getAsJsonObject();
+
+        Map<String, List<String>> newData = new HashMap<>();
+        Map<String, List<String>> newObject = new HashMap<>();
+
+        // Convert incoming dataProperties (array → map)
+        if (inputJson.has("dataProperties")) {
+            inputJson.getAsJsonArray("dataProperties").forEach(el -> {
+                JsonObject obj = el.getAsJsonObject();
+                String prop = obj.get("property").getAsString();
+                String val = obj.has("value") && !obj.get("value").isJsonNull()
+                        ? obj.get("value").getAsString()
+                        : null;
+
+                if (val != null && !val.trim().isEmpty()) {
+                    newData.computeIfAbsent(prop, k -> new ArrayList<>()).add(val);
+                }
+            });
+        }
+
+        // Convert incoming objectProperties (array → map)
+        if (inputJson.has("objectProperties")) {
+            inputJson.getAsJsonArray("objectProperties").forEach(el -> {
+                JsonObject obj = el.getAsJsonObject();
+                String prop = obj.get("property").getAsString();
+                String val = obj.has("value") && !obj.get("value").isJsonNull()
+                        ? obj.get("value").getAsString()
+                        : null;
+
+                if (val != null && !val.trim().isEmpty()) {
+                    newObject.computeIfAbsent(prop, k -> new ArrayList<>()).add(val);
+                }
+            });
+        }
+
+        // ==========================================
+        // STEP 3: MERGE (CRITICAL FIX)
+        // ==========================================
+        // Overwrite only updated data properties
+        for (String key : newData.keySet()) {
+            existingData.put(key, newData.get(key));
+        }
+
+        // Overwrite only updated object properties
+        for (String key : newObject.keySet()) {
+            existingObject.put(key, newObject.get(key));
+        }
+
+        // ==========================================
+        // STEP 4: BUILD FINAL PAYLOAD
+        // ==========================================
+        JsonObject payload = new JsonObject();
+        payload.addProperty("action", "updateIndividual");
+        payload.addProperty("className", className);
+        payload.addProperty("individualName", individualName); // ✅ FIX HERE
+
+        existingData = cleanNullValues(existingData);
+        existingObject = cleanNullValues(existingObject);
+
+        payload.add("dataProperties", gson.toJsonTree(existingData));
+        payload.add("objectProperties", gson.toJsonTree(existingObject));
+
+        byte[] newBody = payload.toString().getBytes(StandardCharsets.UTF_8);
+
+        // ==========================================
+        // STEP 5: WRAP REQUEST
+        // ==========================================
+        HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper(request) {
+
+            @Override
+            public String getMethod() {
+                return "POST"; // 🔥 FORCE POST
+            }
+
+            @Override
+            public BufferedReader getReader() {
+                return new BufferedReader(
+                        new InputStreamReader(
+                                new ByteArrayInputStream(newBody),
+                                StandardCharsets.UTF_8
+                        )
+                );
+            }
+
+            @Override
+            public ServletInputStream getInputStream() {
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(newBody);
+
+                return new ServletInputStream() {
+                    @Override
+                    public int read() {
+                        return byteArrayInputStream.read();
+                    }
+
+                    @Override
+                    public boolean isFinished() {
+                        return byteArrayInputStream.available() == 0;
+                    }
+
+                    @Override
+                    public boolean isReady() {
+                        return true;
+                    }
+
+                    @Override
+                    public void setReadListener(ReadListener readListener) {
+                    }
+                };
+            }
+
+            @Override
+            public int getContentLength() {
+                return newBody.length;
+            }
+
+            @Override
+            public long getContentLengthLong() {
+                return newBody.length;
+            }
+
+            @Override
+            public String getContentType() {
+                return "application/json";
+            }
+        };
+
+        // ==========================================
+        // STEP 6: FORWARD TO EXISTING BACKEND
+        // ==========================================
+        request.getRequestDispatcher("/UpdateIndividualServlet1")
+                .forward(wrappedRequest, response);
+    }
+
+    private Map<String, List<String>> cleanNullValues(Map<String, List<String>> map) {
+        Map<String, List<String>> cleaned = new HashMap<>();
+
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+
+            if (values == null) {
+                continue;
+            }
+
+            List<String> filtered = values.stream()
+                    .filter(v -> v != null && !v.trim().isEmpty())
+                    .collect(Collectors.toList());
+
+            if (!filtered.isEmpty()) {
+                cleaned.put(key, filtered);
+            }
+        }
+
+        return cleaned;
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        String pathInfo = request.getPathInfo(); // /MaterialSupplier/MaterialSupplier_1
+
+        if (pathInfo == null || pathInfo.split("/").length < 3) {
+            response.getWriter().write("{\"error\":\"Invalid DELETE path\"}");
+            return;
+        }
+
+        String[] parts = pathInfo.split("/");
+        String className = parts[1];
+        String instanceId = parts[2];
+
+        // 🔥 Build parameters exactly like frontend servlet expects
+        String queryString = "className=" + className + "&individualName=" + instanceId;
+
+        byte[] newBody = new byte[0]; // no body needed
+
+        HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper(request) {
+
+            @Override
+            public String getMethod() {
+                return "POST"; // 🔥 force POST
+            }
+
+            @Override
+            public String getParameter(String name) {
+                if ("className".equals(name)) {
+                    return className;
+                }
+                if ("individualName".equals(name)) {
+                    return instanceId;
+                }
+                return super.getParameter(name);
+            }
+
+            @Override
+            public String getQueryString() {
+                return queryString;
+            }
+
+            @Override
+            public BufferedReader getReader() {
+                return new BufferedReader(
+                        new InputStreamReader(
+                                new ByteArrayInputStream(newBody),
+                                StandardCharsets.UTF_8
+                        )
+                );
+            }
+
+            @Override
+            public ServletInputStream getInputStream() {
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(newBody);
+
+                return new ServletInputStream() {
+                    @Override
+                    public int read() {
+                        return byteArrayInputStream.read();
+                    }
+
+                    @Override
+                    public boolean isFinished() {
+                        return byteArrayInputStream.available() == 0;
+                    }
+
+                    @Override
+                    public boolean isReady() {
+                        return true;
+                    }
+
+                    @Override
+                    public void setReadListener(ReadListener readListener) {
+                    }
+                };
+            }
+        };
+
+        // 🔥 Forward to your WORKING servlet
+        request.getRequestDispatcher("/DeleteIndividualServlet")
                 .forward(wrappedRequest, response);
     }
 
