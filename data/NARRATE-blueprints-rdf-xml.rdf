@@ -71,16 +71,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSustainabilityOf -->
-
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSustainabilityOf">
-        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasComponentSustainability"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSustainability"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductComponent"/>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartnerIsCertifiedBy -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsPartnerIsCertifiedBy">
@@ -142,6 +132,17 @@
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionAffectsKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionAffectsKPI">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isImpactedByAction"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>Indicates which KPIs are expected to be influenced by the action</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#affectedByEvent -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#affectedByEvent">
@@ -149,6 +150,28 @@
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionEvent"/>
         <rdfs:comment>Inverse of affectsProcess: Indicates the production process whose performance or execution is impacted by the event</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#affectsEntity -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#affectsEntity">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isAffectedByEvent"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Specifies the entity impacted by the event, such as a machine, production process, station, product, or supplier.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#affectsKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#affectsKPI">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isImpactedByEvent"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>Links an event to one or more KPIs that are impacted, enabling performance evaluation and monitoring.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -453,6 +476,16 @@ traceability of how process impacts contribute to product KPIs</rdfs:comment>
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#componentSustainabilityOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#componentSustainabilityOf">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasComponentSustainability"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ComponentSustainability"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductComponent"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#conditionObservedBy -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#conditionObservedBy">
@@ -568,6 +601,17 @@ traceability of how process impacts contribute to product KPIs</rdfs:comment>
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#derivedFromEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#derivedFromEvent">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#leadsToEvent"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:comment>Indicates that an event is derived or inferred from one or more other events (e.g., CEP-generated composite events).</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#employs -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#employs">
@@ -596,6 +640,17 @@ traceability of how process impacts contribute to product KPIs</rdfs:comment>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnviroSensorObservation"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#EnvironmentalSensor"/>
         <rdfs:comment>inverse of observesEnvironment: Links the observation to the sensor that produced it. Ensures traceability and correct semantic chain.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluatesKPI -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluatesKPI">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByEvaluation"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:comment>Links a KPIEvaluation to the KPI definition it computes, indicating which KPI is being evaluated.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -1086,6 +1141,17 @@ support for semantic reasoning and validation</rdfs:comment>
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasObservation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasObservation">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isObservationOfEvent"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ObservationEvent"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SensorObservation"/>
+        <rdfs:comment>Links the event to the underlying observation containing the measured data.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasOutgoingShipment -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasOutgoingShipment">
@@ -1370,6 +1436,16 @@ support for semantic reasoning and validation</rdfs:comment>
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isAffectedByEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isAffectedByEvent">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:comment>Inverse of affectsEntity: Specifies the entity impacted by the event, such as a machine, production process, station, product, or supplier.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isAggregatedByCompSustain -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isAggregatedByCompSustain">
@@ -1521,6 +1597,15 @@ It provides a reverse navigational link, allowing processes to be queried based 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByEvaluation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByEvaluation">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByLogisticsKPI -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isEvaluatedByLogisticsKPI">
@@ -1621,6 +1706,26 @@ It provides a reverse navigational link, allowing processes to be queried based 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isImpactedByAction -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isImpactedByAction">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:comment>Inverse of affectsKPI: Indicates which KPIs are expected to be influenced by the action</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isImpactedByEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isImpactedByEvent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPI"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:comment>Inverse of affectsKPI: Links an event to one or more KPIs that are impacted, enabling performance evaluation and monitoring.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isInputToEnergyKPI -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isInputToEnergyKPI">
@@ -1697,6 +1802,16 @@ It provides a reverse navigational link, allowing processes to be queried based 
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Material"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaterialSupplier"/>
         <rdfs:comment>Materials are provided by one or more suppliers</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isObservationOfEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isObservationOfEvent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SensorObservation"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ObservationEvent"/>
+        <rdfs:comment>Inverse of hasObservation : Links the event to the underlying observation containing the measured data.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -1780,6 +1895,17 @@ It provides a reverse navigational link, allowing processes to be queried based 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isRequiredByEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isRequiredByEvent">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#requiresAction"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:comment>Inverse of requiresAction: Indicates that the event requires an operational or decision-making response (e.g., maintenance, rescheduling, rerouting).</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isRequiredByProcess -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isRequiredByProcess">
@@ -1843,12 +1969,34 @@ It provides a reverse navigational link, allowing processes to be queried based 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isTargetOfAction -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isTargetOfAction">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#targetsEntity"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:comment>Inverse of targetsEntity: Specifies the entity on which the action is performed (e.g., machine, shipment, process).</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isUsedByProcess -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isUsedByProcess">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#usesSpecification"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductSpecification"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionProcess"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isUsedInEvaluation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#isUsedInEvaluation">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#usesFormula"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:comment>InverseOf usesFormula: Links a KPIEvaluation to the Formula used to compute the KPI value, ensuring traceability of the computation logic.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -1891,6 +2039,16 @@ It provides a reverse navigational link, allowing processes to be queried based 
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LaborRole"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Employee"/>
         <rdfs:comment>Employees assigned a labor role</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#leadsToEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#leadsToEvent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:comment>Inverse of derivedFromEvent: Indicates that an event is derived or inferred from one or more other events (e.g., CEP-generated composite events).</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -2602,6 +2760,16 @@ It provides a reverse navigational link, allowing processes to be queried based 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#requiresAction -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#requiresAction">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:comment>Indicates that the event requires an operational or decision-making response (e.g., maintenance, rescheduling, rerouting).</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#requiresCertificate_SLA -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#requiresCertificate_SLA">
@@ -2916,6 +3084,37 @@ It provides a reverse navigational link, allowing processes to be queried based 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#targetsEntity -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#targetsEntity">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Specifies the entity on which the action is performed (e.g., machine, shipment, process).</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#triggeredByEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#triggeredByEvent">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#triggersEvaluation"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:comment>Links a KPIEvaluation to the Event that triggered its execution, capturing the temporal or operational cause of the evaluation.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#triggersEvaluation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#triggersEvaluation">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:comment>Inverse of triggeredByEvent: Links a KPIEvaluation to the Event that triggered its execution, capturing the temporal or operational cause of the evaluation.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#triggersLogisticsEvent -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#triggersLogisticsEvent">
@@ -2961,6 +3160,16 @@ It provides a reverse navigational link, allowing processes to be queried based 
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Carrier"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment"/>
         <rdfs:comment>links to Shipment</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#usesFormula -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#usesFormula">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Formula"/>
+        <rdfs:comment>Links a KPIEvaluation to the Formula used to compute the KPI value, ensuring traceability of the computation logic.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -3072,56 +3281,62 @@ It provides a reverse navigational link, allowing processes to be queried based 
     
 
 
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CertificationType -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CertificationType">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
-        <rdfs:range>
-            <rdfs:Datatype>
-                <owl:oneOf>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                        <rdf:first>CSR</rdf:first>
-                        <rdf:rest>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                <rdf:first>Compliance</rdf:first>
-                                <rdf:rest>
-                                    <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                        <rdf:first>Ethical</rdf:first>
-                                        <rdf:rest>
-                                            <rdf:Description>
-                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                <rdf:first>Quality</rdf:first>
-                                                <rdf:rest>
-                                                    <rdf:Description>
-                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                        <rdf:first>Sustainability</rdf:first>
-                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                                                    </rdf:Description>
-                                                </rdf:rest>
-                                            </rdf:Description>
-                                        </rdf:rest>
-                                    </rdf:Description>
-                                </rdf:rest>
-                            </rdf:Description>
-                        </rdf:rest>
-                    </rdf:Description>
-                </owl:oneOf>
-            </rdfs:Datatype>
-        </rdfs:range>
-        <rdfs:comment>The type of the Certifictaion. For example: Environmental, Sustainability, Carbon Footprint, etc</rdfs:comment>
-    </owl:DatatypeProperty>
-    
-
-
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterUsage -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WaterUsage">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProcessSustainability"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
         <rdfs:comment>Expected water consumption (liters); important for water sustainability reporting.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Human-readable description of the action.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionID -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionID">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Unique identifier of the action.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionStatus -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionStatus">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Current state of the action (e.g., Planned, InProgress, Completed).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionTimestamp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionTimestamp">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
+        <rdfs:comment>Timestamp indicating when the action is created or executed.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#actionType">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Category of the action (e.g., Maintenance, Logistics, Production).</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -3279,6 +3494,50 @@ It provides a reverse navigational link, allowing processes to be queried based 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#certificationType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#certificationType">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first>CSR</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first>Compliance</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first>Ethical</rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first>Quality</rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first>Sustainability</rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+        <rdfs:comment>The type of the Certifictaion. For example: Environmental, Sustainability, Carbon Footprint, etc</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#city -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#city">
@@ -3384,6 +3643,16 @@ It provides a reverse navigational link, allowing processes to be queried based 
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductComponent"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:comment>Weight of the component (for logistics, cost).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#computedValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#computedValue">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Result of the KPI evaluation</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -3554,6 +3823,26 @@ It provides a reverse navigational link, allowing processes to be queried based 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#derivationConfidenceLevel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#derivationConfidenceLevel">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DerivedEvent"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Indicates the confidence or reliability of the derived event, especially for predictions or probabilistic reasoning.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#derivationLogic -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#derivationLogic">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DerivedEvent"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Describes the rule, condition, or logic used to derive the event (e.g., threshold rule, CEP query, prediction model). For example: &quot;argonGasLevel &lt; 20%&quot;</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#description -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#description">
@@ -3632,13 +3921,85 @@ It provides a reverse navigational link, allowing processes to be queried based 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluationConfidenceScore -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluationConfidenceScore">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Confidence level of the computed value (e.g., for estimated data)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluationDuration -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluationDuration">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Time taken to compute the KPI (optional)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluationID -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluationID">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Unique identifier for the KPI evaluation instance</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluationStatus -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluationStatus">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first>computed</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first>estimated</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first>failed</rdf:first>
+                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+        <rdfs:comment>Status of evaluation (e.g., computed, failed, estimated)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluationTimestamp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#evaluationTimestamp">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
+        <rdfs:comment>Timestamp indicating when the event occurred or was generated.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#eventDescription -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#eventDescription">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2</j.0:displayOrder>
-        <rdfs:comment>Textual description explaining the nature and context of the event.</rdfs:comment>
+        <rdfs:comment>Human-readable description providing contextual details about the event.</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -3649,76 +4010,7 @@ It provides a reverse navigational link, allowing processes to be queried based 
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <j.0:displayOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1</j.0:displayOrder>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#eventSeverity -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#eventSeverity">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
-        <rdfs:range>
-            <rdfs:Datatype>
-                <owl:oneOf>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                        <rdf:first>Critical</rdf:first>
-                        <rdf:rest>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                <rdf:first>High</rdf:first>
-                                <rdf:rest>
-                                    <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                        <rdf:first>Low</rdf:first>
-                                        <rdf:rest>
-                                            <rdf:Description>
-                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                <rdf:first>Medium</rdf:first>
-                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                                            </rdf:Description>
-                                        </rdf:rest>
-                                    </rdf:Description>
-                                </rdf:rest>
-                            </rdf:Description>
-                        </rdf:rest>
-                    </rdf:Description>
-                </owl:oneOf>
-            </rdfs:Datatype>
-        </rdfs:range>
-        <rdfs:comment>Indicates the severity level of the event and its potential operational impact.</rdfs:comment>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#eventStatus -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#eventStatus">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
-        <rdfs:range>
-            <rdfs:Datatype>
-                <owl:oneOf>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                        <rdf:first>Active</rdf:first>
-                        <rdf:rest>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                <rdf:first>Detected</rdf:first>
-                                <rdf:rest>
-                                    <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                        <rdf:first>Resolved</rdf:first>
-                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                                    </rdf:Description>
-                                </rdf:rest>
-                            </rdf:Description>
-                        </rdf:rest>
-                    </rdf:Description>
-                </owl:oneOf>
-            </rdfs:Datatype>
-        </rdfs:range>
-        <rdfs:comment>Indicates the lifecycle state of the event within the monitoring system.</rdfs:comment>
+        <rdfs:comment>Unique identifier assigned to the event for traceability across systems and services.</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -5104,6 +5396,56 @@ It provides a reverse navigational link, allowing processes to be queried based 
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductSustainability"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:comment>Defines the lifecycle stages covered (e.g., Cradle-to-Gate, Cradle-to-Grave)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLifecycleState -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasLifecycleState">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first>Active</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first>Confirmed</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first>Detected</rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first>Mitigated</rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first>Predicted</rdf:first>
+                                                        <rdf:rest>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                                <rdf:first>Resolved</rdf:first>
+                                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                            </rdf:Description>
+                                                        </rdf:rest>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+        <rdfs:comment>Represents the current state of the event within its lifecycle, capturing its progression from detection or prediction through validation and resolution.</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -6662,6 +7004,44 @@ This property supports traceability, risk assessment, and compliance auditing by
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSeverity -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSeverity">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first>Critical</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first>High</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first>Low</rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first>Medium</rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+        <rdfs:comment>Indicates the severity or criticality level of the event and its potential impact on operations</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasShipmentDate -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasShipmentDate">
@@ -6750,6 +7130,61 @@ This property supports traceability, risk assessment, and compliance auditing by
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MBOM"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:comment>Indicates the manufacturing site or facility the MBOM applies to.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSource -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSource">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Identifies the specific origin of the event as a textual identifier, such as a sensor ID, machine ID, system name, or external source. This property enables traceability to the originating component without requiring explicit semantic linking.
+Constraint: The value of hasSource should follow a structured identifier format combining the source type and a unique identifier (e.g., Machine_3, Sensor_12, CEP_Engine_1).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSourceType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#hasSourceType">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first>CEP</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first>External</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first>Manual</rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first>Sensor</rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first>Simulation</rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+        <rdfs:comment>Specifies the origin category of the event, indicating whether it was generated directly from sensor observations, derived through complex event processing (CEP), or obtained from external systems or data sources.</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -8230,6 +8665,16 @@ This property supports traceability, risk assessment, and compliance auditing by
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#priorityLevel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#priorityLevel">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Indicates the urgency or priority of the action (controlled vocabulary).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#processInstruction -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#processInstruction">
@@ -8906,6 +9351,45 @@ IoT, ERP, energy systems. This represents the data layer</rdfs:comment>
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Action">
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>Action represents an operation, intervention, or decision executed in response to an ActionableEvent within the Smart Manufacturing Network. Actions aim to mitigate disruptions, optimize performance, or maintain system stability.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ActionableEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ActionableEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DerivedEvent"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>ActionableEvent represents a type of DerivedEvent that requires or triggers a response, decision, or intervention within the Smart Manufacturing Network. It captures situations where system adaptation, mitigation, or optimization actions are necessary. Events important enough to trigger DTPL/BMS actions</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#AnalyticalEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#AnalyticalEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DerivedEvent"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>AnalyticalEvent represents a type of DerivedEvent that is produced through analytical processing, such as rule evaluation, statistical analysis, or predictive modeling. It captures interpreted insights including anomalies, threshold violations, and predictions derived from one or more underlying events.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#AnomalyEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#AnomalyEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#AnalyticalEvent"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>AnomalyEvent represents an AnalyticalEvent that identifies abnormal or unexpected behavior deviating from normal operational patterns.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#BillOfMaterials -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#BillOfMaterials">
@@ -9072,7 +9556,7 @@ hasSustainabilityPreference can be used to track and prioritize eco-conscious cu
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CustomerMetadata">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ClassMetadata"/>
-        <j.0:blueprintClass>CustomerBlueprint</j.0:blueprintClass>
+        <j.0:blueprintClass>ProductBlueprint</j.0:blueprintClass>
     </owl:Class>
     
 
@@ -9080,8 +9564,10 @@ hasSustainabilityPreference can be used to track and prioritize eco-conscious cu
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DeliveryDelayEvent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DeliveryDelayEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ActionableEvent"/>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsEvent"/>
-        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>Represents a logistics-related actionable event where a delay in delivery is detected or predicted, requiring corrective actions such as rescheduling or rerouting.</rdfs:comment>
     </owl:Class>
     
 
@@ -9101,10 +9587,31 @@ It answers key questions like:
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DerivedEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DerivedEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>DerivedEvent represents an event that is inferred, aggregated, or computed from one or more observation events or data sources. It captures higher-level semantics such as threshold violations, anomalies, predictions, or correlations, and serves as the basis for decision-making and system responses within the Smart Manufacturing Network.
+this is the most important class in the Event hierarchy. This is where the model moves from data representation → intelligence (CEP, reasoning, disruption, KPIs).</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Designer -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Designer">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Employee"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DisruptionEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DisruptionEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DerivedEvent"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>DisruptionEvent represents a type of DerivedEvent that indicates a significant disturbance or interruption affecting operations, resources, or supply chain continuity. It captures events with potential high impact requiring mitigation or adaptation.</rdfs:comment>
     </owl:Class>
     
 
@@ -9159,23 +9666,8 @@ It answers key questions like:
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsEvent"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaintenanceEvent"/>
-                    <rdf:Description rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionEvent"/>
-                </owl:unionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:comment>Superclass for all events detected in the Smart Manufacturing Network.
-An Event represents a significant occurrence detected by the digital twin through sensor observations, indicating operational changes, disruptions, anomalies, or maintenance conditions affecting manufacturing, logistics, or equipment performance.
-Examples include:
-•	production bottlenecks
-•	shipment delays
-•	machine failures
-•	predictive maintenance alerts
-Events are typically triggered by sensor observations and may affect production processes, machines, logistics operations, or maintenance schedules.</rdfs:comment>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>Event is an abstract class representing any occurrence within the Smart Manufacturing Network (SMN) that is detected, derived, or predicted based on sensor data, system monitoring, or external inputs. Events capture changes in system state and may affect production processes, resources, logistics, or overall network performance. They serve as the basis for monitoring, analysis, and decision-making within Digital Twins</rdfs:comment>
     </owl:Class>
     
 
@@ -9215,6 +9707,15 @@ Events are typically triggered by sensor observations and may affect production 
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#KPIEvaluation">
+        <rdfs:comment>Represents a specific execution instance of a KPI computation. It captures the evaluation context, inputs, timing, and resulting value of a KPI when triggered by an event or request.
+It enables traceability, temporal tracking, and auditability of KPI calculations within the BMS.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LaborRole -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LaborRole">
@@ -9249,8 +9750,9 @@ Events are typically triggered by sensor observations and may affect production 
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsEvent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsEvent">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
-        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DerivedEvent"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>LogisticsEvent represents a type of DerivedEvent associated with transportation, delivery, and movement of goods within the supply chain. It captures events affecting logistics operations, timing, and coordination.</rdfs:comment>
     </owl:Class>
     
 
@@ -9339,8 +9841,9 @@ Maintenance history could be modeled as a separate class (MaintenanceLog) to ena
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaintenanceEvent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaintenanceEvent">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
-        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DerivedEvent"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>MaintenanceEvent represents a type of DerivedEvent related to the condition, performance, or failure risk of equipment and machinery. It captures events associated with maintenance needs, degradation, or operational anomalies affecting assets.</rdfs:comment>
     </owl:Class>
     
 
@@ -9406,6 +9909,16 @@ Maintenance history could be modeled as a separate class (MaintenanceLog) to ena
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ObservationEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ObservationEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>ObservationEvent represents an event that encapsulates a recorded observation and links it to the underlying measurement data without duplicating it.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#OperationSustainability">
@@ -9454,11 +9967,23 @@ Maintenance history could be modeled as a separate class (MaintenanceLog) to ena
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#PredictionEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#PredictionEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#AnalyticalEvent"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>PredictionEvent represents an AnalyticalEvent that estimates a future state or condition based on current and historical data using analytical or predictive models.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#PredictiveMaintenanceEvent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#PredictiveMaintenanceEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ActionableEvent"/>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#MaintenanceEvent"/>
-        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>Represents an actionable event indicating that maintenance should be performed based on predicted equipment conditions or degradation.</rdfs:comment>
     </owl:Class>
     
 
@@ -9659,8 +10184,10 @@ hasDocumentLink can store a path to a file in a DMS or ERP.</rdfs:comment>
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionBottleneckEvent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionBottleneckEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ActionableEvent"/>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionEvent"/>
-        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>Represents an actionable event indicating a bottleneck in the production process that requires intervention to maintain efficiency and throughput.</rdfs:comment>
     </owl:Class>
     
 
@@ -9668,8 +10195,9 @@ hasDocumentLink can store a path to a file in a DMS or ERP.</rdfs:comment>
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionEvent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductionEvent">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Event"/>
-        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DerivedEvent"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>ProductionEvent represents a type of DerivedEvent that is related to production processes, operations, or resources within the manufacturing system. It captures situations affecting production performance, flow, capacity, or execution.</rdfs:comment>
     </owl:Class>
     
 
@@ -9883,6 +10411,16 @@ hasDocumentLink can store a path to a file in a DMS or ERP.</rdfs:comment>
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SensorObservationEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#SensorObservationEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ObservationEvent"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>SensorObservationEvent is a specialization of ObservationEvent representing events generated from sensor-based observations.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Shipment">
@@ -10052,11 +10590,24 @@ Contracts can also be filtered by hasSustainabilityClause = true for eco-focused
     
 
 
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ThresholdViolationEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ThresholdViolationEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#AnalyticalEvent"/>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>ThresholdViolationEvent represents an AnalyticalEvent that occurs when a measured parameter exceeds or falls below a predefined threshold.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#TransportationDisruptionEvent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#TransportationDisruptionEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ActionableEvent"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#DisruptionEvent"/>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#LogisticsEvent"/>
-        <j.0:blueprintClass>SensorBlueprint</j.0:blueprintClass>
+        <j.0:blueprintClass>EventBlueprint</j.0:blueprintClass>
+        <rdfs:comment>Represents an actionable event indicating a disruption in transportation that impacts logistics operations and requires mitigation actions.</rdfs:comment>
     </owl:Class>
     
 
@@ -10251,7 +10802,7 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CERT-ENV-2024-001">
         <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
-        <j.0:CertificationType>Sustainability</j.0:CertificationType>
+        <j.0:certificationType>Sustainability</j.0:certificationType>
         <j.0:hasCertificationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-03-15T00:00:00</j.0:hasCertificationDate>
         <j.0:hasCertificationID>CERT-ENV-2024-001</j.0:hasCertificationID>
         <j.0:hasCertificationName>ISO 14001:2015</j.0:hasCertificationName>
@@ -10269,7 +10820,7 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CERT-ENV-2024-002">
         <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
         <j.0:certifiesProduct rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product_1"/>
-        <j.0:CertificationType>Sustainability</j.0:CertificationType>
+        <j.0:certificationType>Sustainability</j.0:certificationType>
         <j.0:hasCertificationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-04-20T00:00:00</j.0:hasCertificationDate>
         <j.0:hasCertificationID>CERT-ENV-2024-002</j.0:hasCertificationID>
         <j.0:hasCertificationName>Cradle to Cradle Certified® Bronze</j.0:hasCertificationName>
@@ -10287,7 +10838,7 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CERT-FSC-2023-0421-Sustain-Product">
         <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
         <j.0:certifiesProduct rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Product_1"/>
-        <j.0:CertificationType>Sustainability</j.0:CertificationType>
+        <j.0:certificationType>Sustainability</j.0:certificationType>
         <j.0:hasCertificationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2023-04-21T00:00:00</j.0:hasCertificationDate>
         <j.0:hasCertificationID>FSC-C123456</j.0:hasCertificationID>
         <j.0:hasCertificationName>FSC Chain of Custody</j.0:hasCertificationName>
@@ -10305,7 +10856,7 @@ If a workflow engine or ERP-style system is needed, WorkOrder can serve as a con
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#CERT-FSC-2024-001">
         <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#Certification"/>
         <j.0:certifiesMaterial rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#WalnutWood"/>
-        <j.0:CertificationType>Sustainability</j.0:CertificationType>
+        <j.0:certificationType>Sustainability</j.0:certificationType>
         <j.0:hasCertificationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-02-15T00:00:00</j.0:hasCertificationDate>
         <j.0:hasCertificationID>CERT-FSC-2024-001</j.0:hasCertificationID>
         <j.0:hasCertificationName>FSC (Forest Stewardship Council)</j.0:hasCertificationName>
