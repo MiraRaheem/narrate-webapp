@@ -216,6 +216,9 @@ public class AddIndividualServlet2 extends HttpServlet {
                         StandardCopyOption.REPLACE_EXISTING
                 );
 
+                // ✅ DEBUG AFTER WRITE
+                System.out.println("Size AFTER: " + finalFile.length());
+                System.out.println("==== END DEBUG ====");
                 // ✅ Reload model
                 OntologyReader.reloadModel();
 
@@ -276,6 +279,4 @@ public class AddIndividualServlet2 extends HttpServlet {
         public String getValue() { return value; }
     }
 
-    System.out.println("Size AFTER: " + finalFile.length());
-System.out.println("==== END DEBUG ====");
 }
