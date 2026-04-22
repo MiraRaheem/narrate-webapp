@@ -203,6 +203,11 @@ public class AddIndividualServlet2 extends HttpServlet {
                 }
 
                 File finalFile = new File(ONTOLOGY_PATH);
+                System.out.println("=== DEBUG ONTOLOGY WRITE ===");
+                System.out.println("Path: " + finalFile.getAbsolutePath());
+                System.out.println("Exists: " + finalFile.exists());
+                System.out.println("Writable: " + finalFile.canWrite());
+                System.out.println("Size BEFORE: " + finalFile.length());
 
                 // ✅ Reliable replace (fixes renameTo issues)
                 Files.move(
@@ -270,4 +275,7 @@ public class AddIndividualServlet2 extends HttpServlet {
         public String getProperty() { return property; }
         public String getValue() { return value; }
     }
+
+    System.out.println("Size AFTER: " + finalFile.length());
+System.out.println("==== END DEBUG ====");
 }
