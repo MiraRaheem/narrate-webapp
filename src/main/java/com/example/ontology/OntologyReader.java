@@ -14,7 +14,13 @@ import org.apache.jena.util.iterator.ExtendedIterator;
 import org.apache.jena.vocabulary.RDFS;
 import org.apache.jena.vocabulary.XSD;
 import org.apache.jena.vocabulary.OWL;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.ontology.Individual;
 /**
  *
  * @author amal.elgammal
@@ -1536,6 +1542,41 @@ public class OntologyReader {
 
         return individuals;
     }
+
+
+
+    public Map<String, List<String>> getIndividualDetailsMulti(String individualName) {
+
+    Map<String, List<String>> details = new HashMap<>();
+
+    Individual individual = model.getIndividual(NS + individualName);
+
+    if (individual == null) {
+        return details;
+    }
+
+    StmtIterator stmts = individual.listProperties();
+
+    while (stmts.hasNext()) {
+
+        Statement stmt = stmts.nextStatement();
+
+        String propertyName = stmt.getPredicate().getLocalName();
+
+        String value;
+
+        if (stmt.getObject().isResource()) {
+            value = stmt.getObject().asResource().getURI();
+        } else {
+            value = stmt.getObject().asLiteral().getString();
+        }
+
+        details.computeIfAbsent(propertyName, k -> new ArrayList<>())
+               .add(value);
+    }
+
+    return details;
+}
 
 }
 
