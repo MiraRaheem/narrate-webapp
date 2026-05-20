@@ -155,42 +155,7 @@ if (parts.length == 2 && parts[0].equals("full")) {
             )));
             e.printStackTrace();
         }
-    }
-
-
-
-    public Map<String, List<String>> getIndividualDetailsMulti(String individualName) {
-
-    Map<String, List<String>> details = new HashMap<>();
-
-    Individual individual = model.getIndividual(NS + individualName);
-
-    if (individual == null) {
-        return details;
-    }
-
-    StmtIterator stmts = individual.listProperties();
-
-    while (stmts.hasNext()) {
-
-        Statement stmt = stmts.nextStatement();
-
-        String propertyName = stmt.getPredicate().getLocalName();
-
-        String value;
-
-        if (stmt.getObject().isResource()) {
-            value = stmt.getObject().asResource().getURI();
-        } else {
-            value = stmt.getObject().asLiteral().getString();
-        }
-
-        details.computeIfAbsent(propertyName, k -> new ArrayList<>())
-               .add(value);
-    }
-
-    return details;
-}
+            }
 
 
 
