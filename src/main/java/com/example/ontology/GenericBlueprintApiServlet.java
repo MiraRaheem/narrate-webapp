@@ -83,6 +83,31 @@ public class GenericBlueprintApiServlet extends HttpServlet {
 
         try {
             //OntologyReader ontologyReader = OntologyReader.getInstance();
+            // =====================================
+// CASE SPECIAL: MULTI VALUE DETAILS
+// /api/full/{id}
+// =====================================
+
+if (parts.length == 2 && parts[0].equals("full")) {
+
+    String individualId = parts[1];
+
+    Map<String, List<String>> details =
+            ontologyReader.getIndividualDetailsMulti(individualId);
+
+    if (details == null || details.isEmpty()) {
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        out.print("{\"error\":\"Individual not found.\"}");
+        return;
+    }
+
+    out.print(gson.toJson(Map.of(
+            "instance", individualId,
+            "data", details
+    )));
+
+    return;
+}
 
             // CASE 1: /api/{className}
             if (parts.length == 1) {
@@ -509,4 +534,41 @@ public class GenericBlueprintApiServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+}
+
+
+
+
+
+public Map<String, List<String>> getIndividualDetailsMulti(String individualName) {
+
+    Map<String, List<String>> details = new HashMap<>();
+
+    Individual individual = model.getIndividual(NS + individualName);
+
+    if (individual == null) {
+        return details;
+    }
+
+    StmtIterator stmts = individual.listProperties();
+
+    while (stmts.hasNext()) {
+
+        Statement stmt = stmts.nextStatement();
+
+        String propertyName = stmt.getPredicate().getLocalName();
+
+        String value;
+
+        if (stmt.getObject().isResource()) {
+            value = stmt.getObject().asResource().getURI();
+        } else {
+            value = stmt.getObject().asLiteral().getString();
+        }
+
+        details.computeIfAbsent(propertyName, k -> new ArrayList<>())
+               .add(value);
+    }
+
+    return details;
 }
