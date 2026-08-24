@@ -26,6 +26,24 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * @author amal.elgammal
  */
+private <T> T withReadLock(java.util.function.Supplier<T> action) {
+    MODEL_LOCK.readLock().lock();
+    try {
+        return action.get();
+    } finally {
+        MODEL_LOCK.readLock().unlock();
+    }
+}
+
+private void withWriteLock(Runnable action) {
+    MODEL_LOCK.writeLock().lock();
+    try {
+        action.run();
+    } finally {
+        MODEL_LOCK.writeLock().unlock();
+    }
+}
+
 public class OntologyReader {
 
     // ✅ Docker-safe path (ONLY real change)
