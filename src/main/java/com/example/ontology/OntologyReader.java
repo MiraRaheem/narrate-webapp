@@ -25,6 +25,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import org.apache.jena.vocabulary.RDF;
 /**
  *
  * @author amal.elgammal
