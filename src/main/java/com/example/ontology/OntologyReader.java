@@ -148,20 +148,28 @@ public static void reloadModel() {
 
    // Method to get all classes
     public Set<String> getOntologyClasses() {
+    return withReadLock(() -> {
+
         Set<String> classSet = new HashSet<>();
-        ExtendedIterator<OntClass> classIter = model.listClasses();
+
+        ExtendedIterator<OntClass> classIter =
+                model.listClasses();
 
         while (classIter.hasNext()) {
             OntClass ontClass = classIter.next();
+
             if (ontClass.getLocalName() != null) {
-                classSet.add(ontClass.getLocalName());
+                classSet.add(
+                        ontClass.getLocalName()
+                );
             }
         }
 
         return classSet;
-    }
-
+    });
+}
     public List<Map<String, Object>> getDataPropertiesWithMeta(String className) {
+        return withReadLock(() -> {
         List<Map<String, Object>> result = new ArrayList<>();
         OntClass ontClass = model.getOntClass(NS + className);
 
@@ -213,10 +221,12 @@ public static void reloadModel() {
         // Sort by displayOrder
         result.sort(Comparator.comparingInt(p -> (int) p.get("order")));
         return result;
-    }
+    });
+}
 
     // New method to return Data Property names + comments
     public Map<String, String> getDataPropertiesWithComments(String className) {
+        return withReadLock(() -> {
         Map<String, String> propertiesWithComments = new HashMap<>();
         OntClass ontClass = model.getOntClass(NS + className);
 
@@ -239,9 +249,11 @@ public static void reloadModel() {
             }
         }
         return propertiesWithComments;
-    }
+    });
+}
 
     public Set<String> getDataProperties(String className) {
+        return withReadLock(() -> {
         Set<String> properties = new HashSet<>();
         OntClass ontClass = model.getOntClass(NS + className);
 
@@ -266,7 +278,8 @@ public static void reloadModel() {
             }
         }
         return properties;
-    }
+    });
+}
 
     /* public Set<String> getObjectProperties(String className) {
         Set<String> properties = new HashSet<>();
@@ -295,6 +308,7 @@ public static void reloadModel() {
         return properties;
     }*/
     public Set<String> getObjectProperties(String className, boolean excludeInverses) {
+        return withReadLock(() -> {
         System.out.println("Entering getObjectProperties method");
         //OntologyReader.reloadModel();
         Set<String> properties = new HashSet<>();
@@ -329,13 +343,16 @@ public static void reloadModel() {
         }
 
         return properties;
-    }
+    });
+}
 
     public Set<String> getObjectProperties(String className) {
         return getObjectProperties(className, true); // Default: exclude inverses
     }
 
     public Map<String, String> getObjectPropertiesWithComments(String className, boolean excludeInverses) {
+        return withReadLock(() -> {
+
         System.out.println("Entering getObjectPropertiesWithComments method");
         Map<String, String> propertiesWithComments = new HashMap<>();
         OntClass ontClass = model.getOntClass(NS + className);
@@ -371,9 +388,11 @@ public static void reloadModel() {
         }
 
         return propertiesWithComments;
+    });
     }
 
     public Map<String, String> getDataPropertiesForIndividual(String individualName) {
+        return withReadLock(() -> {
         Map<String, String> dataProperties = new HashMap<>();
         Individual individual = model.getIndividual(NS + individualName);
         if (individual != null) {
@@ -386,11 +405,14 @@ public static void reloadModel() {
             }
         }
         return dataProperties;
-    }
+    });
+}
 
     //not used across application
     public Map<String, String> getObjectPropertiesForIndividual(String individualName) {
-        Map<String, String> objectProperties = new HashMap<>();
+        return withReadLock(() -> {
+
+            Map<String, String> objectProperties = new HashMap<>();
         Individual individual = model.getIndividual(NS + individualName);
         if (individual != null) {
             StmtIterator it = individual.listProperties();
@@ -402,9 +424,11 @@ public static void reloadModel() {
             }
         }
         return objectProperties;
+    });
     }
 
     public Set<String> getInstancesOfClass(String className) {
+        return withReadLock(() -> {
         Set<String> instances = new HashSet<>();
         OntClass ontClass = model.getOntClass(NS + className);
 
@@ -426,7 +450,8 @@ public static void reloadModel() {
             }
         }
         return instances;
-    }
+    });
+}
 
     /**
      * Retrieves the range class of an object property.
@@ -435,6 +460,7 @@ public static void reloadModel() {
      * @return The name of the range class, or null if not found.
      */
     public String getRangeClass(String objectProperty) {
+        return withReadLock(() -> {
         ObjectProperty prop = model.getObjectProperty(NS + objectProperty);
 
         if (prop == null) {
@@ -458,10 +484,12 @@ public static void reloadModel() {
             }
         }
         return null;
+    });
     }
 
     //not used across application
     public Map<String, String> getIndividualDetails(String individualName) {
+        return withReadLock(() -> {
         Map<String, String> details = new HashMap<>();
         Individual individual = model.getIndividual(NS + individualName);
         if (individual != null) {
@@ -476,6 +504,7 @@ public static void reloadModel() {
             }
         }
         return details;
+    });
     }
 
     public boolean deleteIndividual(String individualName) {
@@ -583,6 +612,7 @@ public static void reloadModel() {
 }
     
     public List<String> getIndividualTriples(String individualName) {
+        return withReadLock(() -> {
         List<String> triples = new ArrayList<>();
         Individual individual = model.getIndividual(NS + individualName);
 
@@ -606,6 +636,7 @@ public static void reloadModel() {
         }
 
         return triples;
+    });
     }
 
 public boolean updateIndividual(
@@ -1441,6 +1472,7 @@ public boolean updateIndividual(
     }
 }    
     public Map<String, Map<String, Integer>> getPropertyCardinalities(String className) {
+        return withReadLock(() -> {
         Map<String, Map<String, Integer>> cardinalityMap = new HashMap<>();
         OntClass ontClass = model.getOntClass(NS + className);
 
@@ -1473,9 +1505,11 @@ public boolean updateIndividual(
         }
 
         return cardinalityMap;
+    });
     }
 
     public Map<String, Map<String, Integer>> getCardinalities(String className) {
+        return withReadLock(() -> {
         System.out.println("📌 Fetching cardinalities for class: " + className);
 
         Map<String, Map<String, Integer>> cardinalityMap = new HashMap<>();
@@ -1563,9 +1597,11 @@ public boolean updateIndividual(
 
         System.out.println("📦 Final cardinalities map: " + cardinalityMap);
         return cardinalityMap;
+    });
     }
 
     public Map<String, List<String>> getAllDataPropertiesForIndividual(String individualName) {
+        return withReadLock(() -> {
         Map<String, List<String>> dataProperties = new HashMap<>();
         Individual individual = model.getIndividual(NS + individualName);
 
@@ -1594,10 +1630,12 @@ public boolean updateIndividual(
         }
 
         return dataProperties;
+    });
     }
 
     //not used across application
     public Map<String, List<String>> getAllObjectPropertiesForIndividual(String individualName) {
+        return withReadLock(() -> {
         Map<String, List<String>> objectProperties = new HashMap<>();
         Individual individual = model.getIndividual(NS + individualName);
 
@@ -1615,9 +1653,11 @@ public boolean updateIndividual(
         }
 
         return objectProperties;
+    });
     }
 
     public Map<String, List<String>> getAllObjectPropertiesWithReasoner(String individualName) {
+        return withReadLock(() -> {
         OntModel reasonedModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF, model);
         Map<String, List<String>> objectProperties = new HashMap<>();
         Individual individual = reasonedModel.getIndividual(NS + individualName);
@@ -1636,6 +1676,7 @@ public boolean updateIndividual(
         }
 
         return objectProperties;
+    });
     }
 
 // Helper classes to handle data structure for AJAX request
@@ -1688,6 +1729,7 @@ public boolean updateIndividual(
             Map<String, List<String>> objectProps,
             boolean includeFuzzy,
             double fuzzyThreshold) {
+        return withReadLock(() -> {
 
         Set<String> matchedIndividuals = new HashSet<>();
         Map<String, Map<String, String>> similarityNotes = new HashMap<>();
@@ -1876,6 +1918,7 @@ public boolean updateIndividual(
         return result;
 
         //return similarityNotes;
+    });
     }
 
     private double computeStringSimilarity(String a, String b) {
@@ -1892,6 +1935,7 @@ public boolean updateIndividual(
     }
 
     public Set<String> getNumericDataProperties(String className) {
+        return withReadLock(() -> {
         Set<String> numericProps = new HashSet<>();
         Set<String> dataProps = getDataProperties(className);
         for (String prop : dataProps) {
@@ -1910,10 +1954,12 @@ public boolean updateIndividual(
             }
         }
         return numericProps;
+    });
     }
 
 // 🗓️ Get Date Properties
     public Set<String> getDateDataProperties(String className) {
+        return withReadLock(() -> {
         Set<String> dateProps = new HashSet<>();
         OntClass ontClass = model.getOntClass(NS + className);
 
@@ -1937,9 +1983,11 @@ public boolean updateIndividual(
             }
         }
         return dateProps;
+    });
     }
 
     public Set<String> getDateTimeStampProperties(String className) {
+        return withReadLock(() -> {
         Set<String> props = new HashSet<>();
         OntClass ontClass = model.getOntClass(NS + className);
 
@@ -1966,10 +2014,12 @@ public boolean updateIndividual(
             }
         }
         return props;
+    });
     }
 
 // 🌐 Get URI Properties
     public Set<String> getURIDataProperties(String className) {
+        return withReadLock(() -> {
         Set<String> uriProps = new HashSet<>();
         OntClass ontClass = model.getOntClass(NS + className);
 
@@ -1990,9 +2040,11 @@ public boolean updateIndividual(
             }
         }
         return uriProps;
+    });
     }
 
     public Map<String, String> getDataPropertyRanges(String className) {
+        return withReadLock(() -> {
         Map<String, String> propertyRanges = new HashMap<>();
         Set<String> dataProps = getDataProperties(className);
 
@@ -2014,10 +2066,12 @@ public boolean updateIndividual(
         }
 
         return propertyRanges;
+    });
     }
 
     public Map<String, List<String>> getEnumeratedDataProperties(String className) {
-        Map<String, List<String>> enumMap = new HashMap<>();
+        return withReadLock(() -> {
+            Map<String, List<String>> enumMap = new HashMap<>();
 
         OntClass ontClass = model.getOntClass(NS + className);
         if (ontClass == null) {
@@ -2076,10 +2130,12 @@ public boolean updateIndividual(
 
         System.out.println("📦 Final enumerated properties for class " + className + ": " + enumMap);
         return enumMap;
+    });
     }
 
     public Map<String, Map<String, Map<String, List<String>>>> getIndividualsPropertiesForComparison(String className, List<String> individuals) {
-        Map<String, Map<String, Map<String, List<String>>>> result = new HashMap<>();
+        return withReadLock(() -> {
+            Map<String, Map<String, Map<String, List<String>>>> result = new HashMap<>();
 
         for (String individualName : individuals) {
             Map<String, List<String>> dataMap = getAllDataPropertiesForIndividual(individualName);
@@ -2093,10 +2149,12 @@ public boolean updateIndividual(
         }
 
         return result;
+    });
     }
 
     public Map<String, List<Double>> getAllNumericPropertyValues(String className) {
-        Map<String, List<Double>> statsMap = new HashMap<>();
+        return withReadLock(() -> {
+            Map<String, List<Double>> statsMap = new HashMap<>();
         Set<String> numericProps = getNumericDataProperties(className);
         OntClass cls = model.getOntClass(NS + className);
 
@@ -2121,10 +2179,12 @@ public boolean updateIndividual(
             }
         }
         return statsMap;
+    });
     }
 
     //Enforce specific order for showing data and object properties in the UI based on "displayOrder" metadata
     private int getDisplayOrder(OntProperty prop) {
+        return withReadLock(() -> {
         for (StmtIterator annots = prop.listProperties(); annots.hasNext();) {
             Statement stmt = annots.nextStatement();
             if (stmt.getPredicate().getLocalName().equals("displayOrder") && stmt.getObject().isLiteral()) {
@@ -2136,10 +2196,12 @@ public boolean updateIndividual(
             }
         }
         return Integer.MAX_VALUE; // No order defined → push to bottom
+    });
     }
 
     public Map<String, List<String>> getInverseObjectProperties(String individualName) {
-        System.out.println("🔍 Checking inverse object properties for individual: " + individualName);
+        return withReadLock(() -> {
+            System.out.println("🔍 Checking inverse object properties for individual: " + individualName);
 
         OntModel reasonedModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF, model);
         Map<String, List<String>> inverseProps = new HashMap<>();
@@ -2160,10 +2222,12 @@ public boolean updateIndividual(
         }
 
         return inverseProps;
+    });
     }
 
     //returns a map of blueprint classes and a passed annotation
     public Map<String, List<String>> getClassGroupingsByAnnotation(String annotationName) {
+        return withReadLock(() -> {
 
         System.out.println("🔍 Annotation requested: " + annotationName);
 
@@ -2220,6 +2284,7 @@ public boolean updateIndividual(
 
         System.out.println("✅ Grouping complete. Groups found: " + grouped.size());
         return grouped;
+    });
     }
 
     /**
@@ -2265,7 +2330,8 @@ public boolean updateIndividual(
         return values;
     } */
     public List<String> getObjectPropertyValues(String subject, String propertyName) {
-        System.out.println("[DEBUG] Fetching list of object values for '" + propertyName + "' from subject '" + subject + "'");
+        return withReadLock(() -> {
+            System.out.println("[DEBUG] Fetching list of object values for '" + propertyName + "' from subject '" + subject + "'");
 
         List<String> values = new ArrayList<>();
 
@@ -2298,13 +2364,15 @@ public boolean updateIndividual(
         }
 
         return values;
+    });
     }
 
     // Retrieves all instances of a given class, including instances of its subclasses using reasoning.
 // Each instance is returned with its most specific subclass type for clearer UI representation.
 // Useful when object property ranges are abstract superclasses with no direct instances.
     public List<Map<String, String>> getInstancesWithTypes(String className) {
-        List<Map<String, String>> results = new ArrayList<>();
+        return withReadLock(() -> {
+            List<Map<String, String>> results = new ArrayList<>();
 
         OntClass parentClass = model.getOntClass(NS + className);
         if (parentClass == null) {
@@ -2353,11 +2421,13 @@ public boolean updateIndividual(
         }
 
         return results;
+    });
     }
 
     // 🔧 Add this method to OntologyReader.java
     public List<String> getIndividualsByClass(String className) {
-        List<String> individuals = new ArrayList<>();
+        return withReadLock(() -> {
+            List<String> individuals = new ArrayList<>();
 
         OntClass ontClass = model.getOntClass(NS + className);
         if (ontClass != null) {
@@ -2369,12 +2439,13 @@ public boolean updateIndividual(
         }
 
         return individuals;
+    });
     }
 
 
 
     public Map<String, List<String>> getIndividualDetailsMulti(String individualName) {
-
+return withReadLock(() -> {
     Map<String, List<String>> details = new HashMap<>();
 
     Individual individual = model.getIndividual(NS + individualName);
@@ -2406,5 +2477,6 @@ public boolean updateIndividual(
     return details;
 }
 
-}
+});
+    }
 
