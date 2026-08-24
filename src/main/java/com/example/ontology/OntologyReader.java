@@ -1026,7 +1026,7 @@ public boolean updateIndividual(
 
                                     if (!val.endsWith("Z")
                                             && !val.matches(
-                                            ".*[+-]\\d{2}:\\d{2}$"
+                                            ".*[+-]\\\d{2}:\\\d{2}$"
                                     )) {
 
                                         val += "Z";
@@ -1282,8 +1282,7 @@ public boolean updateIndividual(
                     // ---------------------------------------------
 
                     if (!objectValue.startsWith("http://")
-                            && !objectValue.startsWith("https://")) {
-
+        && !objectValue.startsWith("https://")) {
                         objectValue =
                                 NS + objectValue;
                     }
