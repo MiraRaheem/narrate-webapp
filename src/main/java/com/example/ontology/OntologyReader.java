@@ -25,7 +25,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.math.BigDecimal;
 import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
+import org.apache.jena.vocabulary.XSD;
 /**
  *
  * @author amal.elgammal
