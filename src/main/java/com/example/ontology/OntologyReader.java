@@ -62,7 +62,7 @@ public class OntologyReader {
 
     private static volatile OntModel model;
     private static volatile OntologyReader instance;
-    private static final ReentrantReadWriteLock MODEL_LOCK =
+    static final ReentrantReadWriteLock MODEL_LOCK =
         new ReentrantReadWriteLock();
     
 
