@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.ontology.Individual;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  *
  * @author amal.elgammal
@@ -43,6 +44,9 @@ public class OntologyReader {
 
     private static volatile OntModel model;
     private static volatile OntologyReader instance;
+    private static final ReentrantReadWriteLock MODEL_LOCK =
+        new ReentrantReadWriteLock();
+    
 
     private static final String OWL_NS = "http://www.w3.org/2002/07/owl#";
     private static final Property OWL_MIN_QUALIFIED_CARDINALITY = ResourceFactory.createProperty(OWL_NS + "minQualifiedCardinality");
@@ -83,21 +87,28 @@ public class OntologyReader {
     }
 
     public static void reloadModel() {
-        System.out.println("♻️ Reloading Ontology Model...");
-        synchronized (OntologyReader.class) {
-            loadOntologyModel();
-            System.out.println("✅ Ontology model reloaded successfully.");
+    System.out.println("♻️ Reloading Ontology Model...");
 
-            System.out.println("📌 Individuals After Reload:");
-            for (OntClass cls : model.listNamedClasses().toList()) {
-                for (ExtendedIterator<? extends OntResource> i = cls.listInstances(); i.hasNext();) {
-                    Individual ind = (Individual) i.next();
-                    System.out.println("🔹 " + ind.getLocalName());
-                }
+    MODEL_LOCK.writeLock().lock();
+    try {
+        loadOntologyModel();
+
+        System.out.println("✅ Ontology model reloaded successfully.");
+        System.out.println("📌 Individuals After Reload:");
+
+        for (OntClass cls : model.listNamedClasses().toList()) {
+            for (ExtendedIterator<? extends OntResource> i =
+                    cls.listInstances(); i.hasNext();) {
+
+                Individual ind = (Individual) i.next();
+                System.out.println("🔹 " + ind.getLocalName());
             }
         }
+    } finally {
+        MODEL_LOCK.writeLock().unlock();
     }
-
+}
+    
     public static OntModel getModel() {
         return model;
     }
