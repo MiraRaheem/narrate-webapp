@@ -141,6 +141,7 @@ public static void reloadModel() {
     public static OntModel getModel() {
         return model;
     }
+    
 
     public OntModel getReasonedModel() {
         return ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF, model);
@@ -350,37 +351,53 @@ public static void reloadModel() {
         return getObjectProperties(className, true); // Default: exclude inverses
     }
 
-    public Map<String, String> getObjectPropertiesWithComments(String className, boolean excludeInverses) {
-        return withReadLock(() -> {
+    public Map<String, String> getObjectPropertiesWithComments(
+        String className,
+        boolean excludeInverses) {
 
-        System.out.println("Entering getObjectPropertiesWithComments method");
+    return withReadLock(() -> {
+
         Map<String, String> propertiesWithComments = new HashMap<>();
+
         OntClass ontClass = model.getOntClass(NS + className);
 
         if (ontClass != null) {
-            for (Iterator<ObjectProperty> it = model.listObjectProperties(); it.hasNext();) {
+
+            for (Iterator<ObjectProperty> it = model.listObjectProperties();
+                    it.hasNext();) {
+
                 ObjectProperty op = it.next();
 
                 if (excludeInverses) {
-                    StmtIterator invCheck = model.listStatements(op, OWL.inverseOf, (RDFNode) null);
-                    if (invCheck.hasNext()) {
-                        System.out.println("⛔ Skipping inverse-only property: " + op.getLocalName());
-                        continue;
-                    }
+                    ...
                 }
 
-                for (ExtendedIterator<? extends Resource> itDomain = op.listDomain(); itDomain.hasNext();) {
+                for (ExtendedIterator<? extends Resource> itDomain =
+                        op.listDomain(); itDomain.hasNext();) {
+
                     Resource domain = itDomain.next();
 
                     if (domain.canAs(OntClass.class)) {
-                        OntClass domainClass = domain.as(OntClass.class);
 
-                        if (domainClass.equals(ontClass) || ontClass.hasSuperClass(domainClass, true)) {
+                        OntClass domainClass =
+                                domain.as(OntClass.class);
+
+                        if (domainClass.equals(ontClass)
+                                || ontClass.hasSuperClass(domainClass, true)) {
+
                             String comment = "";
+
                             if (op.hasProperty(RDFS.comment)) {
-                                comment = op.getProperty(RDFS.comment).getObject().asLiteral().getString();
+                                comment = op.getProperty(RDFS.comment)
+                                        .getObject()
+                                        .asLiteral()
+                                        .getString();
                             }
-                            propertiesWithComments.put(op.getLocalName(), comment);
+
+                            propertiesWithComments.put(
+                                    op.getLocalName(),
+                                    comment
+                            );
                         }
                     }
                 }
@@ -389,8 +406,7 @@ public static void reloadModel() {
 
         return propertiesWithComments;
     });
-    }
-
+}
     public Map<String, String> getDataPropertiesForIndividual(String individualName) {
         return withReadLock(() -> {
         Map<String, String> dataProperties = new HashMap<>();
