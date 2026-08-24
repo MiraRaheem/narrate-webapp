@@ -37,7 +37,8 @@ import org.apache.jena.vocabulary.XSD;
  */
 
 public class OntologyReader {
-    private <T> T withReadLock(java.util.function.Supplier<T> action) {
+
+private <T> T withReadLock(java.util.function.Supplier<T> action) {
     MODEL_LOCK.readLock().lock();
     try {
         return action.get();
@@ -2491,8 +2492,9 @@ return withReadLock(() -> {
     }
 
     return details;
-}
+
 
 });
+    }
     }
 
