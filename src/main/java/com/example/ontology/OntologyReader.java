@@ -477,33 +477,49 @@ public static void reloadModel() {
      * @return The name of the range class, or null if not found.
      */
     public String getRangeClass(String objectProperty) {
-        return withReadLock(() -> {
-        ObjectProperty prop = model.getObjectProperty(NS + objectProperty);
+    return withReadLock(() -> {
+
+        ObjectProperty prop =
+                model.getObjectProperty(NS + objectProperty);
 
         if (prop == null) {
-            System.out.println("Object Property not found: " + objectProperty);
+            System.out.println(
+                    "Object Property not found: "
+                            + objectProperty
+            );
             return null;
         }
 
-        StmtIterator it = model.listStatements(prop, RDFS.range, (RDFNode) null);
+        StmtIterator it =
+                model.listStatements(
+                        prop,
+                        RDFS.range,
+                        (RDFNode) null
+                );
+
         while (it.hasNext()) {
             Statement stmt = it.nextStatement();
-            return stmt.getObject().asResource().getLocalName(); // Found range class
+
+            return stmt.getObject()
+                    .asResource()
+                    .getLocalName();
         }
 
-        return null; // No range class found
-    }
-
-    private String getFullURI(String className) {
-        for (OntClass cls : model.listNamedClasses().toList()) {
-            if (cls.getLocalName() != null && cls.getLocalName().equals(className)) {
-                return cls.getURI();
-            }
-        }
         return null;
     });
+}
+
+private String getFullURI(String className) {
+    for (OntClass cls : model.listNamedClasses().toList()) {
+        if (cls.getLocalName() != null
+                && cls.getLocalName().equals(className)) {
+
+            return cls.getURI();
+        }
     }
 
+    return null;
+}
     //not used across application
     public Map<String, String> getIndividualDetails(String individualName) {
         return withReadLock(() -> {
