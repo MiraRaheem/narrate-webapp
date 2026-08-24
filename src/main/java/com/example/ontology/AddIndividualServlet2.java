@@ -57,8 +57,8 @@ public class AddIndividualServlet2 extends HttpServlet {
                 return;
             }
 
-            synchronized (AddIndividualServlet2.class) {
-
+            OntologyReader.MODEL_LOCK.writeLock().lock();
+            try {
                 // ✅ Load shared model
                 OntologyReader.reloadModel();
                 OntModel model = OntologyReader.getModel();
@@ -69,7 +69,10 @@ public class AddIndividualServlet2 extends HttpServlet {
                     jsonResponse.addProperty("message", "Individual already exists.");
                     response.getWriter().print(jsonResponse);
                     return;
-                }
+                
+                } finally {
+    OntologyReader.MODEL_LOCK.writeLock().unlock();
+}
 
                 // ✅ Get class
                 OntClass ontClass = model.getOntClass(NAMESPACE + data.getClassName());
