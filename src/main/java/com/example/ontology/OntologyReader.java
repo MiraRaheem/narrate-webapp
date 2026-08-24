@@ -370,8 +370,17 @@ public static void reloadModel() {
                 ObjectProperty op = it.next();
 
                 if (excludeInverses) {
-                    ...
-                }
+    StmtIterator invCheck =
+            model.listStatements(
+                    op,
+                    OWL.inverseOf,
+                    (RDFNode) null
+            );
+
+    if (invCheck.hasNext()) {
+        continue;
+    }
+}
 
                 for (ExtendedIterator<? extends Resource> itDomain =
                         op.listDomain(); itDomain.hasNext();) {
@@ -1042,7 +1051,7 @@ public boolean updateIndividual(
 
                                     if (!val.endsWith("Z")
                                             && !val.matches(
-                                            ".*[+-]\\\d{2}:\\\d{2}$"
+                                            ".*[+-]\\d{2}:\\d{2}$"
                                     )) {
 
                                         val += "Z";
