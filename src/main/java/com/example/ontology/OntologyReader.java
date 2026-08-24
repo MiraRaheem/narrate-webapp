@@ -22,11 +22,16 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.ontology.Individual;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 /**
  *
  * @author amal.elgammal
  */
-private <T> T withReadLock(java.util.function.Supplier<T> action) {
+
+public class OntologyReader {
+    private <T> T withReadLock(java.util.function.Supplier<T> action) {
     MODEL_LOCK.readLock().lock();
     try {
         return action.get();
@@ -43,8 +48,6 @@ private void withWriteLock(Runnable action) {
         MODEL_LOCK.writeLock().unlock();
     }
 }
-
-public class OntologyReader {
 
     // ✅ Docker-safe path (ONLY real change)
     private static final String ONTOLOGY_PATH =
@@ -104,10 +107,11 @@ public class OntologyReader {
         }
     }
 
-    public static void reloadModel() {
+public static void reloadModel() {
     System.out.println("♻️ Reloading Ontology Model...");
 
     MODEL_LOCK.writeLock().lock();
+
     try {
         loadOntologyModel();
 
@@ -122,6 +126,7 @@ public class OntologyReader {
                 System.out.println("🔹 " + ind.getLocalName());
             }
         }
+
     } finally {
         MODEL_LOCK.writeLock().unlock();
     }
@@ -468,41 +473,109 @@ public class OntologyReader {
     }
 
     public boolean deleteIndividual(String individualName) {
-        System.out.println("Deleting individual: " + individualName);
 
-        Individual individual = model.getIndividual(NS + individualName);
+    MODEL_LOCK.writeLock().lock();
+
+    try {
+
+        System.out.println(
+                "Deleting individual: " + individualName
+        );
+
+        // Always reload the latest file before modifying it
+        loadOntologyModel();
+
+        Individual individual =
+                model.getIndividual(NS + individualName);
+
         if (individual == null) {
-            System.err.println("Error: Individual " + individualName + " not found.");
+
+            System.err.println(
+                    "Error: Individual "
+                            + individualName
+                            + " not found."
+            );
+
             return false;
         }
 
-        // Log the triples before deletion
-        StmtIterator it = model.listStatements(individual, null, (RDFNode) null);
+        // Log triples before deletion
+        StmtIterator it =
+                model.listStatements(
+                        individual,
+                        null,
+                        (RDFNode) null
+                );
+
         while (it.hasNext()) {
-            System.out.println("Triple found: " + it.nextStatement());
+            System.out.println(
+                    "Triple found: "
+                            + it.nextStatement()
+            );
         }
 
-        // Remove all triples where the individual is subject
-        model.removeAll(individual, null, null);
+        // Remove triples where individual is subject
+        model.removeAll(
+                individual,
+                null,
+                null
+        );
 
-        // Remove all triples where the individual is an object
-        model.removeAll(null, null, individual);
+        // Remove triples where individual is object
+        model.removeAll(
+                null,
+                null,
+                individual
+        );
 
-        System.out.println("Successfully deleted: " + individualName);
+        System.out.println(
+                "Successfully deleted: "
+                        + individualName
+        );
 
-        // Persist changes to OWL file
-        try (FileOutputStream out = new FileOutputStream(ONTOLOGY_PATH)) {
-            model.write(out, "RDF/XML-ABBREV");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+        // Write to temporary file first
+        File tempFile =
+                new File(
+                        ONTOLOGY_PATH + ".tmp"
+                );
+
+        try (FileOutputStream out =
+                     new FileOutputStream(tempFile)) {
+
+            model.write(
+                    out,
+                    "RDF/XML-ABBREV"
+            );
         }
-        reloadModel();
-        System.out.println("📂 Loaded ontology from: " + ONTOLOGY_PATH);
+
+        // Atomically replace ontology
+        Files.move(
+                tempFile.toPath(),
+                new File(ONTOLOGY_PATH).toPath(),
+                StandardCopyOption.REPLACE_EXISTING
+        );
+
+        System.out.println(
+                "📂 Loaded ontology from: "
+                        + ONTOLOGY_PATH
+        );
+
+        // Reload latest version
+        loadOntologyModel();
 
         return true;
-    }
 
+    } catch (IOException e) {
+
+        e.printStackTrace();
+        return false;
+
+    } finally {
+
+        MODEL_LOCK.writeLock().unlock();
+    }
+}
+    
     public List<String> getIndividualTriples(String individualName) {
         List<String> triples = new ArrayList<>();
         Individual individual = model.getIndividual(NS + individualName);
@@ -529,118 +602,447 @@ public class OntologyReader {
         return triples;
     }
 
-//UpdateIndividual Method by taking into consideration numeric values, and multi-value properties
-    public boolean updateIndividual(String className, String individualName,
-            Map<String, Object> dataProps,
-            Map<String, Object> objectProps) {
+public boolean updateIndividual(
+        String className,
+        String individualName,
+        Map<String, Object> dataProps,
+        Map<String, Object> objectProps) {
 
-        System.out.println("🚨 updateIndividual() CALLED!");
-        System.out.println("👉 className: " + className);
-        System.out.println("👉 individualName: " + individualName);
-        System.out.println("👉 dataProps: " + dataProps);
-        System.out.println("👉 objectProps: " + objectProps);
+    System.out.println("🚨 updateIndividual() CALLED!");
+    System.out.println("👉 className: " + className);
+    System.out.println("👉 individualName: " + individualName);
+    System.out.println("👉 dataProps: " + dataProps);
+    System.out.println("👉 objectProps: " + objectProps);
 
-        Individual individual = model.getIndividual(NS + individualName);
+    /*
+     * IMPORTANT:
+     * The entire operation is protected by the WRITE lock.
+     *
+     * This prevents:
+     * - another PUT/update from modifying the ontology simultaneously
+     * - a GET/read from accessing the model while it is being modified
+     * - two requests from writing the RDF file at the same time
+     */
+    MODEL_LOCK.writeLock().lock();
+
+    try {
+
+        /*
+         * Always reload the latest ontology from disk before modifying it.
+         *
+         * This is important because another successful write may have
+         * happened since the current in-memory model was loaded.
+         */
+        System.out.println("♻️ Loading latest ontology before update...");
+        loadOntologyModel();
+
+        Individual individual =
+                model.getIndividual(NS + individualName);
+
         if (individual == null) {
-            System.out.println("❌ Individual not found: " + individualName);
+            System.out.println(
+                    "❌ Individual not found: " + individualName
+            );
             return false;
         }
 
-        // 🔄 Remove all existing properties
+        // =========================================================
+        // 🔄 REMOVE EXISTING PROPERTIES
+        // =========================================================
+
         individual.removeAll(null);
 
-        // 🔍 Detect numeric data properties for this class
-        Set<String> numericProps = getNumericDataProperties(className);
-        System.out.println("🔢 Numeric properties: " + numericProps);
+        // =========================================================
+        // 🔍 DETECT NUMERIC DATA PROPERTIES
+        // =========================================================
 
-        // ✅ Add updated Data Properties
-        for (Map.Entry<String, Object> entry : dataProps.entrySet()) {
-            String prop = entry.getKey();
-            Object rawValue = entry.getValue();
-            Property property = model.getProperty(NS + prop);
-            if (property == null) {
-                continue;
-            }
+        Set<String> numericProps =
+                getNumericDataProperties(className);
 
-            List<Object> values = (rawValue instanceof List)
-                    ? (List<Object>) rawValue
-                    : Collections.singletonList(rawValue);
+        System.out.println(
+                "🔢 Numeric properties: " + numericProps
+        );
 
-            for (Object valueObj : values) {
-                String valueStr = valueObj.toString();
-                Literal typedLiteral;
+        // =========================================================
+        // ✅ ADD UPDATED DATA PROPERTIES
+        // =========================================================
 
-                if (numericProps.contains(prop)) {
-                    if (valueObj instanceof Number) {
-                        double num = ((Number) valueObj).doubleValue();
-                        if (num == Math.floor(num)) {
-                            typedLiteral = model.createTypedLiteral((int) num);
-                            System.out.println("🔢 Parsed Integer for " + prop + ": " + num);
-                        } else {
-                            typedLiteral = model.createTypedLiteral(num);
-                            System.out.println("🔢 Parsed Double for " + prop + ": " + num);
-                        }
-                    } else {
-                        try {
-                            if (valueStr.contains(".")) {
-                                typedLiteral = model.createTypedLiteral(Double.parseDouble(valueStr));
-                            } else {
-                                typedLiteral = model.createTypedLiteral(Integer.parseInt(valueStr));
-                            }
-                            System.out.println("🔢 Parsed from String for " + prop + ": " + valueStr);
-                        } catch (NumberFormatException e) {
-                            System.err.println("⚠️ Failed to parse number for " + prop + ": " + valueStr);
-                            typedLiteral = model.createTypedLiteral(valueStr);
-                        }
+        if (dataProps != null) {
+
+            for (Map.Entry<String, Object> entry
+                    : dataProps.entrySet()) {
+
+                String prop = entry.getKey();
+                Object rawValue = entry.getValue();
+
+                Property property =
+                        model.getProperty(NS + prop);
+
+                if (property == null) {
+                    System.out.println(
+                            "⚠️ Property not found: " + prop
+                    );
+                    continue;
+                }
+
+                List<Object> values =
+                        (rawValue instanceof List)
+                                ? (List<Object>) rawValue
+                                : Collections.singletonList(rawValue);
+
+                for (Object valueObj : values) {
+
+                    if (valueObj == null) {
+                        continue;
                     }
-                } else {
-                    typedLiteral = model.createTypedLiteral(valueStr);
+
+                    String valueStr =
+                            valueObj.toString();
+
+                    Literal typedLiteral;
+
+                    // =================================================
+                    // NUMERIC VALUES
+                    // =================================================
+
+                    if (numericProps.contains(prop)) {
+
+                        if (valueObj instanceof Number) {
+
+                            double num =
+                                    ((Number) valueObj).doubleValue();
+
+                            if (num == Math.floor(num)) {
+
+                                typedLiteral =
+                                        model.createTypedLiteral(
+                                                (int) num
+                                        );
+
+                                System.out.println(
+                                        "🔢 Parsed Integer for "
+                                                + prop
+                                                + ": "
+                                                + num
+                                );
+
+                            } else {
+
+                                typedLiteral =
+                                        model.createTypedLiteral(
+                                                num
+                                        );
+
+                                System.out.println(
+                                        "🔢 Parsed Double for "
+                                                + prop
+                                                + ": "
+                                                + num
+                                );
+                            }
+
+                        } else {
+
+                            try {
+
+                                if (valueStr.contains(".")) {
+
+                                    typedLiteral =
+                                            model.createTypedLiteral(
+                                                    Double.parseDouble(
+                                                            valueStr
+                                                    )
+                                            );
+
+                                } else {
+
+                                    typedLiteral =
+                                            model.createTypedLiteral(
+                                                    Integer.parseInt(
+                                                            valueStr
+                                                    )
+                                            );
+                                }
+
+                                System.out.println(
+                                        "🔢 Parsed from String for "
+                                                + prop
+                                                + ": "
+                                                + valueStr
+                                );
+
+                            } catch (NumberFormatException e) {
+
+                                System.err.println(
+                                        "⚠️ Failed to parse number for "
+                                                + prop
+                                                + ": "
+                                                + valueStr
+                                );
+
+                                typedLiteral =
+                                        model.createTypedLiteral(
+                                                valueStr
+                                        );
+                            }
+                        }
+
+                    } else {
+
+                        // =================================================
+                        // NON-NUMERIC VALUES
+                        // =================================================
+
+                        typedLiteral =
+                                model.createTypedLiteral(valueStr);
+                    }
+
+                    individual.addProperty(
+                            property,
+                            typedLiteral
+                    );
+
+                    System.out.println(
+                            "✅ Stored Property: " + prop
+                    );
+
+                    System.out.println(
+                            "   → Value: "
+                                    + typedLiteral.getString()
+                    );
+
+                    System.out.println(
+                            "   → DataType URI: "
+                                    + typedLiteral.getDatatypeURI()
+                    );
+
+                    System.out.println(
+                            "   → Jena Type: "
+                                    + typedLiteral.getDatatype()
+                    );
+                }
+            }
+        }
+
+        // =========================================================
+        // ✅ ADD UPDATED OBJECT PROPERTIES
+        // =========================================================
+
+        if (objectProps != null) {
+
+            for (Map.Entry<String, Object> entry
+                    : objectProps.entrySet()) {
+
+                String prop = entry.getKey();
+                Object rawValue = entry.getValue();
+
+                Property property =
+                        model.getProperty(NS + prop);
+
+                if (property == null) {
+
+                    System.out.println(
+                            "⚠️ Object property not found: "
+                                    + prop
+                    );
+
+                    continue;
                 }
 
-                individual.addProperty(property, typedLiteral);
-                // ✅ Print what's actually being stored
-                System.out.println("✅ Stored Property: " + prop);
-                System.out.println("   → Value: " + typedLiteral.getString());
-                System.out.println("   → DataType URI: " + typedLiteral.getDatatypeURI());
-                System.out.println("   → Jena Type: " + typedLiteral.getDatatype());
-            }
-        }
+                List<Object> values =
+                        (rawValue instanceof List)
+                                ? (List<Object>) rawValue
+                                : Collections.singletonList(rawValue);
 
-        // ✅ Add updated Object Properties
-        for (Map.Entry<String, Object> entry : objectProps.entrySet()) {
-            String prop = entry.getKey();
-            Object rawValue = entry.getValue();
-            Property property = model.getProperty(NS + prop);
-            if (property == null) {
-                continue;
-            }
+                for (Object valueObj : values) {
 
-            List<Object> values = (rawValue instanceof List)
-                    ? (List<Object>) rawValue
-                    : Collections.singletonList(rawValue);
+                    if (valueObj == null) {
+                        continue;
+                    }
 
-            for (Object valueObj : values) {
-                String value = valueObj.toString();
-                Resource objResource = model.getResource(NS + value);
-                if (objResource != null) {
-                    individual.addProperty(property, objResource);
+                    String value =
+                            valueObj.toString();
+
+                    Resource objResource =
+                            model.getResource(
+                                    NS + value
+                            );
+
+                    if (objResource != null) {
+
+                        individual.addProperty(
+                                property,
+                                objResource
+                        );
+
+                        System.out.println(
+                                "🔗 Added object property: "
+                                        + prop
+                                        + " → "
+                                        + value
+                        );
+                    }
                 }
             }
         }
 
-        // 💾 Save the updated model
-        try (FileOutputStream out = new FileOutputStream(ONTOLOGY_PATH)) {
-            model.write(out, "RDF/XML-ABBREV");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+        // =========================================================
+        // 💾 SAFE ATOMIC FILE WRITE
+        // =========================================================
+
+        File finalFile =
+                new File(ONTOLOGY_PATH);
+
+        File tempFile =
+                new File(
+                        ONTOLOGY_PATH + ".tmp"
+                );
+
+        System.out.println(
+                "=== DEBUG ONTOLOGY UPDATE ==="
+        );
+
+        System.out.println(
+                "Path: "
+                        + finalFile.getAbsolutePath()
+        );
+
+        System.out.println(
+                "Exists: "
+                        + finalFile.exists()
+        );
+
+        System.out.println(
+                "Writable: "
+                        + finalFile.canWrite()
+        );
+
+        System.out.println(
+                "Size BEFORE: "
+                        + finalFile.length()
+        );
+
+        /*
+         * First write the complete updated ontology
+         * to a temporary file.
+         *
+         * The real ontology file is untouched during
+         * this operation.
+         */
+        try (FileOutputStream out =
+                     new FileOutputStream(tempFile)) {
+
+            model.write(
+                    out,
+                    "RDF/XML-ABBREV"
+            );
         }
 
-        reloadModel();
-        System.out.println("📂 Loaded ontology from: " + ONTOLOGY_PATH);
+        System.out.println(
+                "✅ Temporary ontology written: "
+                        + tempFile.getAbsolutePath()
+        );
+
+        /*
+         * Replace the real ontology only after the
+         * temporary file has been successfully written.
+         */
+        Files.move(
+                tempFile.toPath(),
+                finalFile.toPath(),
+                StandardCopyOption.REPLACE_EXISTING
+        );
+
+        System.out.println(
+                "✅ Ontology file replaced successfully."
+        );
+
+        System.out.println(
+                "Size AFTER: "
+                        + finalFile.length()
+        );
+
+        System.out.println(
+                "==== END DEBUG ===="
+        );
+
+        // =========================================================
+        // ♻️ RELOAD MODEL
+        // =========================================================
+
+        /*
+         * DO NOT call reloadModel() here.
+         *
+         * We already hold MODEL_LOCK.writeLock().
+         * reloadModel() also tries to acquire the write lock.
+         *
+         * ReentrantReadWriteLock is reentrant, so this would work,
+         * but it is unnecessary. Loading directly keeps the locking
+         * flow simpler and avoids nested locking.
+         */
+        loadOntologyModel();
+
+        System.out.println(
+                "📂 Loaded ontology from: "
+                        + ONTOLOGY_PATH
+        );
+
+        System.out.println(
+                "✅ updateIndividual() completed successfully."
+        );
+
         return true;
-    }
 
+    } catch (Exception e) {
+
+        System.err.println(
+                "❌ Error while updating individual: "
+                        + individualName
+        );
+
+        e.printStackTrace();
+
+        /*
+         * Clean up temporary file if something went wrong.
+         */
+        try {
+
+            File tempFile =
+                    new File(
+                            ONTOLOGY_PATH + ".tmp"
+                    );
+
+            if (tempFile.exists()) {
+                Files.deleteIfExists(
+                        tempFile.toPath()
+                );
+            }
+
+        } catch (IOException cleanupException) {
+
+            System.err.println(
+                    "⚠️ Could not delete temporary ontology file."
+            );
+
+            cleanupException.printStackTrace();
+        }
+
+        return false;
+
+    } finally {
+
+        /*
+         * ALWAYS release the write lock,
+         * even when an exception occurs.
+         */
+        MODEL_LOCK.writeLock().unlock();
+
+        System.out.println(
+                "🔓 updateIndividual(): write lock released."
+        );
+    }
+}
+    
     public Map<String, Map<String, Integer>> getPropertyCardinalities(String className) {
         Map<String, Map<String, Integer>> cardinalityMap = new HashMap<>();
         OntClass ontClass = model.getOntClass(NS + className);
