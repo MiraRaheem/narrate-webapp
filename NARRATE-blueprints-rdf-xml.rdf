@@ -3656,7 +3656,6 @@ It provides a reverse navigational link, allowing processes to be queried based 
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#componentID">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductComponent"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:comment>The name of the component (e.g., CutWoodPanel, CotFrame).</rdfs:comment>
     </owl:DatatypeProperty>
     
@@ -3677,7 +3676,6 @@ It provides a reverse navigational link, allowing processes to be queried based 
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#componentWeight">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ProductComponent"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:comment>Weight of the component (for logistics, cost).</rdfs:comment>
     </owl:DatatypeProperty>
     
@@ -13650,6 +13648,175 @@ Avenida Burjassot 301-15</j.0:locationAddress>
         <j.0:criticalityLevel>Critical</j.0:criticalityLevel>
         <j.0:parameterID>PP001</j.0:parameterID>
         <j.0:parameterName>Machine Vibration</j.0:parameterName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5031062 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5031062">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>TABLILLA SOMIER A MOLDURADA DE HAYA DE 527X35X9 PEFC KANBAN</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5031062</j.0:componentID>
+        <j.0:componentName>TABLILLA SOMIER A MOLDURADA DE HAYA DE 527X35X9 PEFC KANBAN</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.48</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.17802</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5031065 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5031065">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>TABLILLA EXTERIOR SOMIER A MOL. HAYA DE 528X41X9 PEFC KANBAN</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5031065</j.0:componentID>
+        <j.0:componentName>TABLILLA EXTERIOR SOMIER A MOL. HAYA DE 528X41X9 PEFC KANBAN</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.53</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.63656</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5031495 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5031495">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>SOMIER TIPO A 2019 PEFC KANBAN</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5031495</j.0:componentID>
+        <j.0:componentName>SOMIER TIPO A 2019 PEFC KANBAN</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5.03</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7.97478</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5031496 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5031496">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>BANCADA SOMIER A 2019 MOLD. HAYA DE 1168X35X23 PEFC KANBAN</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5031496</j.0:componentID>
+        <j.0:componentName>BANCADA SOMIER A 2019 MOLD. HAYA DE 1168X35X23 PEFC KANBAN</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.02</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.47495</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033148 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033148">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>TRABA PATAS MARTHA 1190X70X26 (NAT) PULIMENTO ROBLE</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5033148</j.0:componentID>
+        <j.0:componentName>TRABA PATAS MARTHA 1190X70X26 (NAT) PULIMENTO ROBLE</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.26</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">14.98218</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033149 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033149">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>BOLSA HERRAJE CUNA MARTHA</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5033149</j.0:componentID>
+        <j.0:componentName>BOLSA HERRAJE CUNA MARTHA</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.79</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8.06755</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033150 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033150">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>PLANO MONTAJE MARTHA</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5033150</j.0:componentID>
+        <j.0:componentName>PLANO MONTAJE MARTHA</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.2</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.12419</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033151 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033151">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>PATA MARTHA PULIMENTO ROBLE</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5033151</j.0:componentID>
+        <j.0:componentName>PATA MARTHA PULIMENTO ROBLE</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.41</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">16.41459</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033258 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033258">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>LATERAL FIJO N12 2023 PULIMENTO PEFC AGUA ROBLE</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5033258</j.0:componentID>
+        <j.0:componentName>LATERAL FIJO N12 2023 PULIMENTO PEFC AGUA ROBLE</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.85</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">29.78727</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033259 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033259">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>TABLILLA COSTADOS N12 HAYA DE 620X45X13 (NAT) PEFC</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5033259</j.0:componentID>
+        <j.0:componentName>TABLILLA COSTADOS N12 HAYA DE 620X45X13 (NAT) PEFC</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.3</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12.84488</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033260 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033260">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>LATERAL FIJO N12 2023 MONTADO PEFC (NAT)</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5033260</j.0:componentID>
+        <j.0:componentName>LATERAL FIJO N12 2023 MONTADO PEFC (NAT)</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.72</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">21.88986</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033262 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033262">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>LARGUERO FIJO SUP R5 N12 PRIS. HAYA 1180X45X26 (NAT)</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5033262</j.0:componentID>
+        <j.0:componentName>LARGUERO FIJO SUP R5 N12 PRIS. HAYA 1180X45X26 (NAT)</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.2</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.76037</j.0:hasUnitCostEuro>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033263 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent_5033263">
+        <rdf:type rdf:resource="http://www.semanticweb.org/amal.elgammal/ontologies/2025/3/untitled-ontology-31#ManufacturedComponent"/>
+        <j.0:componentDescription>LARGUERO FIJO INF R5 N12 PRIS. HAYA 1180X45X26 (NAT)</j.0:componentDescription>
+        <j.0:componentID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5033263</j.0:componentID>
+        <j.0:componentName>LARGUERO FIJO INF R5 N12 PRIS. HAYA 1180X45X26 (NAT)</j.0:componentName>
+        <j.0:componentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.2</j.0:componentWeight>
+        <j.0:hasUnitCostEuro rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.76037</j.0:hasUnitCostEuro>
     </owl:NamedIndividual>
     
 
@@ -45754,5 +45921,4 @@ Avenida Burjassot 301-15</j.0:locationAddress>
 
 
 <!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
-
 
