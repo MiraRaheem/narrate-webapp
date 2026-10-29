@@ -194,6 +194,13 @@ public class ontologyReaderAjax extends HttpServlet {
         OntologyReader ontologyReader = OntologyReader.getInstance();  // ✅ Use fresh instance here too
 
         if ("updateIndividual".equals(action)) {
+            if (Boolean.TRUE) {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                out.print("{\"status\":\"error\",\"message\":\"Blueprint updates are disabled.\"}");
+                out.flush();
+                return;
+            }
+
             String className = json.get("className").getAsString(); // ✅ new line
             String individualName = json.get("individual").getAsString();
 

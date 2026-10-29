@@ -42,6 +42,11 @@ public class UpdateIndividualServlet1 extends HttpServlet {
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        if (Boolean.TRUE) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.getWriter().write("{\"status\":\"error\",\"message\":\"Blueprint updates are disabled.\"}");
+            return;
+        }
 
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();

@@ -47,6 +47,11 @@ public class DeleteIndividualServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        if (Boolean.TRUE) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.getWriter().write("{\"status\":\"error\",\"message\":\"Blueprint deletion is disabled.\"}");
+            return;
+        }
 
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
