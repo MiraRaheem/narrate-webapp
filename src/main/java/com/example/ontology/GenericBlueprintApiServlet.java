@@ -253,12 +253,6 @@ if (parts.length == 2 && parts[0].equals("full")) {
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        if (Boolean.TRUE) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.getWriter().write("{\"error\":\"Blueprint updates are disabled.\"}");
-            return;
-        }
-
         String path = request.getPathInfo();
 
         if (path == null || path.split("/").length < 3) {
@@ -456,12 +450,6 @@ if (parts.length == 2 && parts[0].equals("full")) {
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        if (Boolean.TRUE) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.getWriter().write("{\"error\":\"Blueprint deletion is disabled.\"}");
-            return;
-        }
-
         String pathInfo = request.getPathInfo(); // /MaterialSupplier/MaterialSupplier_1
 
         if (pathInfo == null || pathInfo.split("/").length < 3) {
