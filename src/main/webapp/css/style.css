@@ -9706,7 +9706,11 @@ p,
 }
 
 
-.kpi-btn {
+
+
+.kpi-btn,
+.product-kpi-btn,
+.energy-kpi-btn {
     min-height: 120px;
     display: flex;
     flex-direction: column;
@@ -9717,16 +9721,22 @@ p,
     padding: 10px;
 }
 
-.kpi-btn i {
+.kpi-btn i,
+.product-kpi-btn i,
+.energy-kpi-btn i {
     font-size: 2rem;
     margin-bottom: 8px;
 }
 
-.kpi-btn span {
+.kpi-btn span,
+.product-kpi-btn span,
+.energy-kpi-btn span {
     display: block;
     font-size: 0.9rem;
     font-weight: 500;
 }
+
+
 
 #materialKpiChart {
     max-width: 600px;
