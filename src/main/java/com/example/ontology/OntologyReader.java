@@ -25,6 +25,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.Path;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import org.apache.jena.datatypes.xsd.XSDDatatype;
 import java.math.BigDecimal;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.OWL;
@@ -2520,5 +2524,695 @@ return withReadLock(() -> {
 
 });
     }
+        /**
+     * Publishes a successfully persisted ontology model. Used by
+     * KpiEvaluationService.
+     */
+    static void replaceModelAfterSave(OntModel updatedModel) {
+        if (updatedModel == null) {
+            throw new IllegalArgumentException(
+                    "Updated ontology model cannot be null.");
+        }
+        model = updatedModel;
     }
+
+    /**
+     * Preserves the existing Material Intensity evaluation API.
+     *
+     * Existing callers with five arguments continue to work.
+     */
+    public String createKpiEvaluation(
+            String evaluationName,
+            String evaluationId,
+            double computedValue,
+            String calculationMethod,
+            String resultProvenance) throws IOException {
+
+        return createKpiEvaluation(
+                evaluationName,
+                evaluationId,
+                computedValue,
+                calculationMethod,
+                resultProvenance,
+                "MaterialIntensityKPI",
+                "MaterialIntensityFormula");
+    }
+
+    /**
+     * Creates and persists a KPI evaluation for the specified KPI and formula
+     * individuals.
+     *
+     * Supports Material Intensity and Renewable Content.
+     */
+    public String createKpiEvaluation(
+            String evaluationName,
+            String evaluationId,
+            double computedValue,
+            String calculationMethod,
+            String resultProvenance,
+            String kpiIndividualName,
+            String formulaIndividualName) throws IOException {
+
+        return createKpiEvaluation(
+                evaluationName,
+                evaluationId,
+                computedValue,
+                calculationMethod,
+                resultProvenance,
+                kpiIndividualName,
+                formulaIndividualName,
+                null,
+                null);
+    }
+
+    /**
+     * Creates and persists a KPI evaluation with an optional evaluated entity
+     * and an optional additional context.
+     *
+     * For Renewable Content: evaluatedEntityName = raw material individual
+     * contextEntityName = manufactured product individual
+     *
+     * Both context arguments may be null for legacy callers.
+     */
+    public String createKpiEvaluation(
+            String evaluationName,
+            String evaluationId,
+            double computedValue,
+            String calculationMethod,
+            String resultProvenance,
+            String kpiIndividualName,
+            String formulaIndividualName,
+            String evaluatedEntityName,
+            String contextEntityName) throws IOException {
+
+        if (!Double.isFinite(computedValue)) {
+            throw new IllegalArgumentException(
+                    "Computed KPI value must be finite.");
+        }
+
+        MODEL_LOCK.writeLock().lock();
+        try {
+        synchronized (OntologyReader.class) {
+
+            OntModel currentModel = model;
+
+            if (currentModel == null) {
+                throw new IllegalStateException(
+                        "Ontology model is not initialized.");
+            }
+
+            if (currentModel.getIndividual(
+                    NS + evaluationName) != null) {
+
+                throw new IllegalStateException(
+                        "Evaluation already exists: "
+                        + evaluationName);
+            }
+
+            // Validate the selected KPI and formula.
+            if (currentModel.getIndividual(
+                    NS + kpiIndividualName) == null
+                    || currentModel.getIndividual(
+                            NS + formulaIndividualName) == null) {
+
+                throw new IllegalStateException(
+                        "KPI or formula not found: "
+                        + kpiIndividualName + " / "
+                        + formulaIndividualName);
+            }
+
+            OntClass evaluationClass
+                    = currentModel.getOntClass(
+                            NS + "KPIEvaluation");
+
+            if (evaluationClass == null) {
+                throw new IllegalStateException(
+                        "KPIEvaluation class not found.");
+            }
+
+            // Validate the optional evaluated entity.
+            if (evaluatedEntityName != null) {
+
+                if (evaluatedEntityName.trim().isEmpty()
+                        || currentModel.getIndividual(
+                                NS + evaluatedEntityName) == null) {
+
+                    throw new IllegalArgumentException(
+                            "Evaluated entity not found: "
+                            + evaluatedEntityName);
+                }
+
+                if (currentModel.getObjectProperty(
+                        NS + "hasEvaluatedEntity") == null) {
+
+                    throw new IllegalStateException(
+                            "Object property hasEvaluatedEntity not found.");
+                }
+            }
+
+            // Validate the optional evaluation context.
+            if (contextEntityName != null) {
+
+                if (contextEntityName.trim().isEmpty()
+                        || currentModel.getIndividual(
+                                NS + contextEntityName) == null) {
+
+                    throw new IllegalArgumentException(
+                            "Evaluation context not found: "
+                            + contextEntityName);
+                }
+
+                if (currentModel.getObjectProperty(
+                        NS + "hasEvaluationContext") == null) {
+
+                    throw new IllegalStateException(
+                            "Object property hasEvaluationContext not found.");
+                }
+            }
+
+            // Preserve all existing ontology statements.
+            OntModel updatedModel
+                    = ModelFactory.createOntologyModel(
+                            OntModelSpec.OWL_MEM);
+
+            updatedModel.add(currentModel);
+
+            Individual evaluation
+                    = updatedModel.createIndividual(
+                            NS + evaluationName,
+                            updatedModel.getOntClass(
+                                    NS + "KPIEvaluation"));
+
+            evaluation.addProperty(
+                    updatedModel.getProperty(
+                            NS + "evaluationID"),
+                    evaluationId);
+
+            // Read the datatype declared in the ontology.
+            Map<String, String> propertyRanges
+                    = getDataPropertyRanges("KPIEvaluation");
+
+            String computedValueRange
+                    = propertyRanges.get("computedValue");
+
+            if (computedValueRange == null) {
+                throw new IllegalStateException(
+                        "No datatype range declared "
+                        + "for computedValue.");
+            }
+
+            // Create the literal using the ontology's
+            // declared datatype.
+            Literal computedValueLiteral;
+
+            switch (computedValueRange) {
+
+                case "http://www.w3.org/2001/XMLSchema#decimal":
+
+                    computedValueLiteral
+                            = updatedModel.createTypedLiteral(
+                                    java.math.BigDecimal.valueOf(
+                                            computedValue));
+                    break;
+
+                case "http://www.w3.org/2001/XMLSchema#double":
+
+                    computedValueLiteral
+                            = updatedModel.createTypedLiteral(
+                                    computedValue);
+                    break;
+
+                case "http://www.w3.org/2001/XMLSchema#float":
+
+                    computedValueLiteral
+                            = updatedModel.createTypedLiteral(
+                                    (float) computedValue);
+                    break;
+
+                case "http://www.w3.org/2001/XMLSchema#integer":
+
+                    if (computedValue != Math.rint(
+                            computedValue)) {
+
+                        throw new IllegalArgumentException(
+                                "computedValue is not an integer: "
+                                + computedValue);
+                    }
+
+                    computedValueLiteral
+                            = updatedModel.createTypedLiteral(
+                                    java.math.BigDecimal.valueOf(
+                                            computedValue)
+                                            .toBigIntegerExact());
+                    break;
+
+                default:
+
+                    throw new IllegalStateException(
+                            "Unsupported datatype "
+                            + "for computedValue: "
+                            + computedValueRange);
+            }
+
+            evaluation.addLiteral(
+                    updatedModel.getProperty(
+                            NS + "computedValue"),
+                    computedValueLiteral);
+
+            evaluation.addProperty(
+                    updatedModel.getProperty(
+                            NS + "evaluationStatus"),
+                    "computed");
+
+            // UTC timestamp with whole-second precision.
+            // Matches the ontology's xsd:dateTime range.
+            String timestamp = Instant.now()
+                    .truncatedTo(ChronoUnit.SECONDS)
+                    .toString();
+
+            evaluation.addLiteral(
+                    updatedModel.getProperty(
+                            NS + "evaluationTimestamp"),
+                    updatedModel.createTypedLiteral(
+                            timestamp,
+                            XSDDatatype.XSDdateTime));
+
+            evaluation.addProperty(
+                    updatedModel.getProperty(
+                            NS + "calculationMethod"),
+                    calculationMethod);
+
+            evaluation.addProperty(
+                    updatedModel.getProperty(
+                            NS + "resultProvenance"),
+                    resultProvenance);
+
+            // Link to the selected KPI.
+            evaluation.addProperty(
+                    updatedModel.getProperty(
+                            NS + "evaluatesKPI"),
+                    updatedModel.getResource(
+                            NS + kpiIndividualName));
+
+            // Link to the selected formula.
+            evaluation.addProperty(
+                    updatedModel.getProperty(
+                            NS + "usesFormula"),
+                    updatedModel.getResource(
+                            NS + formulaIndividualName));
+
+            // Link to the primary evaluated entity.
+            if (evaluatedEntityName != null) {
+
+                evaluation.addProperty(
+                        updatedModel.getObjectProperty(
+                                NS + "hasEvaluatedEntity"),
+                        updatedModel.getIndividual(
+                                NS + evaluatedEntityName));
+            }
+
+            // Link to the additional evaluation context.
+            if (contextEntityName != null) {
+
+                evaluation.addProperty(
+                        updatedModel.getObjectProperty(
+                                NS + "hasEvaluationContext"),
+                        updatedModel.getIndividual(
+                                NS + contextEntityName));
+            }
+
+            // Save without replacing the original file
+            // until serialization has completed.
+            Path ontologyFile
+                    = Path.of(ONTOLOGY_PATH);
+
+            Path temporary
+                    = Files.createTempFile(
+                            ontologyFile.getParent(),
+                            "narrate-evaluation-",
+                            ".rdf");
+
+            try {
+
+                try (java.io.OutputStream output
+                        = Files.newOutputStream(temporary)) {
+
+                    updatedModel.write(
+                            output,
+                            "RDF/XML-ABBREV");
+                }
+
+                Files.move(
+                        temporary,
+                        ontologyFile,
+                        StandardCopyOption.REPLACE_EXISTING);
+
+            } finally {
+
+                Files.deleteIfExists(temporary);
+            }
+
+            // Update the shared singleton model.
+            replaceModelAfterSave(updatedModel);
+
+            System.out.println(
+                    "[KPI Evaluation] Saved: "
+                    + evaluationName
+                    + " | KPI=" + kpiIndividualName
+                    + " | Formula=" + formulaIndividualName
+                    + " | EvaluatedEntity=" + evaluatedEntityName
+                    + " | Context=" + contextEntityName
+                    + " | timestamp=" + timestamp);
+
+            return evaluationName;
+        }
+        } finally {
+            MODEL_LOCK.writeLock().unlock();
+        }
+    }
+
+    /**
+     * Creates and persists a BenchmarkAssessment individual linked to an
+     * existing KPIEvaluation and an existing benchmark.
+     *
+     * Uses the datatype ranges declared in the ontology and preserves the
+     * current in-memory model if persistence fails.
+     *
+     * @return the local name of the saved BenchmarkAssessment individual
+     */
+    public String createBenchmarkAssessment(
+            String evaluationName,
+            String benchmarkName,
+            boolean meetsBenchmark,
+            double absoluteDeviation,
+            double relativeDeviationPercent,
+            String assessmentStatus,
+            String assessmentExplanation) throws IOException {
+
+        // 1. Validate input.
+        if (evaluationName == null || evaluationName.trim().isEmpty()
+                || benchmarkName == null || benchmarkName.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Evaluation and benchmark names are required.");
+        }
+
+        if (!Double.isFinite(absoluteDeviation)
+                || !Double.isFinite(relativeDeviationPercent)) {
+            throw new IllegalArgumentException(
+                    "Benchmark deviations must be finite.");
+        }
+
+        if (assessmentStatus == null || assessmentStatus.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Assessment status is required.");
+        }
+
+        MODEL_LOCK.writeLock().lock();
+        try {
+        synchronized (OntologyReader.class) {
+
+            OntModel currentModel = model;
+
+            if (currentModel == null) {
+                throw new IllegalStateException(
+                        "Ontology model is not initialized.");
+            }
+
+            // 2. Validate ontology classes and referenced individuals.
+            OntClass assessmentClass
+                    = currentModel.getOntClass(NS + "BenchmarkAssessment");
+
+            if (assessmentClass == null) {
+                throw new IllegalStateException(
+                        "BenchmarkAssessment class not found.");
+            }
+
+            OntClass evaluationClass
+                    = currentModel.getOntClass(NS + "KPIEvaluation");
+
+            if (evaluationClass == null) {
+                throw new IllegalStateException(
+                        "KPIEvaluation class not found.");
+            }
+
+            Individual evaluation
+                    = currentModel.getIndividual(NS + evaluationName);
+
+            if (evaluation == null
+                    || !evaluation.hasRDFType(evaluationClass)) {
+                throw new IllegalStateException(
+                        "Valid KPIEvaluation not found: " + evaluationName);
+            }
+
+            Individual benchmark
+                    = currentModel.getIndividual(NS + benchmarkName);
+
+            if (benchmark == null) {
+                throw new IllegalStateException(
+                        "Benchmark individual not found: " + benchmarkName);
+            }
+
+            // 3. Validate required datatype properties.
+            String[] dataProperties = {
+                "assessmentStatus",
+                "meetsBenchmark",
+                "absoluteDeviation",
+                "relativeDeviationPercent",
+                "assessmentTimestamp",
+                "assessmentExplanation"
+            };
+
+            for (String propertyName : dataProperties) {
+                if (currentModel.getDatatypeProperty(
+                        NS + propertyName) == null) {
+                    throw new IllegalStateException(
+                            "Datatype property not found: " + propertyName);
+                }
+            }
+
+            // 4. Validate required object properties.
+            if (currentModel.getObjectProperty(
+                    NS + "assessesEvaluation") == null) {
+                throw new IllegalStateException(
+                        "Object property assessesEvaluation not found.");
+            }
+
+            if (currentModel.getObjectProperty(
+                    NS + "assessesAgainstBenchmark") == null) {
+                throw new IllegalStateException(
+                        "Object property assessesAgainstBenchmark not found.");
+            }
+
+            // 5. Read datatype ranges from the ontology.
+            Map<String, String> ranges
+                    = getDataPropertyRanges("BenchmarkAssessment");
+
+            String absoluteRange = ranges.get("absoluteDeviation");
+            String relativeRange = ranges.get("relativeDeviationPercent");
+            String timestampRange = ranges.get("assessmentTimestamp");
+            String statusRange = ranges.get("assessmentStatus");
+            String explanationRange = ranges.get("assessmentExplanation");
+            String meetsRange = ranges.get("meetsBenchmark");
+
+            final String xsd
+                    = "http://www.w3.org/2001/XMLSchema#";
+
+            for (String range
+                    : new String[]{absoluteRange, relativeRange}) {
+
+                if (!(xsd + "decimal").equals(range)
+                        && !(xsd + "double").equals(range)
+                        && !(xsd + "float").equals(range)) {
+                    throw new IllegalStateException(
+                            "Unsupported or missing deviation datatype: "
+                            + range);
+                }
+            }
+
+            if (!(xsd + "dateTime").equals(timestampRange)
+                    && !(xsd + "dateTimeStamp").equals(timestampRange)) {
+                throw new IllegalStateException(
+                        "Unsupported assessmentTimestamp datatype: "
+                        + timestampRange);
+            }
+
+            if (!(xsd + "boolean").equals(meetsRange)) {
+                throw new IllegalStateException(
+                        "meetsBenchmark must have xsd:boolean range.");
+            }
+
+            if (!(xsd + "string").equals(statusRange)
+                    || !(xsd + "string").equals(explanationRange)) {
+                throw new IllegalStateException(
+                        "Assessment status and explanation "
+                        + "must have xsd:string ranges.");
+            }
+
+            // 6. Create a copy of the current ontology.
+            OntModel updatedModel
+                    = ModelFactory.createOntologyModel(
+                            OntModelSpec.OWL_MEM);
+
+            updatedModel.add(currentModel);
+
+            String assessmentName
+                    = "BenchmarkAssessment_"
+                    + java.util.UUID.randomUUID()
+                            .toString().replace("-", "");
+
+            Individual assessment
+                    = updatedModel.createIndividual(
+                            NS + assessmentName,
+                            updatedModel.getOntClass(
+                                    NS + "BenchmarkAssessment"));
+
+            // 7. Store assessment status.
+            assessment.addProperty(
+                    updatedModel.getDatatypeProperty(
+                            NS + "assessmentStatus"),
+                    assessmentStatus);
+
+            // 8. Store pass/fail result.
+            assessment.addLiteral(
+                    updatedModel.getDatatypeProperty(
+                            NS + "meetsBenchmark"),
+                    updatedModel.createTypedLiteral(meetsBenchmark));
+
+            // 9. Store absolute deviation with its declared datatype.
+            Literal absoluteLiteral;
+
+            if ((xsd + "decimal").equals(absoluteRange)) {
+                absoluteLiteral = updatedModel.createTypedLiteral(
+                        java.math.BigDecimal.valueOf(absoluteDeviation));
+
+            } else if ((xsd + "float").equals(absoluteRange)) {
+                absoluteLiteral = updatedModel.createTypedLiteral(
+                        (float) absoluteDeviation);
+
+            } else {
+                absoluteLiteral = updatedModel.createTypedLiteral(
+                        absoluteDeviation);
+            }
+
+            assessment.addLiteral(
+                    updatedModel.getDatatypeProperty(
+                            NS + "absoluteDeviation"),
+                    absoluteLiteral);
+
+            // 10. Store relative deviation with its declared datatype.
+            Literal relativeLiteral;
+
+            if ((xsd + "decimal").equals(relativeRange)) {
+                relativeLiteral = updatedModel.createTypedLiteral(
+                        java.math.BigDecimal.valueOf(
+                                relativeDeviationPercent));
+
+            } else if ((xsd + "float").equals(relativeRange)) {
+                relativeLiteral = updatedModel.createTypedLiteral(
+                        (float) relativeDeviationPercent);
+
+            } else {
+                relativeLiteral = updatedModel.createTypedLiteral(
+                        relativeDeviationPercent);
+            }
+
+            assessment.addLiteral(
+                    updatedModel.getDatatypeProperty(
+                            NS + "relativeDeviationPercent"),
+                    relativeLiteral);
+
+            // 11. Store timestamp using the ontology's declared datatype.
+            String timestamp = Instant.now()
+                    .truncatedTo(ChronoUnit.SECONDS)
+                    .toString();
+
+            org.apache.jena.datatypes.RDFDatatype timestampDatatype
+                    = org.apache.jena.datatypes.TypeMapper
+                            .getInstance()
+                            .getSafeTypeByName(timestampRange);
+
+            assessment.addLiteral(
+                    updatedModel.getDatatypeProperty(
+                            NS + "assessmentTimestamp"),
+                    updatedModel.createTypedLiteral(
+                            timestamp,
+                            timestampDatatype));
+
+            // 12. Store explanation.
+            assessment.addProperty(
+                    updatedModel.getDatatypeProperty(
+                            NS + "assessmentExplanation"),
+                    assessmentExplanation == null
+                            ? ""
+                            : assessmentExplanation);
+
+            // 13. Link assessment to the existing KPIEvaluation.
+            assessment.addProperty(
+                    updatedModel.getObjectProperty(
+                            NS + "assessesEvaluation"),
+                    updatedModel.getIndividual(
+                            NS + evaluationName));
+
+            // 14. Link assessment to the existing benchmark.
+            assessment.addProperty(
+                    updatedModel.getObjectProperty(
+                            NS + "assessesAgainstBenchmark"),
+                    updatedModel.getIndividual(
+                            NS + benchmarkName));
+
+            // 15. Persist using a temporary file.
+            Path ontologyFile = Path.of(ONTOLOGY_PATH);
+
+            Path temporary = Files.createTempFile(
+                    ontologyFile.getParent(),
+                    "narrate-benchmark-assessment-",
+                    ".rdf");
+
+            try {
+                try (java.io.OutputStream output
+                        = Files.newOutputStream(temporary)) {
+
+                    updatedModel.write(
+                            output,
+                            "RDF/XML-ABBREV");
+                }
+
+                try {
+                    Files.move(
+                            temporary,
+                            ontologyFile,
+                            StandardCopyOption.REPLACE_EXISTING,
+                            StandardCopyOption.ATOMIC_MOVE);
+
+                } catch (java.nio.file.AtomicMoveNotSupportedException ex) {
+
+                    Files.move(
+                            temporary,
+                            ontologyFile,
+                            StandardCopyOption.REPLACE_EXISTING);
+                }
+
+            } finally {
+                Files.deleteIfExists(temporary);
+            }
+
+            // 16. Publish the successfully saved model.
+            replaceModelAfterSave(updatedModel);
+
+            System.out.println(
+                    "[BenchmarkAssessment] Saved: "
+                    + assessmentName
+                    + " | Evaluation=" + evaluationName
+                    + " | Benchmark=" + benchmarkName
+                    + " | Status=" + assessmentStatus
+                    + " | Timestamp=" + timestamp);
+
+            return assessmentName;
+        }
+        } finally {
+            MODEL_LOCK.writeLock().unlock();
+        }
+    }
+
+}
 
