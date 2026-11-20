@@ -253,6 +253,12 @@ $(document).ready(function () {
     // Handle Search
     $("#searchBtn").on("click", function () {
         const className = $("#classSelect").val();
+
+        // NEW: Optional search by ontology Individual ID
+        const individualIdFilter = $("#individualIdSearch")
+                .val()
+                .trim()
+                .toLowerCase();
         const dataProperties = {};
         const objectProperties = {};
 
@@ -323,18 +329,42 @@ $(document).ready(function () {
             url: "QueryIndividualsServlet",
             contentType: "application/json",
             data: JSON.stringify(payload),
+
             success: function (response) {
                 console.log("✅ Query result:", response);
-                //displayResults(response.matchedIndividuals, response.similarityNotes);
-                $.getJSON("ontologyReaderAjax", {type: "objectProperties", class: $("#classSelect").val()})
-                        .done(function (objectProps) {
-                            displayResults(response.matchedIndividuals, response.similarityNotes, objectProps, className);
 
+                // NEW: Filter matching individuals by full or partial ID.
+                const allIndividuals = Array.isArray(response.matchedIndividuals)
+                        ? response.matchedIndividuals
+                        : [];
 
-                        });
+                const filteredIndividuals = individualIdFilter
+                        ? allIndividuals.filter(function (individual) {
+                            return String(individual)
+                                    .toLowerCase()
+                                    .includes(individualIdFilter);
+                        })
+                        : allIndividuals;
 
+                console.log("🔎 Individual ID filter:", individualIdFilter);
+                console.log("📋 Filtered individuals:", filteredIndividuals);
 
+                // EXISTING: Retrieve object properties for result display.
+                $.getJSON("ontologyReaderAjax", {
+                    type: "objectProperties",
+                    class: className
+                }).done(function (objectProps) {
+
+                    displayResults(
+                            filteredIndividuals,
+                            response.similarityNotes,
+                            objectProps,
+                            className
+                            );
+
+                });
             },
+
             error: function () {
                 console.error("❌ Failed to retrieve individuals.");
                 Swal.fire("❌ Error", "Failed to retrieve individuals.", "error");
