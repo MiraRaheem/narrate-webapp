@@ -9,8 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Query Blueprints</title>
-             <!-- Favicon -->
+        <title>Semantic Querying</title>
+        <!-- Favicon -->
         <link href="img/favicon.ico" rel="icon">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
@@ -20,7 +20,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- ✅ Add Bootstrap Bundle which includes Popper.js + Bootstrap.js -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        
+
 
     </head>
 
@@ -92,13 +92,14 @@
     <!-- Navbar End -->
 
     <body>
-        <h1 class="text-center my-4">Query Blueprints</h1>
+        <h1 class="text-center my-4">Semantic Querying</h1>
 
         <div id="alertsContainer" class="mt-3"></div>
 
         <div class="container mt-5">
 
             <h2 class="text-primary">Retrieve Instances</h2>
+
 
             <!-- Class Selector -->
             <div class="form-group">
@@ -108,11 +109,35 @@
                 </select>
             </div>
 
+            <!-- NEW: Individual ID Search -->
+            <div class="form-group mb-4">
+                <label for="individualIdSearch">
+                    <i class="fas fa-fingerprint text-primary"></i>
+                    Individual ID
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    id="individualIdSearch"
+                    placeholder="Enter full or partial Individual ID"
+                    autocomplete="off"
+                    >
+
+                <small class="form-text text-muted">
+                    Search by full or partial ontology individual ID.
+                    Leave empty to search all individuals matching
+                    the selected criteria.
+                </small>
+            </div>
+            <!-- END: Individual ID Search -->
+
             <!-- Data Properties Table -->
             <div id="dataPropertiesContainer" class="mb-4">
                 <h4 id="dataPropsHeader" class="d-none">Data Properties</h4>
                 <!-- Table will be generated dynamically here -->
             </div>
+
 
             <!-- Object Properties Table -->
             <div id="objectPropertiesContainer" class="mb-4">
